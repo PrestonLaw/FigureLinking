@@ -1,0 +1,26 @@
+[Allowed ENTITYTYPES]
+    Caption: true
+    Reference: true
+
+[Allowed REFTYPES]
+#    Caption: true
+    Direct: true
+    Indirect: true
+    Spatial-Above: true
+    Spatial-Below: true
+    Spatial-Other: true
+
+[Allowed TYPES]
+    Figure: true
+    Table: true
+    Equation: true
+    Image: true
+    Other: true
+
+[Match Requirements]
+    ENTITYTYPE Match Required: true
+    REFTYPE Match Required: true
+    TYPE Match Required: true
+    NUM Match Required: true
+    Overlap Threshold: 0.9
+

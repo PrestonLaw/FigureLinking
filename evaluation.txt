@@ -1,2 +1,6 @@
-Figure Linking Evaluation
-Script run on 2019-04-20 18:55:53.433645Ground Truth Filename: groundtruth.xml.annResults Filename:      results-unified.xml.annEvaluation Filename:   ./evaluation.txt
+FIGURE LINKING EVALUATION
+
+Script run on 2019-04-20 18:57:43.489320
+Ground Truth Filename: ./groundtruth.xml.ann
+Results Filename:      ./results.xml.ann
+Evaluation Filename:   ./evaluation.txt
