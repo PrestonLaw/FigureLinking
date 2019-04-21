@@ -36,7 +36,7 @@ def parse_args():
 
 # We define this global variable so that we know what EntityTypes there are.
 # It will be appended to whenever we come across an Entity with a new EntityType.
-EntityTypes = []
+EntityTypes = ["Caption", "Reference"]
 
 # We should also define the configuration parameters as a global variable as well.
 config = {}
@@ -480,7 +480,7 @@ if __name__ == "__main__":
 
 
 
-        # Step _.1: Print out the basic parameters the script was run with.
+        # Step 9.1: Print out the basic parameters the script was run with.
 
         rwrite(of, "Script run on %s"%(datetime.datetime.now()))
         rwrite(of, "Ground Truth Filename: %s"%(args.gtfile))
@@ -489,12 +489,12 @@ if __name__ == "__main__":
 
 
 
-        # Step _.2: Print out the parameters given via the config file.
+        # Step 9.2: Print out the parameters given via the config file.
 
         rwrite(of, "-"*50)
         rwrite(of, "CONFIGURATION PARAMETERS\n")
 
-        rwrite(of, "Span Overlap Threshold: %d
+        #rwrite(of, "Span Overlap Threshold: %d
         rwrite(of, "Span Overlap Threshold: %s"%config["Match Requirements"]["Overlap Threshold"])
         rwrite(of, "REFTYPE Categories Tested:")
         for key in config["Allowed REFTYPES"].keys():
@@ -513,11 +513,18 @@ if __name__ == "__main__":
 
         rwrite(of, "ENTITY STATISTICS")
         rwrite(of, "Ground Truth")
-        rwrite(of, "    # of 'Caption':   %d"%(entity_statistics['gt_cap']))
-        rwrite(of, "    # of 'Reference': %d"%(entity_statistics['gt_ref']))
+        for ET in EntityTypes:
+            rwrite(of, "    # of '%s': %d"%(ET, entity_statistics[ET]["gt"]))
+
+        #rwrite(of, "    # of 'Caption':   %d"%(entity_statistics['gt_cap']))
+        #rwrite(of, "    # of 'Reference': %d"%(entity_statistics['gt_ref']))
         rwrite(of, "Results")
-        rwrite(of, "    # of 'Caption':   %d"%(entity_statistics['ex_cap']))
-        rwrite(of, "    # of 'Reference': %d\n"%(entity_statistics['ex_ref']))
+        for ET in EntityTypes:
+             rwrite(of, "    # of '%s': %d"%(ET, entity_statistics[ET]["ex"]))
+        #rwrite(of, "    # of 'Caption':   %d"%(entity_statistics['ex_cap']))
+        #rwrite(of, "    # of 'Reference': %d\n"%(entity_statistics['ex_ref']))
+
+        rwrite(of, "\n" + "-" * 50)
 
 
 
@@ -526,17 +533,25 @@ if __name__ == "__main__":
         rwrite(of, "EVALUATION RESULTS")
         rwrite(of, "Match Counts")
         rwrite(of, "    Overall (all ENTITYTYPES):")
-        rwrite(of, "        # of Correct Matches:        %d"%(match_counts["Caption"]["TP"] + match_counts["Reference"]["TP"]))
-        rwrite(of, "        # of False Negative Matches: %d"%(match_counts["Caption"]["FN"] + match_counts["Reference"]["FN"]))
-        rwrite(of, "        # of False Positive Matches: %d"%(match_counts["Caption"]["FP"] + match_counts["Reference"]["FP"]))
-        rwrite(of, "    'Caption' ENTITYTYPE Only:")
-        rwrite(of, "        # of Correct Matches:        %d"%(match_counts["Caption"]["TP"]))
-        rwrite(of, "        # of False Negative Matches: %d"%(match_counts["Caption"]["FN"]))
-        rwrite(of, "        # of False Positive Matches: %d"%(match_counts["Caption"]["FP"]))
-        rwrite(of, "    'Reference' ENTITYTYPE Only:")
-        rwrite(of, "        # of Correct Matches:        %d"%(match_counts["Reference"]["TP"]))
-        rwrite(of, "        # of False Negative Matches: %d"%(match_counts["Reference"]["FN"]))
-        rwrite(of, "        # of False Positive Matches: %d"%(match_counts["Reference"]["FP"]))
+        rwrite(of, "        # of True Matches:    %d"%(sum([match_counts[ET]["TM"] for ET in EntityTypes])))
+        rwrite(of, "        # of False Matches:   %d"%(sum([match_counts[ET]["FM"] for ET in EntityTypes])))
+        rwrite(of, "        # of False Entities:  %d"%(sum([match_counts[ET]["FE"] for ET in EntityTypes])))
+        rwrite(of, "        # of Missed Entities: %d"%(sum([match_counts[ET]["ME"] for ET in EntityTypes])))
+        for ET in EntityTypes:
+            rwrite(of, "    '%s' ENTITYTYPES Only:")
+            rwrite(of, "        # of True Matches:    %d"%(match_counts[ET]["TM"]))
+            rwrite(of, "        # of False Matches:   %d"%(match_counts[ET]["FM"]))
+            rwrite(of, "        # of False Entities:  %d"%(match_counts[ET]["FE"]))
+            rwrite(of, "        # of Missed Entities: %d"%(match_counts[ET]["ME"]))
+
+        #rwrite(of, "    'Caption' ENTITYTYPE Only:")
+        #rwrite(of, "        # of Correct Matches:        %d"%(match_counts["Caption"]["TP"]))
+        #rwrite(of, "        # of False Negative Matches: %d"%(match_counts["Caption"]["FN"]))
+        #rwrite(of, "        # of False Positive Matches: %d"%(match_counts["Caption"]["FP"]))
+        #rwrite(of, "    'Reference' ENTITYTYPE Only:")
+        #rwrite(of, "        # of Correct Matches:        %d"%(match_counts["Reference"]["TP"]))
+        #rwrite(of, "        # of False Negative Matches: %d"%(match_counts["Reference"]["FN"]))
+        #rwrite(of, "        # of False Positive Matches: %d"%(match_counts["Reference"]["FP"]))
 
 
 
@@ -549,14 +564,16 @@ if __name__ == "__main__":
         rwrite(of, "Match Metrics")
         rwrite(of, "    Overall (all ENTITYTYPES):")
         rwrite(of, "        Overlap (computed on overlap between text spans):")
-        P,R = PR(match_overlaps["Caption"] + match_overlaps["Reference"],
-                 cap_range_total_gt + ref_range_total_gt,
-                 cap_range_total_ex + ref_range_total_ex)
+        P,R = PR(sum(match_overlaps.values()), sum(gt_ranges.values()), sum(ex_ranges.values()))
+        #P,R = PR(match_overlaps["Caption"] + match_overlaps["Reference"],
+        #         cap_range_total_gt + ref_range_total_gt,
+        #         cap_range_total_ex + ref_range_total_ex)
         rwrite(of, "            Precision = %f, Recall = %f"%(P,R))
         rwrite(of, "        Count (computed on # of correct/incorrect matches):")
-        P,R = PR(match_counts["Caption"]["TP"] + match_counts["Reference"]["TP"],
-                 cap_count_total_gt + ref_count_total_gt,
-                 cap_count_total_ex + ref_count_total_ex)
+        P,R = PR(sum([match_counts[ET]["TM"] for ET in EntityTypes]), sum(gt_counts.values()), sum(ex_counts.values()))
+        #P,R = PR(match_counts["Caption"]["TP"] + match_counts["Reference"]["TP"],
+        #         cap_count_total_gt + ref_count_total_gt,
+        #         cap_count_total_ex + ref_count_total_ex)
         rwrite(of, "            Precision = %f, Recall = %f"%(P,R))
 
 
@@ -565,6 +582,16 @@ if __name__ == "__main__":
         # Note: Precision is defined as the proportion of non-GT entities that have GT entities matching them.
         #       Recall is defined as the proportion of GT entities that have non-GT entities matching them.
 
+        for ET in EntityTypes:
+            rwrite(of, "    '%s' ENTITYTYPE Only:")
+            rwrite(of, "        Overlap (computed on overlap between next spans):")
+            P,R = PR(match_overlaps[ET], gt_ranges[ET], ex_ranges[ET])
+            rwrite(of, "            Precision = %f, Recall = %f"%(P,R))
+            rwrite(of, "        Count (computed on # of correct/incorrect matches):")
+            P,R = PR(match_counts[ET]["TM"], gt_counts[ET], ex_counts[ET])
+            rwrite(of, "            Precision = %f, Recall = %f"%(P,R))
+
+        """
         rwrite(of, "    'Caption' ENTITYTYPE Only:")
         rwrite(of, "        Overlap (computed on overlap between text spans):")
         P,R = PR(match_overlaps["Caption"], cap_range_total_gt, cap_range_total_ex)
@@ -580,15 +607,18 @@ if __name__ == "__main__":
         rwrite(of, "        Count (computed on # of correct/incorrect matches):")
         P,R = PR(match_counts["Reference"]["TP"], ref_count_total_gt, ref_count_total_ex)
         rwrite(of, "            Precision = %f, Recall = %f"%(P,R))
+        """
+
+        rwrite(of, "\n" + "-" * 50)
 
 
 
-        # Part 9.5.3: Print out all true matches.
+        # Part 9.6: Print out all true matches, false matches, false entities, and missed entities.
         rwrite(of, "")
         rwrite(of, "Match Contents")
-        rwrite(of, "CORRECT MATCHES")
+        rwrite(of, "TRUE MATCHES")
         count = 0
-        for (f_gt, f_ex) in TP_match_pairs:
+        for (f_gt, f_ex) in T_matches:
 
             gt = dict(f_gt)
             ex = dict(f_ex)
@@ -602,17 +632,21 @@ if __name__ == "__main__":
             count += 1
 
             rwrite(of, "Match %d:"%(count))
-            rwrite(of, "    ENTITYTYPES: %s, %s"%(gt["EntityType"], ex["EntityType"]))
-            rwrite(of, "    REFTYPES: %s, %s"%(gt["RefType"], ex["RefType"]))
-            rwrite(of, "    TYPES: %s, %s"%(gt["Type"], ex["Type"]))
-            rwrite(of, "    NUMS: %d, %d"%(gt["Num"], ex["Num"]))
-            rwrite(of, "    Text of GT / non-GT entities:")
-            rwrite(of, "%s"%(gt["Text"]))
-            rwrite(of, "%s\n"%(ex["Text"]))
+            rwrite(of, "    R: %s %s %s %s %d"%(gt["ID"], gt["EntityType"], gt["RefType"], gt["Type"], gt["Num"]))
+            rwrite(of, "    G: %s %s %s %s %d"%(ex["ID"], ex["EntityType"], ex["RefType"], ex["Type"], ex["Num"]))
 
-        rwrite(of, "FALSE POSITIVE MATCHES")
+            #rwrite(of, "    ENTITYTYPES: %s, %s"%(gt["EntityType"], ex["EntityType"]))
+            #rwrite(of, "    REFTYPES: %s, %s"%(gt["RefType"], ex["RefType"]))
+            #rwrite(of, "    TYPES: %s, %s"%(gt["Type"], ex["Type"]))
+            #rwrite(of, "    NUMS: %d, %d"%(gt["Num"], ex["Num"]))
+            #rwrite(of, "    Text of GT / non-GT entities:")
+            #rwrite(of, "%s"%(gt["Text"]))
+            #rwrite(of, "%s\n"%(ex["Text"]))
+
+
+        rwrite(of, "\nFALSE MATCHES")
         count = 0
-        for (f_gt, f_ex) in FP_match_pairs:
+        for (f_gt, f_ex) in F_matches:
 
             gt = dict(f_gt)
             ex = dict(f_ex)
@@ -626,11 +660,24 @@ if __name__ == "__main__":
             count += 1
 
             rwrite(of, "Match %d:"%(count))
-            rwrite(of, "    ENTITYTYPES: %s, %s"%(gt["EntityType"], ex["EntityType"]))
-            rwrite(of, "    REFTYPES: %s, %s"%(gt["RefType"], ex["RefType"]))
-            rwrite(of, "    TYPES: %s, %s"%(gt["Type"], ex["Type"]))
-            rwrite(of, "    NUMS: %d, %d"%(gt["Num"], ex["Num"]))
-            rwrite(of, "    Text of GT / non-GT entities:")
-            rwrite(of, "%s"%(gt["Text"]))
-            rwrite(of, "%s\n"%(ex["Text"]))
+            rwrite(of, "    R: %s %s %s %s %d"%(gt["ID"], gt["EntityType"], gt["RefType"], gt["Type"], gt["Num"]))
+            rwrite(of, "    G: %s %s %s %s %d"%(ex["ID"], ex["EntityType"], ex["RefType"], ex["Type"], ex["Num"]))
+
+            #rwrite(of, "    ENTITYTYPES: %s, %s"%(gt["EntityType"], ex["EntityType"]))
+            #rwrite(of, "    REFTYPES: %s, %s"%(gt["RefType"], ex["RefType"]))
+            #rwrite(of, "    TYPES: %s, %s"%(gt["Type"], ex["Type"]))
+            #rwrite(of, "    NUMS: %d, %d"%(gt["Num"], ex["Num"]))
+            #rwrite(of, "    Text of GT / non-GT entities:")
+            #rwrite(of, "%s"%(gt["Text"]))
+            #rwrite(of, "%s\n"%(ex["Text"]))
+
+        rwrite(of, "\nFALSE ENTITIES")
+        count = 0
+        for f_ex in F_entities:
+
+            ex = dict(f_ex)
+
+            count += 1
+            rwrite(of, "Entity %d:"%(count))
+            rwrite(of, "    R: %s %s %s %s %d"%(gt["ID"], gt["EntityType"], gt["RefType"], gt["Type"], gt["Num"]))
 
