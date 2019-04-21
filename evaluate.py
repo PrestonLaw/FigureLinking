@@ -38,12 +38,17 @@ def parse_args():
 # It will be appended to whenever we come across an Entity with a new EntityType.
 EntityTypes = []
 
+# We should also define the configuration parameters as a global variable as well.
+config = {}
+
 
 
 # Reading in a BRAT .ann file.
-def read_ann(filename, config):
+def read_ann(filename):
 
     ann_list = []
+
+    ann_dict = {}
 
     #pdb.set_trace()
 
@@ -56,18 +61,18 @@ def read_ann(filename, config):
         while line:
             tokens = line.split()
             # We know a line is to be ignored if it starts with "#".
-            if tokens[0][0] == "#":
-                line = f.readline()
-                continue
+            #if tokens[0][0] == "#":
+            #    line = f.readline()
+            #    continue
 
             # Here's the tricky bit. I need to resume reading lines until I stop getting
             # attribute lines.  I then need to use those attributes to load the character
             # range for this particular annotation into a specific dictionary, based on
             # what the Type and Num are.
             if tokens[0][0] == "T":
-                # Begin reading in the annotation.
-                # First, get the character range.
+                # Read in the annotation.
 
+                # Step 1: Get the character range.
                 char_range = []
                 start_ann = int(tokens[2])
                 index = 3
@@ -81,11 +86,46 @@ def read_ann(filename, config):
                 # The rest of the tokens make up the text covered by the entity.
                 text = " ".join(tokens[index+1:])
 
-                # This must either be "Reference" or "Caption".
+                # Step 2: Handle the EntityType.  This can be "Reference" or "Caption" or something else.
                 entitytype = tokens[1]
 
-                # Now that I have the character range, start reading in attribute lines.
-                line = f.readline()
+                # Maintaining the list of EntityTypes.
+                if entitytype not in EntityTypes:
+                    EntityTypes.append(entitytype)
+                    # New EntityTypes are included by default, and must be explicitly disallowed in the config file.
+                    config["Allowed ENTITYTYPES"][entitytype] = "true"
+
+                # Step 3: Using the ID of the entity as a key in a dictionary to enable future attribute modification.
+                id = tokens[0]
+
+                ann_dict[id] = {
+                    "ID": id,
+                    "EntityType": entitytype,
+                    "RefType": None,
+                    "Type": None,
+                    "Num": None,
+                    "range": char_range
+                }
+
+            # Each line that begins with "A" is an attribute that needs to be set.
+            if tokens[0][0] == "A":
+
+                # The ID of the entity the attribute belongs to.
+                e_id = tokens[2]
+                # The attribute name we're overwriting.  Can be "RefType", "Type", or "Num".
+                a_type = tokens[1]
+                # The value of the attribute we're overwriting.
+                a_val = tokens[3]
+
+                # Special case: If We're overwriting a Num attribute, the value needs to be an integer.
+                if a_type == "Num":
+                    a_val = int(a_val)
+
+                # Overwriting the attribute field.
+                ann_dict[e_id][a_type] = a_val
+
+
+                """
                 type = ""
                 num = 0
                 reftype = "Caption"
@@ -124,6 +164,23 @@ def read_ann(filename, config):
                     continue
 
                 ann_list.append(ann_dict)
+                """
+
+            # Reading in the new line to continue the loop.
+            line = f.readline()
+
+    # Now that the dictionary of annotations is complete, we check each one against the configuration file.
+    # We only want to include those with appropriate EntityTypes, RefTypes, and Types.
+
+    for key in ann_dict.keys():
+        ann = ann_dict[key]
+        if config["Allowed ENTITYTYPES"][ann["EntityType"]] != "true" or \
+           (ann["RefType"] is None and config["Allowed REFTYPES"][ann["RefType"]] != "true") or \
+           (ann["Type"] is None and config["Allowed TYPES"][ann["Type"]] != "true"):
+            continue
+
+        # If it does not violate the configuration parameters, append it to the list of returned entities.
+        ann_list.append(ann)
 
     return ann_list
 
@@ -150,14 +207,17 @@ def PR(overlap, gt, ex):
 
 
 
-def range_within_category(config, ann_list):
+def range_within_category(ann_list):
 
-    total = 0
+    #total = 0
 
-    cap_range_total = 0.0
-    ref_range_total = 0.0
-    cap_count_total = 0
-    ref_count_total = 0
+    range_totals = [0.0 for ET in EntityTypes]
+    count_totals = [0 for ET in EntityTypes]
+
+    #cap_range_total = 0.0
+    #ref_range_total = 0.0
+    #cap_count_total = 0
+    #ref_count_total = 0
 
     #pdb.set_trace()
 
@@ -166,18 +226,23 @@ def range_within_category(config, ann_list):
         #pdb.set_trace()
 
         # We should only add the length of an annotation to total_gt or total_ex if it's within category.
+        # However, all entities outside category have already been removed in read_ann().
+
+        range_totals[ann_list[i]["EntityType"]] += len(ann_list[i]["range"])
+        count_totals[ann_list[i]["EntityType"]] += 1
 
         #if ann_list[i]["RefType"] in include_reftype and ann_list[i]["Type"] in include_type:
-        if config["Allowed REFTYPES"][ann_list[i]["RefType"]] == "true" and \
-           config["Allowed TYPES"][ann_list[i]["Type"]] == "true":
-            if ann_list[i]["EntityType"] == "Caption":
-                cap_range_total += len(ann_list[i]["range"])
-                cap_count_total += 1
-            else:
-                ref_range_total += len(ann_list[i]["range"])
-                ref_count_total += 1
+        #if config["Allowed REFTYPES"][ann_list[i]["RefType"]] == "true" and \
+        #   config["Allowed TYPES"][ann_list[i]["Type"]] == "true":
+        #    if ann_list[i]["EntityType"] == "Caption":
+        #        cap_range_total += len(ann_list[i]["range"])
+        #        cap_count_total += 1
+        #    else:
+        #        ref_range_total += len(ann_list[i]["range"])
+        #        ref_count_total += 1
 
-    return (cap_range_total, cap_count_total, ref_range_total, ref_count_total)
+    #return (cap_range_total, cap_count_total, ref_range_total, ref_count_total)
+    return (range_totals, count_totals)
 
 
 
@@ -211,33 +276,49 @@ if __name__ == "__main__":
 
     # Step 3: Parse the grountruth and non-groundtruth files into
 
-# Part 3: Count how many Caption and Reference entities there are in the Groundtruth and NonGroundtruth files.
+    # Part 3: Count how many Caption and Reference entities there are in the Groundtruth and NonGroundtruth files.
+
+    list_gt = read_ann(gt_filename)
+    list_ex = read_ann(ex_filename)
 
     entity_statistics = {
-        'gt_ref': 0,
-        'gt_cap': 0,
-        'ex_ref': 0,
-        'ex_cap': 0
+        ET: {'gt': 0, 'ex': 0}
+        for ET in EntityTypes
     }
 
+    #entity_statistics = {
+    #    'gt_ref': 0,
+    #    'gt_cap': 0,
+    #    'ex_ref': 0,
+    #    'ex_cap': 0
+    #}
+
     for ann in list_gt:
-        if ann["EntityType"] == "Caption":
-            entity_statistics["gt_cap"] += 1
-        else:
-            entity_statistics["gt_ref"] += 1
+        entity_statistics[ann["EntityType"]]["gt"] += 1
     for ann in list_ex:
-        if ann["EntityType"] == "Caption":
-            entity_statistics["ex_cap"] += 1
-        else:
-            entity_statistics["ex_ref"] += 1
+        entity_statistics[ann["EntityType"]]["ex"] += 1
+
+    #for ann in list_gt:
+    #    if ann["EntityType"] == "Caption":
+    #        entity_statistics["gt_cap"] += 1
+    #    else:
+    #        entity_statistics["gt_ref"] += 1
+    #for ann in list_ex:
+    #    if ann["EntityType"] == "Caption":
+    #        entity_statistics["ex_cap"] += 1
+    #    else:
+    #        entity_statistics["ex_ref"] += 1
 
 
 
     # Part 4: Find both character length count and number of entities within the configuration parameters for
     # the four categories delineated by Caption versus Reference entitytype and Groundtruth versus NonGroundtruth file.
 
-    cap_range_total_gt, cap_count_total_gt, ref_range_total_gt, ref_count_total_gt = range_within_category(config, list_gt)
-    cap_range_total_ex, cap_count_total_ex, ref_range_total_ex, ref_count_total_ex = range_within_category(config, list_ex)
+    #cap_range_total_gt, cap_count_total_gt, ref_range_total_gt, ref_count_total_gt = range_within_category(list_gt)
+    #cap_range_total_ex, cap_count_total_ex, ref_range_total_ex, ref_count_total_ex = range_within_category(list_ex)
+
+    gt_ranges, gt_counts = range_within_category(list_gt)
+    ex_ranges, ex_counts = range_within_category(list_ex)
 
 
 
@@ -268,30 +349,48 @@ if __name__ == "__main__":
     # Part 6: Define some variables to be kept track of for the final writing of results.
 
     match_counts = {
-        'Caption': {
-            "TP": 0,
-            "FN": 0,
-            "FP": 0
-        },
-        'Reference': {
-            "TP": 0,
-            "FN": 0,
-            "FP": 0
-        }
+        ET: {
+            "TM": 0,
+            "FM": 0,
+            "FE": 0,
+            "ME": 0
+        } for ET in EntityTypes
     }
 
+    #match_counts = {
+    #    'Caption': {
+    #        "TP": 0,
+    #        "FN": 0,
+    #        "FP": 0
+    #    },
+    #    'Reference': {
+    #        "TP": 0,
+    #        "FN": 0,
+    #        "FP": 0
+    #    }
+    #}
+
     match_overlaps = {
-        "Caption": 0.0,
-        "Reference": 0.0
+        ET: 0.0 for ET in EntityTypes
     }
+
+    #match_overlaps = {
+    #    "Caption": 0.0,
+    #    "Reference": 0.0
+    #}
 
     reqs = config["Match Requirements"]
 
-    TP_matches = []
+    T_matches = []
+    F_matches = []
+    F_entities = []
+    M_entities = []
 
-    TP_match_pairs = []
-    FP_match_pairs = []
-    FN_matches = []
+    #TP_matches = []
+
+    #TP_match_pairs = []
+    #FP_match_pairs = []
+    #FN_matches = []
 
 
 
@@ -323,11 +422,14 @@ if __name__ == "__main__":
            (reqs["TYPE Match Required"] == 'true' and gt["Type"] != ex["Type"]) or \
            (reqs["NUM Match Required"] == 'true' and gt["Num"] != ex["Num"]) or \
            len_gt * threshold > overlap or len_ex * threshold > overlap:
-            FP_match_pairs.append((f_gt, f_ex))
-            if gt["EntityType"] == "Caption":
-                match_counts["Caption"]["FP"] += 1
-            else:
-                match_counts["Reference"]["FP"] += 1
+            F_matches.append((f_gt, f_ex))
+            match_counts[gt["EntityType"]]["FM"] += 1
+
+            #FP_match_pairs.append((f_gt, f_ex))
+            #if gt["EntityType"] == "Caption":
+            #    match_counts["Caption"]["FP"] += 1
+            #else:
+            #    match_counts["Reference"]["FP"] += 1
             continue
 
 
@@ -335,12 +437,16 @@ if __name__ == "__main__":
         # Part 7.2: Otherwise, the preliminary match pair is a true match pair,
         # and is considered a true positive match.
 
-        if gt["EntityType"] == "Caption":
-            match_counts["Caption"]["TP"] += 1
-            match_overlaps["Caption"] += overlap
-        else:
-            match_counts["Reference"]["TP"] += 1
-            match_overlaps["Reference"] += overlap
+        T_matches.append((f_gt, f_ex))
+        match_counts[gt["EntityType"]]["TM"] += 1
+        match_overlaps[gt["EntityType"]] += overlap
+
+        #if gt["EntityType"] == "Caption":
+        #    match_counts["Caption"]["TP"] += 1
+        #    match_overlaps["Caption"] += overlap
+        #else:
+        #    match_counts["Reference"]["TP"] += 1
+        #    match_overlaps["Reference"] += overlap
 
 
 
