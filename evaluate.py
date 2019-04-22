@@ -660,8 +660,8 @@ if __name__ == "__main__":
             count += 1
 
             rwrite(of, "Match %d:"%(count))
-            rwrite(of, "    R: %s %s %s %s %d"%(gt["ID"], gt["EntityType"], gt["RefType"], gt["Type"], gt["Num"]))
-            rwrite(of, "    G: %s %s %s %s %d"%(ex["ID"], ex["EntityType"], ex["RefType"], ex["Type"], ex["Num"]))
+            rwrite(of, "    R: %s %s [%d %d] %s %s %d"%(ex["ID"], ex["EntityType"], min(ex["range"]), max(ex["range"]), ex["RefType"], ex["Type"], ex["Num"]))
+            rwrite(of, "    G: %s %s [%d %d] %s %s %d"%(gt["ID"], gt["EntityType"], min(gt["range"]), max(gt["range"]), gt["RefType"], gt["Type"], gt["Num"]))
 
             #rwrite(of, "    ENTITYTYPES: %s, %s"%(gt["EntityType"], ex["EntityType"]))
             #rwrite(of, "    REFTYPES: %s, %s"%(gt["RefType"], ex["RefType"]))
@@ -679,5 +679,14 @@ if __name__ == "__main__":
 
             count += 1
             rwrite(of, "Entity %d:"%(count))
-            rwrite(of, "    R: %s %s %s %s %d"%(gt["ID"], gt["EntityType"], gt["RefType"], gt["Type"], gt["Num"]))
+            rwrite(of, "    R: %s %s [%d %d] %s %s %d"%(ex["ID"], ex["EntityType"], min(ex["range"]), max(ex["range"]), ex["RefType"], ex["Type"], ex["Num"]))
 
+        rwrite(of, "\nMISSED ENTITIES")
+        count = 0
+        for f_gt in M_entities:
+
+            gt = dict(f_gt)
+
+            count += 1
+            rwrite(of, "Entity %d:"%(count))
+            rwrite(of, "    G: %s %s [%d %d] %s %s %d"%(gt["ID"], gt["EntityType"], min(gt["range"]), max(gt["range"]), gt["RefType"], gt["Type"], gt["Num"]))
