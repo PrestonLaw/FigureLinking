@@ -25,7 +25,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--gtfile", help="Path to groundtruth '.xml.ann' file", default="./groundtruth.xml.ann")
-    parser.add_argument("--resultsfile", help="Path to non-groundtruth '.xml.ann' file", default="./results.xml.ann")
+    parser.add_argument("--resfile", help="Path to non-groundtruth '.xml.ann' file", default="./results.xml.ann")
     parser.add_argument("--config", help="Path to configuration file", default="./config.txt")
     parser.add_argument("--evalfile", help="Path to output file", default="./evaluation.txt")
 
@@ -175,8 +175,8 @@ def read_ann(filename):
     for key in ann_dict.keys():
         ann = ann_dict[key]
         if config["Allowed ENTITYTYPES"][ann["EntityType"]] != "true" or \
-           (ann["RefType"] is None and config["Allowed REFTYPES"][ann["RefType"]] != "true") or \
-           (ann["Type"] is None and config["Allowed TYPES"][ann["Type"]] != "true"):
+           (ann["RefType"] is not None and config["Allowed REFTYPES"][ann["RefType"]] != "true") or \
+           (ann["Type"] is not None and config["Allowed TYPES"][ann["Type"]] != "true"):
             continue
 
         # If it does not violate the configuration parameters, append it to the list of returned entities.
@@ -211,8 +211,8 @@ def range_within_category(ann_list):
 
     #total = 0
 
-    range_totals = [0.0 for ET in EntityTypes]
-    count_totals = [0 for ET in EntityTypes]
+    range_totals = {ET: 0.0 for ET in EntityTypes}
+    count_totals = {ET: 0 for ET in EntityTypes}
 
     #cap_range_total = 0.0
     #ref_range_total = 0.0
@@ -270,7 +270,7 @@ if __name__ == "__main__":
     config.optionxform=str
     config.read(args.config)
 
-    pdb.set_trace()
+    #pdb.set_trace()
 
 
 
@@ -278,8 +278,10 @@ if __name__ == "__main__":
 
     # Part 3: Count how many Caption and Reference entities there are in the Groundtruth and NonGroundtruth files.
 
-    list_gt = read_ann(gt_filename)
-    list_ex = read_ann(ex_filename)
+    #pdb.set_trace()
+
+    list_gt = read_ann(args.gtfile)
+    list_ex = read_ann(args.resfile)
 
     entity_statistics = {
         ET: {'gt': 0, 'ex': 0}
@@ -383,6 +385,8 @@ if __name__ == "__main__":
 
     T_matches = []
     F_matches = []
+
+    T_entities = []
     F_entities = []
     M_entities = []
 
@@ -452,8 +456,9 @@ if __name__ == "__main__":
 
         # Part 7.3: We need to keep track of which GT entities are true matched outside of the loop.
 
-        TP_matches.append(f_gt)
-        TP_match_pairs.append((f_gt, f_ex))
+        T_entities.append(f_gt)
+        T_entities.append(f_ex)
+        T_matches.append((f_gt, f_ex))
 
 
 
@@ -462,13 +467,21 @@ if __name__ == "__main__":
 
     #pdb.set_trace()
 
+    # Within the groundtruth file (missed entities):
     for gt in list_gt:
-        if freeze(gt) not in TP_matches:
-            FN_matches.append(freeze(gt))
-            if gt["EntityType"] == "Caption":
-                match_counts["Caption"]["FN"] += 1
-            else:
-                match_counts["Reference"]["FN"] += 1
+        if freeze(gt) not in T_entities:
+            M_entities.append(freeze(gt))
+            match_counts[gt["EntityType"]]["ME"] += 1
+            #if gt["EntityType"] == "Caption":
+            #    match_counts["Caption"]["FN"] += 1
+            #else:
+            #    match_counts["Reference"]["FN"] += 1
+
+    # Within the non-groundtruth file (false entities):
+    for ex in list_ex:
+        if freeze(ex) not in T_entities:
+            F_entities.append(freeze(ex))
+            match_counts[ex["EntityType"]]["ME"] += 1
 
 
 
@@ -484,7 +497,7 @@ if __name__ == "__main__":
 
         rwrite(of, "Script run on %s"%(datetime.datetime.now()))
         rwrite(of, "Ground Truth Filename: %s"%(args.gtfile))
-        rwrite(of, "Results Filename:      %s"%(args.resultsfile))
+        rwrite(of, "Results Filename:      %s"%(args.resfile))
         rwrite(of, "Evaluation Filename:   %s\n"%(args.evalfile))
 
 
