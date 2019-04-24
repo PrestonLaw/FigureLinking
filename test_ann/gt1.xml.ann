@@ -1,0 +1,10 @@
+# First test: Two entities.  Both References.  One matching 100%, one matching 50%.
+T1	Reference 100 200 Sample text
+A1	RefType T1 Direct
+A2	Type T1 Figure
+A3	Num T1 1
+# Second entity
+T2	Reference 300 400 Sample text
+A4	RefType T2 Indirect
+A5	Type T2 Figure
+A6	Num T2 1

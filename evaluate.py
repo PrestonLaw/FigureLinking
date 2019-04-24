@@ -327,7 +327,11 @@ if __name__ == "__main__":
     # Part 5: Find all preliminary match pairs, pairs that match without regard to configuration parameters
     # and only by the minimum requirement of having at least one character overlap.
 
+    #pdb.set_trace()
+
     match_dict = {}
+
+    matched_entities = []
 
     for i in range(len(list_gt)):
 
@@ -345,6 +349,8 @@ if __name__ == "__main__":
                 f_key = (freeze(ann_gt), freeze(ann_ex))
 
                 match_dict[f_key] = overlap
+                matched_entities.append(freeze(ann_gt))
+                matched_entities.append(freeze(ann_ex))
 
 
 
@@ -389,6 +395,8 @@ if __name__ == "__main__":
     T_entities = []
     F_entities = []
     M_entities = []
+
+    #matched_entities = []
 
     #TP_matches = []
 
@@ -456,9 +464,9 @@ if __name__ == "__main__":
 
         # Part 7.3: We need to keep track of which GT entities are true matched outside of the loop.
 
-        T_entities.append(f_gt)
-        T_entities.append(f_ex)
-        T_matches.append((f_gt, f_ex))
+        #T_entities.append(f_gt)
+        #T_entities.append(f_ex)
+        #T_matches.append((f_gt, f_ex))
 
 
 
@@ -469,19 +477,15 @@ if __name__ == "__main__":
 
     # Within the groundtruth file (missed entities):
     for gt in list_gt:
-        if freeze(gt) not in T_entities:
+        if freeze(gt) not in matched_entities:
             M_entities.append(freeze(gt))
             match_counts[gt["EntityType"]]["ME"] += 1
-            #if gt["EntityType"] == "Caption":
-            #    match_counts["Caption"]["FN"] += 1
-            #else:
-            #    match_counts["Reference"]["FN"] += 1
 
     # Within the non-groundtruth file (false entities):
     for ex in list_ex:
-        if freeze(ex) not in T_entities:
+        if freeze(ex) not in matched_entities:
             F_entities.append(freeze(ex))
-            match_counts[ex["EntityType"]]["ME"] += 1
+            match_counts[ex["EntityType"]]["FE"] += 1
 
 
 
@@ -551,7 +555,7 @@ if __name__ == "__main__":
         rwrite(of, "        # of False Entities:  %d"%(sum([match_counts[ET]["FE"] for ET in EntityTypes])))
         rwrite(of, "        # of Missed Entities: %d"%(sum([match_counts[ET]["ME"] for ET in EntityTypes])))
         for ET in EntityTypes:
-            rwrite(of, "    '%s' ENTITYTYPES Only:")
+            rwrite(of, "    '%s' ENTITYTYPE Only:"%(ET))
             rwrite(of, "        # of True Matches:    %d"%(match_counts[ET]["TM"]))
             rwrite(of, "        # of False Matches:   %d"%(match_counts[ET]["FM"]))
             rwrite(of, "        # of False Entities:  %d"%(match_counts[ET]["FE"]))
@@ -596,7 +600,7 @@ if __name__ == "__main__":
         #       Recall is defined as the proportion of GT entities that have non-GT entities matching them.
 
         for ET in EntityTypes:
-            rwrite(of, "    '%s' ENTITYTYPE Only:")
+            rwrite(of, "    '%s' ENTITYTYPE Only:"%(ET))
             rwrite(of, "        Overlap (computed on overlap between next spans):")
             P,R = PR(match_overlaps[ET], gt_ranges[ET], ex_ranges[ET])
             rwrite(of, "            Precision = %f, Recall = %f"%(P,R))
@@ -645,8 +649,8 @@ if __name__ == "__main__":
             count += 1
 
             rwrite(of, "Match %d:"%(count))
-            rwrite(of, "    R: %s %s %s %s %d"%(gt["ID"], gt["EntityType"], gt["RefType"], gt["Type"], gt["Num"]))
-            rwrite(of, "    G: %s %s %s %s %d"%(ex["ID"], ex["EntityType"], ex["RefType"], ex["Type"], ex["Num"]))
+            rwrite(of, "    R: %s %s [%d %d] %s %s %d"%(ex["ID"], ex["EntityType"], min(ex["range"]), max(ex["range"]), ex["RefType"], ex["Type"], ex["Num"]))
+            rwrite(of, "    G: %s %s [%d %d] %s %s %d"%(gt["ID"], gt["EntityType"], min(gt["range"]), max(gt["range"]), gt["RefType"], gt["Type"], gt["Num"]))
 
             #rwrite(of, "    ENTITYTYPES: %s, %s"%(gt["EntityType"], ex["EntityType"]))
             #rwrite(of, "    REFTYPES: %s, %s"%(gt["RefType"], ex["RefType"]))
@@ -659,6 +663,7 @@ if __name__ == "__main__":
 
         rwrite(of, "\nFALSE MATCHES")
         count = 0
+        #pdb.set_trace()
         for (f_gt, f_ex) in F_matches:
 
             gt = dict(f_gt)

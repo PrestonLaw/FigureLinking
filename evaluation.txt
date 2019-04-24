@@ -1,8 +1,8 @@
 FIGURE LINKING EVALUATION
 
-Script run on 2019-04-22 21:17:33.105392
-Ground Truth Filename: groundtruth1.xml.ann
-Results Filename:      results-unified.xml.ann
+Script run on 2019-04-24 17:00:11.450930
+Ground Truth Filename: ./test_ann/gt1.xml.ann
+Results Filename:      ./test_ann/res1.xml.ann
 Evaluation Filename:   ./evaluation.txt
 
 --------------------------------------------------
@@ -28,227 +28,60 @@ NUM Match Required:        true
 
 ENTITY STATISTICS
 Ground Truth
-    # of 'Caption': 6
-    # of 'Reference': 20
-    # of 'FooBar': 0
+    # of 'Caption': 0
+    # of 'Reference': 2
 Results
-    # of 'Caption': 7
-    # of 'Reference': 19
-    # of 'FooBar': 1
+    # of 'Caption': 0
+    # of 'Reference': 2
 
 --------------------------------------------------
 EVALUATION RESULTS
 Match Counts
     Overall (all ENTITYTYPES):
-        # of True Matches:    20
-        # of False Matches:   5
-        # of False Entities:  0
-        # of Missed Entities: 13
-    '%s' ENTITYTYPES Only:
-        # of True Matches:    5
+        # of True Matches:    1
         # of False Matches:   1
         # of False Entities:  0
-        # of Missed Entities: 3
-    '%s' ENTITYTYPES Only:
-        # of True Matches:    15
-        # of False Matches:   4
-        # of False Entities:  0
-        # of Missed Entities: 9
-    '%s' ENTITYTYPES Only:
+        # of Missed Entities: 0
+    'Caption' ENTITYTYPE Only:
         # of True Matches:    0
         # of False Matches:   0
         # of False Entities:  0
-        # of Missed Entities: 1
+        # of Missed Entities: 0
+    'Reference' ENTITYTYPE Only:
+        # of True Matches:    1
+        # of False Matches:   1
+        # of False Entities:  0
+        # of Missed Entities: 0
 Match Metrics
     Overall (all ENTITYTYPES):
         Overlap (computed on overlap between text spans):
-            Precision = 0.671766, Recall = 0.708211
+            Precision = 0.500000, Recall = 0.500000
         Count (computed on # of correct/incorrect matches):
-            Precision = 0.740741, Recall = 0.769231
-    '%s' ENTITYTYPE Only:
+            Precision = 0.500000, Recall = 0.500000
+    'Caption' ENTITYTYPE Only:
         Overlap (computed on overlap between next spans):
-            Precision = 0.449561, Recall = 0.644654
+            Precision = 1.000000, Recall = 1.000000
         Count (computed on # of correct/incorrect matches):
-            Precision = 0.714286, Recall = 0.833333
-    '%s' ENTITYTYPE Only:
+            Precision = 1.000000, Recall = 1.000000
+    'Reference' ENTITYTYPE Only:
         Overlap (computed on overlap between next spans):
-            Precision = 0.777014, Recall = 0.719907
+            Precision = 0.500000, Recall = 0.500000
         Count (computed on # of correct/incorrect matches):
-            Precision = 0.789474, Recall = 0.750000
-    '%s' ENTITYTYPE Only:
-        Overlap (computed on overlap between next spans):
-            Precision = 0.000000, Recall = 1.000000
-        Count (computed on # of correct/incorrect matches):
-            Precision = 0.000000, Recall = 1.000000
+            Precision = 0.500000, Recall = 0.500000
 
 --------------------------------------------------
 
 Match Contents
 TRUE MATCHES
 Match 1:
-    R: T12 Reference Direct Table 3
-    G: T12 Reference Direct Table 3
-Match 2:
-    R: T12 Reference Direct Table 3
-    G: T12 Reference Direct Table 3
-Match 3:
-    R: T22 Reference Indirect Table 4
-    G: T22 Reference Indirect Table 4
-Match 4:
-    R: T22 Reference Indirect Table 4
-    G: T22 Reference Indirect Table 4
-Match 5:
-    R: T10 Caption None Table 2
-    G: T10 Caption None Table 2
-Match 6:
-    R: T10 Caption None Table 2
-    G: T10 Caption None Table 2
-Match 7:
-    R: T19 Reference Indirect Table 3
-    G: T19 Reference Indirect Table 3
-Match 8:
-    R: T19 Reference Indirect Table 3
-    G: T19 Reference Indirect Table 3
-Match 9:
-    R: T13 Caption None Table 3
-    G: T13 Caption None Table 3
-Match 10:
-    R: T13 Caption None Table 3
-    G: T13 Caption None Table 3
-Match 11:
-    R: T20 Reference Direct Table 4
-    G: T20 Reference Direct Table 4
-Match 12:
-    R: T20 Reference Direct Table 4
-    G: T20 Reference Direct Table 4
-Match 13:
-    R: T24 Reference Direct Table 6
-    G: T24 Reference Direct Table 6
-Match 14:
-    R: T24 Reference Direct Table 6
-    G: T24 Reference Direct Table 6
-Match 15:
-    R: T26 Reference Indirect Table 6
-    G: T26 Reference Indirect Table 6
-Match 16:
-    R: T26 Reference Indirect Table 6
-    G: T26 Reference Indirect Table 6
-Match 17:
-    R: T21 Reference Indirect Table 5
-    G: T21 Reference Indirect Table 5
-Match 18:
-    R: T21 Reference Indirect Table 5
-    G: T21 Reference Indirect Table 5
-Match 19:
-    R: T8 Reference Direct Table 2
-    G: T8 Reference Direct Table 2
-Match 20:
-    R: T8 Reference Direct Table 2
-    G: T8 Reference Direct Table 2
-Match 21:
-    R: T18 Reference Indirect Table 3
-    G: T18 Reference Indirect Table 3
-Match 22:
-    R: T18 Reference Indirect Table 3
-    G: T18 Reference Indirect Table 3
-Match 23:
-    R: T14 Caption None Table 5
-    G: T14 Caption None Table 5
-Match 24:
-    R: T14 Caption None Table 5
-    G: T14 Caption None Table 5
-Match 25:
-    R: T9 Reference Direct Table 2
-    G: T9 Reference Direct Table 2
-Match 26:
-    R: T9 Reference Direct Table 2
-    G: T9 Reference Direct Table 2
-Match 27:
-    R: T27 Reference Direct Table 6
-    G: T27 Reference Direct Table 6
-Match 28:
-    R: T27 Reference Direct Table 6
-    G: T27 Reference Direct Table 6
-Match 29:
-    R: T23 Reference Direct Table 5
-    G: T23 Reference Direct Table 5
-Match 30:
-    R: T23 Reference Direct Table 5
-    G: T23 Reference Direct Table 5
-Match 31:
-    R: T17 Reference Indirect Table 3
-    G: T17 Reference Indirect Table 3
-Match 32:
-    R: T17 Reference Indirect Table 3
-    G: T17 Reference Indirect Table 3
-Match 33:
-    R: T16 Caption None Table 6
-    G: T16 Caption None Table 6
-Match 34:
-    R: T16 Caption None Table 6
-    G: T16 Caption None Table 6
-Match 35:
-    R: T25 Reference Indirect Table 5
-    G: T25 Reference Indirect Table 5
-Match 36:
-    R: T25 Reference Indirect Table 5
-    G: T25 Reference Indirect Table 5
-Match 37:
-    R: T11 Reference Direct Table 3
-    G: T11 Reference Direct Table 3
-Match 38:
-    R: T11 Reference Direct Table 3
-    G: T11 Reference Direct Table 3
-Match 39:
-    R: T15 Caption None Table 4
-    G: T15 Caption None Table 4
-Match 40:
-    R: T15 Caption None Table 4
-    G: T15 Caption None Table 4
+    R: T1 Reference [100 199] Direct Figure 1
+    G: T1 Reference [100 199] Direct Figure 1
 
 FALSE MATCHES
 Match 1:
-    R: T7 Caption [13710 13847] None Table 1
-    G: T7 Reference [13710 13847] Indirect Table 1
-Match 2:
-    R: T6 Reference [13599 13676] Direct Table 2
-    G: T6 Reference [13599 13676] Direct Table 1
-Match 3:
-    R: T5 Reference [13277 13322] Direct Table 1
-    G: T5 Reference [13277 13322] Indirect Table 1
-Match 4:
-    R: T1 Caption [12214 12326] None Figure 1
-    G: T1 Caption [12214 12326] None Table 1
-Match 5:
-    R: T4 Reference [13022 13143] Indirect Table 1
-    G: T4 Reference [13122 13243] Indirect Table 1
+    R: T2 Reference [350 449] Indirect Figure 1
+    G: T2 Reference [300 399] Indirect Figure 1
 
 FALSE ENTITIES
-Entity 1:
-    R: T6 Reference [13599 13676] Direct Table 2
-Entity 2:
-    R: T7 Caption [13710 13847] None Table 1
-Entity 3:
-    R: T4 Reference [13022 13143] Indirect Table 1
-Entity 4:
-    R: T5 Reference [13277 13322] Direct Table 1
-Entity 5:
-    R: T2 Reference [12870 12980] Indirect Table 1
-Entity 6:
-    R: T3 FooBar [100 199] None Table 1
-Entity 7:
-    R: T1 Caption [12214 12326] None Figure 1
 
 MISSED ENTITIES
-Entity 1:
-    G: T6 Reference [13599 13676] Direct Table 1
-Entity 2:
-    G: T7 Reference [13710 13847] Indirect Table 1
-Entity 3:
-    G: T4 Reference [13122 13243] Indirect Table 1
-Entity 4:
-    G: T5 Reference [13277 13322] Indirect Table 1
-Entity 5:
-    G: T3 Reference [300 399] Indirect Table 1
-Entity 6:
-    G: T1 Caption [12214 12326] None Table 1
