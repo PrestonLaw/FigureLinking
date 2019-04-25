@@ -578,6 +578,8 @@ if __name__ == "__main__":
 
         # Part 9.5.1: Over all entity types.
 
+        #pdb.set_trace()
+
         rwrite(of, "Match Metrics")
         rwrite(of, "    Overall (all ENTITYTYPES):")
         rwrite(of, "        Overlap (computed on overlap between text spans):")
