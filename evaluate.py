@@ -124,6 +124,21 @@ def read_ann(filename):
                 # Overwriting the attribute field.
                 ann_dict[e_id][a_type] = a_val
 
+            # Lines that begin with "R" are relations / continuations.
+            if tokens[0][0] == "R":
+
+                fromID = tokens[2][5:]
+                toID = tokens[3][5:]
+
+                #fromEntity = ann_dict[fromID]
+                #toEntity = ann_dict[toID]
+
+                # Append the ranges together.
+                ann_dict[fromID]["range"] += ann_dict[toID]["range"]
+
+                # Since we are treating this as a single annotation, delete the 'to' entity.
+                del ann_dict[toID]
+
 
 
             # Reading in the new line to continue the loop.
@@ -131,6 +146,8 @@ def read_ann(filename):
 
     # Now that the dictionary of annotations is complete, we check each one against the configuration file.
     # We only want to include those with appropriate EntityTypes, RefTypes, and Types.
+
+    #pdb.set_trace()
 
     for key in ann_dict.keys():
         ann = ann_dict[key]

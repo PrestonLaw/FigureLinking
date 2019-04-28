@@ -1,0 +1,94 @@
+FIGURE LINKING EVALUATION
+
+Script run on 2019-04-28 18:58:58.527036
+Ground Truth Filename: test_ann/gt3.xml.ann
+Results Filename:      test_ann/res3.xml.ann
+Evaluation Filename:   output/test3.txt
+
+--------------------------------------------------
+CONFIGURATION PARAMETERS
+
+Span Overlap Threshold: 0.9
+REFTYPE Categories Tested:
+    Direct - true
+    Indirect - true
+    Spatial-Above - true
+    Spatial-Below - true
+    Spatial-Other - true
+TYPE Categories Tested:
+    Figure - true
+    Table - true
+    Equation - true
+    Image - true
+    Other - true
+ENTITYTYPE Match Required: true
+REFTYPE Match Required:    true
+TYPE Match Required:       true
+NUM Match Required:        true
+
+--------------------------------------------------
+ENTITY STATISTICS
+
+Ground Truth
+    # of 'Caption': 0
+    # of 'Reference': 3
+Results
+    # of 'Caption': 0
+    # of 'Reference': 3
+
+--------------------------------------------------
+EVALUATION RESULTS
+
+Match Counts
+    Overall (all ENTITYTYPES):
+        # of True Matches:    2
+        # of False Matches:   0
+        # of False Entities:  1
+        # of Missed Entities: 1
+    'Caption' ENTITYTYPE Only:
+        # of True Matches:    0
+        # of False Matches:   0
+        # of False Entities:  0
+        # of Missed Entities: 0
+    'Reference' ENTITYTYPE Only:
+        # of True Matches:    2
+        # of False Matches:   0
+        # of False Entities:  1
+        # of Missed Entities: 1
+Match Metrics
+    Overall (all ENTITYTYPES):
+        Overlap (computed on overlap between text spans):
+            Precision = 0.821429, Recall = 0.851852
+        Count (computed on # of correct/incorrect matches):
+            Precision = 0.666667, Recall = 0.666667
+    'Caption' ENTITYTYPE Only:
+        Overlap (computed on overlap between next spans):
+            Precision = 1.000000, Recall = 1.000000
+        Count (computed on # of correct/incorrect matches):
+            Precision = 1.000000, Recall = 1.000000
+    'Reference' ENTITYTYPE Only:
+        Overlap (computed on overlap between next spans):
+            Precision = 0.821429, Recall = 0.851852
+        Count (computed on # of correct/incorrect matches):
+            Precision = 0.666667, Recall = 0.666667
+
+--------------------------------------------------
+Match Contents
+
+TRUE MATCHES
+Match 1:
+    R: T5 Reference [300 399] Direct Figure 1
+    G: T5 Reference [300 399] Direct Figure 1
+Match 2:
+    R: T1 Reference [100 129] Direct Figure 1
+    G: T1 Reference [100 129] Direct Figure 1
+
+FALSE MATCHES
+
+FALSE ENTITIES
+Entity 1:
+    R: T3 Reference [250 279] Direct Figure 1
+
+MISSED ENTITIES
+Entity 1:
+    G: T3 Reference [200 229] Direct Figure 1

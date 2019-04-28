@@ -1,0 +1,29 @@
+# Test 3: Matching split entities joined with relations.
+# One split entity that matches a split entity,
+# one split entity that does not match with another split entity,
+# and a split entity that matches a non-split entity.
+# First match pair
+T1      Reference 100 110 Sample text
+A1      RefType T1 Direct
+A2      Type T1 Figure
+A3      Num T1 1
+T2      Reference 120 130 Sample text
+A4      RefType T2 Direct
+A5      Type T2 Figure
+A6      Num T2 1
+R1      Continued Arg1:T1 Arg2:T2
+# Second match pair
+T3      Reference 250 260 Sample text
+A7      RefType T3 Direct
+A8      Type T3 Figure
+A9      Num T3 1
+T4      Reference 270 280 Sample text
+A10     RefType T4 Direct
+A11     Type T4 Figure
+A12     Num T4 1
+R2      Continued Arg1:T3 Arg2:T4
+# Third match pair
+T5      Reference 300 400 Sample text
+A13     RefType T5 Direct
+A14     Type T5 Figure
+A15     Num T5 1
