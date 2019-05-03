@@ -29,8 +29,8 @@ def parse_args():
     parser.add_argument("--config", help="Path to configuration file", default="./config.txt")
     parser.add_argument("--evalfile", help="Path to output file", default="./evaluation.txt")
 
-    _args = parser.parse_args()
-    return _args
+    args = parser.parse_args()
+    return args
 
 
 
@@ -39,8 +39,7 @@ def parse_args():
 EntityTypes = ["Caption", "Reference"]
 
 # We should also define the configuration parameters as a global variable as well.
-args = None
-config = None
+config = {}
 
 
 
@@ -212,19 +211,23 @@ def rwrite(outfile, text):
 
 
 
-def evaluate(_args):
+if __name__ == "__main__":
 
-    global args
-    args = _args
 
-    #pdb.set_trace()
+
+    # Part 1: Parse the arguments.
+
+    args = parse_args()
+
+
 
     # Part 2: Parse the config file.
 
-    global config
     config = configparser.ConfigParser()
     config.optionxform=str
     config.read(args.config)
+
+    pdb.set_trace()
 
 
 
@@ -545,21 +548,3 @@ def evaluate(_args):
             count += 1
             rwrite(of, "Entity %d:"%(count))
             rwrite(of, "    G: %s %s [%d %d] %s %s %d"%(gt["ID"], gt["EntityType"], min(gt["range"]), max(gt["range"]), gt["RefType"], gt["Type"], gt["Num"]))
-
-
-
-
-
-
-
-if __name__ == "__main__":
-
-
-
-    # Part 1: Parse the arguments.
-
-    _args = parse_args()
-
-
-
-    evaluate(_args)

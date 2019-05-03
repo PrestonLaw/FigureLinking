@@ -1,9 +1,9 @@
 FIGURE LINKING EVALUATION
 
-Script run on 2019-04-24 21:34:15.002720
-Ground Truth Filename: test_ann/gt1.xml.ann
-Results Filename:      test_ann/res1.xml.ann
-Evaluation Filename:   output/test1.txt
+Script run on 2019-05-03 05:03:05.203474
+Ground Truth Filename: ./test_ann/gt1.xml.ann
+Results Filename:      ./test_ann/res1.xml.ann
+Evaluation Filename:   ./output/test1.txt
 
 --------------------------------------------------
 CONFIGURATION PARAMETERS

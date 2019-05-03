@@ -3,7 +3,6 @@
     Reference: true
 
 [Allowed REFTYPES]
-#    Caption: true
     Direct: true
     Indirect: true
     Spatial-Above: true

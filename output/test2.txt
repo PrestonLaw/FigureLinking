@@ -1,9 +1,9 @@
 FIGURE LINKING EVALUATION
 
-Script run on 2019-04-24 21:34:26.262820
-Ground Truth Filename: test_ann/gt2.xml.ann
-Results Filename:      test_ann/res2.xml.ann
-Evaluation Filename:   output/test2.txt
+Script run on 2019-05-03 05:03:05.267497
+Ground Truth Filename: ./test_ann/gt2.xml.ann
+Results Filename:      ./test_ann/res2.xml.ann
+Evaluation Filename:   ./output/test2.txt
 
 --------------------------------------------------
 CONFIGURATION PARAMETERS
@@ -32,9 +32,11 @@ ENTITY STATISTICS
 Ground Truth
     # of 'Caption': 2
     # of 'Reference': 2
+    # of 'FooBar': 0
 Results
     # of 'Caption': 2
     # of 'Reference': 2
+    # of 'FooBar': 0
 
 --------------------------------------------------
 EVALUATION RESULTS
@@ -55,6 +57,11 @@ Match Counts
         # of False Matches:   1
         # of False Entities:  0
         # of Missed Entities: 0
+    'FooBar' ENTITYTYPE Only:
+        # of True Matches:    0
+        # of False Matches:   0
+        # of False Entities:  0
+        # of Missed Entities: 0
 Match Metrics
     Overall (all ENTITYTYPES):
         Overlap (computed on overlap between text spans):
@@ -71,6 +78,11 @@ Match Metrics
             Precision = 0.500000, Recall = 0.500000
         Count (computed on # of correct/incorrect matches):
             Precision = 0.500000, Recall = 0.500000
+    'FooBar' ENTITYTYPE Only:
+        Overlap (computed on overlap between next spans):
+            Precision = 1.000000, Recall = 1.000000
+        Count (computed on # of correct/incorrect matches):
+            Precision = 1.000000, Recall = 1.000000
 
 --------------------------------------------------
 Match Contents

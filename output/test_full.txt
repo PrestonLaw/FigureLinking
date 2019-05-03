@@ -1,9 +1,9 @@
 FIGURE LINKING EVALUATION
 
-Script run on 2019-04-24 21:34:41.844230
-Ground Truth Filename: test_ann/gt_full.xml.ann
-Results Filename:      test_ann/res_full.xml.ann
-Evaluation Filename:   output/test_full.txt
+Script run on 2019-05-03 05:03:05.254386
+Ground Truth Filename: ./test_ann/gt_full.xml.ann
+Results Filename:      ./test_ann/res_full.xml.ann
+Evaluation Filename:   ./output/test_full.txt
 
 --------------------------------------------------
 CONFIGURATION PARAMETERS
@@ -95,73 +95,73 @@ Match 2:
     R: T22 Reference [27065 27098] Indirect Table 4
     G: T22 Reference [27065 27098] Indirect Table 4
 Match 3:
-    R: T10 Caption [20515 20546] None Table 2
-    G: T10 Caption [20515 20546] None Table 2
+    R: T15 Caption [25840 25861] None Table 4
+    G: T15 Caption [25840 25861] None Table 4
 Match 4:
     R: T19 Reference [25884 25964] Indirect Table 3
     G: T19 Reference [25884 25964] Indirect Table 3
 Match 5:
-    R: T13 Caption [25434 25506] None Table 3
-    G: T13 Caption [25434 25506] None Table 3
-Match 6:
     R: T20 Reference [26496 26596] Direct Table 4
     G: T20 Reference [26496 26596] Direct Table 4
-Match 7:
+Match 6:
     R: T24 Reference [27229 27240] Direct Table 6
     G: T24 Reference [27229 27240] Direct Table 6
-Match 8:
+Match 7:
     R: T26 Reference [28541 28674] Indirect Table 6
     G: T26 Reference [28541 28674] Indirect Table 6
+Match 8:
+    R: T13 Caption [25434 25506] None Table 3
+    G: T13 Caption [25434 25506] None Table 3
 Match 9:
     R: T21 Reference [26631 26817] Indirect Table 5
     G: T21 Reference [26631 26817] Indirect Table 5
 Match 10:
-    R: T8 Reference [15721 15774] Direct Table 2
-    G: T8 Reference [15721 15774] Direct Table 2
-Match 11:
     R: T18 Reference [25196 25294] Indirect Table 3
     G: T18 Reference [25196 25294] Indirect Table 3
-Match 12:
-    R: T14 Caption [25508 25546] None Table 5
-    G: T14 Caption [25508 25546] None Table 5
-Match 13:
-    R: T9 Reference [16332 16422] Direct Table 2
-    G: T9 Reference [16332 16422] Direct Table 2
-Match 14:
-    R: T27 Reference [29195 29295] Direct Table 6
-    G: T27 Reference [29195 29295] Direct Table 6
-Match 15:
-    R: T23 Reference [27133 27227] Direct Table 5
-    G: T23 Reference [27133 27227] Direct Table 5
-Match 16:
-    R: T17 Reference [25863 25881] Indirect Table 3
-    G: T17 Reference [25863 25881] Indirect Table 3
-Match 17:
+Match 11:
     R: T16 Caption [27865 27903] None Table 6
     G: T16 Caption [27865 27903] None Table 6
-Match 18:
+Match 12:
+    R: T9 Reference [16332 16422] Direct Table 2
+    G: T9 Reference [16332 16422] Direct Table 2
+Match 13:
+    R: T27 Reference [29195 29295] Direct Table 6
+    G: T27 Reference [29195 29295] Direct Table 6
+Match 14:
+    R: T23 Reference [27133 27227] Direct Table 5
+    G: T23 Reference [27133 27227] Direct Table 5
+Match 15:
+    R: T17 Reference [25863 25881] Indirect Table 3
+    G: T17 Reference [25863 25881] Indirect Table 3
+Match 16:
+    R: T14 Caption [25508 25546] None Table 5
+    G: T14 Caption [25508 25546] None Table 5
+Match 17:
     R: T25 Reference [28115 28173] Indirect Table 5
     G: T25 Reference [28115 28173] Indirect Table 5
-Match 19:
+Match 18:
     R: T11 Reference [24886 24964] Direct Table 3
     G: T11 Reference [24886 24964] Direct Table 3
+Match 19:
+    R: T10 Caption [20515 20546] None Table 2
+    G: T10 Caption [20515 20546] None Table 2
 Match 20:
-    R: T15 Caption [25840 25861] None Table 4
-    G: T15 Caption [25840 25861] None Table 4
+    R: T8 Reference [15721 15774] Direct Table 2
+    G: T8 Reference [15721 15774] Direct Table 2
 
 FALSE MATCHES
 Match 1:
-    R: T7 Caption [13710 13847] None Table 1
-    G: T7 Reference [13710 13847] Indirect Table 1
-Match 2:
-    R: T6 Reference [13599 13676] Direct Table 2
-    G: T6 Reference [13599 13676] Direct Table 1
-Match 3:
-    R: T5 Reference [13277 13322] Direct Table 1
-    G: T5 Reference [13277 13322] Indirect Table 1
-Match 4:
     R: T1 Caption [12214 12326] None Figure 1
     G: T1 Caption [12214 12326] None Table 1
+Match 2:
+    R: T7 Caption [13710 13847] None Table 1
+    G: T7 Reference [13710 13847] Indirect Table 1
+Match 3:
+    R: T6 Reference [13599 13676] Direct Table 2
+    G: T6 Reference [13599 13676] Direct Table 1
+Match 4:
+    R: T5 Reference [13277 13322] Direct Table 1
+    G: T5 Reference [13277 13322] Indirect Table 1
 Match 5:
     R: T4 Reference [13022 13143] Indirect Table 1
     G: T4 Reference [13122 13243] Indirect Table 1
