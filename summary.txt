@@ -1,0 +1,60 @@
+FIGURE LINKING EVALUATION SUMMARY
+
+Script run on 2019-05-03 05:53:21.584941
+--------------------------------------------------
+ENTITY STATISTICS
+
+Ground Truth
+    # of 'Caption': 8
+    # of 'Reference': 27
+    # of 'FooBar': 0
+Results
+    # of 'Caption': 9
+    # of 'Reference': 26
+    # of 'FooBar': 1
+
+--------------------------------------------------
+EVALUATION RESULTS
+
+Match Counts
+    Overall (all ENTITYTYPES):
+        # of True Matches:    25
+        # of False Matches:   7
+        # of False Entities:  4
+        # of Missed Entities: 3
+    'Caption' ENTITYTYPE Only:
+        # of True Matches:    6
+        # of False Matches:   1
+        # of False Entities:  1
+        # of Missed Entities: 1
+    'Reference' ENTITYTYPE Only:
+        # of True Matches:    19
+        # of False Matches:   6
+        # of False Entities:  2
+        # of Missed Entities: 2
+    'FooBar' ENTITYTYPE Only:
+        # of True Matches:    0
+        # of False Matches:   0
+        # of False Entities:  1
+        # of Missed Entities: 0
+Match Metrics
+    Overall (all ENTITYTYPES):
+        Overlap (computed on overlap between text spans):
+            Precision = 0.663455, Recall = 0.690821
+        Count (computed on # of correct/incorrect matches):
+            Precision = 0.694444, Recall = 0.714286
+    'Caption' ENTITYTYPE Only:
+        Overlap (computed on overlap between next spans):
+            Precision = 0.534759, Recall = 0.700935
+        Count (computed on # of correct/incorrect matches):
+            Precision = 0.666667, Recall = 0.750000
+    'Reference' ENTITYTYPE Only:
+        Overlap (computed on overlap between next spans):
+            Precision = 0.728164, Recall = 0.688909
+        Count (computed on # of correct/incorrect matches):
+            Precision = 0.730769, Recall = 0.703704
+    'FooBar' ENTITYTYPE Only:
+        Overlap (computed on overlap between next spans):
+            Precision = 0.000000, Recall = 1.000000
+        Count (computed on # of correct/incorrect matches):
+            Precision = 0.000000, Recall = 1.000000

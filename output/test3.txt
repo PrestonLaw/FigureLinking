@@ -1,6 +1,6 @@
 FIGURE LINKING EVALUATION
 
-Script run on 2019-05-03 05:03:05.273570
+Script run on 2019-05-03 05:53:21.583320
 Ground Truth Filename: ./test_ann/gt3.xml.ann
 Results Filename:      ./test_ann/res3.xml.ann
 Evaluation Filename:   ./output/test3.txt

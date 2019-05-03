@@ -547,7 +547,14 @@ def evaluate(_args):
             rwrite(of, "    G: %s %s [%d %d] %s %s %d"%(gt["ID"], gt["EntityType"], min(gt["range"]), max(gt["range"]), gt["RefType"], gt["Type"], gt["Num"]))
 
 
-
+    return (EntityTypes,
+            entity_statistics,
+            match_counts,
+            match_overlaps,
+            gt_ranges,
+            gt_counts,
+            ex_ranges,
+            ex_counts)
 
 
 
