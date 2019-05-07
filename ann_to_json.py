@@ -5,7 +5,7 @@ import pdb
 import argparse
 import configparser
 import datetime
-
+import json
 
 
 
@@ -15,10 +15,10 @@ def parse_args():
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--gtfile", help="Path to groundtruth '.xml.ann' file", default="./groundtruth.xml.ann")
-    parser.add_argument("--resfile", help="Path to non-groundtruth '.xml.ann' file", default="./results.xml.ann")
-    parser.add_argument("--config", help="Path to configuration file", default="./config.txt")
-    parser.add_argument("--evalfile", help="Path to output file", default="./evaluation.txt")
+    parser.add_argument("--annfile", help="Path to '.xml.ann' file", default="./groundtruth.xml.ann")
+    parser.add_argument("--outfile", help="Path to output json file", default="./results.xml.ann")
+    #parser.add_argument("--config", help="Path to configuration file", default="./config.txt")
+    #parser.add_argument("--evalfile", help="Path to output file", default="./evaluation.txt")
 
     _args = parser.parse_args()
     return _args
@@ -31,16 +31,18 @@ EntityTypes = ["Caption", "Reference"]
 
 # We should also define the configuration parameters as a global variable as well.
 args = None
-config = None
+#config = None
 
 
 
 # Reading in a BRAT .ann file.
 def read_ann(filename):
 
-    ann_list = []
+    #ann_list = []
 
     ann_dict = {}
+
+    conn_map = {}
 
     #pdb.set_trace()
 
@@ -85,7 +87,7 @@ def read_ann(filename):
                 if entitytype not in EntityTypes:
                     EntityTypes.append(entitytype)
                     # New EntityTypes are included by default, and must be explicitly disallowed in the config file.
-                    config["Allowed ENTITYTYPES"][entitytype] = "true"
+                    #config["Allowed ENTITYTYPES"][entitytype] = "true"
 
                 # Step 3: Using the ID of the entity as a key in a dictionary to enable future attribute modification.
                 id = tokens[0]
@@ -122,6 +124,11 @@ def read_ann(filename):
                 fromID = tokens[2][5:]
                 toID = tokens[3][5:]
 
+                conn_map[toID] = fromID
+
+                while fromID in conn_map.keys():
+                    fromID = conn_map[fromID]
+
                 #fromEntity = ann_dict[fromID]
                 #toEntity = ann_dict[toID]
 
@@ -136,22 +143,26 @@ def read_ann(filename):
             # Reading in the new line to continue the loop.
             line = f.readline()
 
+    ann_dict["Connected"] = conn_map
+
+    return ann_dict
+
     # Now that the dictionary of annotations is complete, we check each one against the configuration file.
     # We only want to include those with appropriate EntityTypes, RefTypes, and Types.
 
     #pdb.set_trace()
 
-    for key in ann_dict.keys():
-        ann = ann_dict[key]
+    #for key in ann_dict.keys():
+    #    ann = ann_dict[key]
         #if config["Allowed ENTITYTYPES"][ann["EntityType"]] != "true" or \
         #   (ann["RefType"] is not None and config["Allowed REFTYPES"][ann["RefType"]] != "true") or \
         #   (ann["Type"] is not None and config["Allowed TYPES"][ann["Type"]] != "true"):
         #    continue
 
         # If it does not violate the configuration parameters, append it to the list of returned entities.
-        ann_list.append(ann)
+    #    ann_list.append(ann)
 
-    return ann_list
+    #return ann_list
 
 
 
@@ -166,10 +177,9 @@ if __name__ == "__main__":
 
     _args = parse_args()
 
-    global args
-
-    args = _args
 
 
+    ann_dict = read_ann(_args.annfile)
 
-    list_ann = read_ann(args.annfile)
+    with open(_args.outfile, 'w') as of:
+        json.dump(ann_dict, of)
