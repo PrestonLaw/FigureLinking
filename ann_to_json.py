@@ -72,10 +72,12 @@ def read_ann(filename):
                 index = 3
                 while ";" in tokens[index]:
                     i = tokens[index].split(";")
-                    ann_list += range(start_ann, int(i[0]))
+                    #ann_list += range(start_ann, int(i[0]))
+                    char_range.append([ start_ann, int(i[0]) ])
                     start_ann = int(i[1])
                     index += 1
-                char_range += range(start_ann, int(tokens[index]))
+                #char_range += range(start_ann, int(tokens[index]))
+                char_range.append([ start_ann, int(tokens[index]) ])
 
                 # The rest of the tokens make up the text covered by the entity.
                 text = " ".join(tokens[index+1:])
@@ -98,7 +100,8 @@ def read_ann(filename):
                     "RefType": None,
                     "Type": None,
                     "Num": None,
-                    "range": char_range
+                    "range": char_range,
+                    "text": text
                 }
 
             # Each line that begins with "A" is an attribute that needs to be set.
@@ -134,6 +137,9 @@ def read_ann(filename):
 
                 # Append the ranges together.
                 ann_dict[fromID]["range"] += ann_dict[toID]["range"]
+
+                # And the texts.
+                ann_dict[fromID]["text"] += " " + ann_dict[toID]["text"]
 
                 # Since we are treating this as a single annotation, delete the 'to' entity.
                 del ann_dict[toID]

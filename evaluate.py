@@ -51,6 +51,8 @@ def read_ann(filename):
 
     ann_dict = {}
 
+    conn_map = {}
+
     #pdb.set_trace()
 
     annot_count = 0
@@ -130,6 +132,11 @@ def read_ann(filename):
 
                 fromID = tokens[2][5:]
                 toID = tokens[3][5:]
+
+                conn_map[toID] = fromID
+
+                while fromID in conn_map.keys():
+                    fromID = conn_map[fromID]
 
                 #fromEntity = ann_dict[fromID]
                 #toEntity = ann_dict[toID]
