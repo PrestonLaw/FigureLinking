@@ -1,0 +1,199 @@
+
+	
+		Abbreviations are common in biomedical documents and many are ambiguous in the sensethat they have several potential expansions.Identifying the correct expansion is necessaryfor language understanding and important forapplications such as document retrieval.
+		Identifying the correct expansion can be viewed asa Word Sense Disambiguation (WSD) problem.
+		A WSD system that uses a variety ofknowledge sources, including two types of information specific to the biomedical domain,is also described.
+		This system was tested on acorpus of ambiguous abbreviations, created byautomatically identifying the correct expansion in Medline abstracts, and found to identify the correct expansion with up to 99% accuracy.
+	
+	
+			Many abbreviations are ambiguous in the sense thatthey have more than one possible expansion.
+			Forexample, expansions for NLP include Neuro-linguistic Programming as well as Natural Language Processing.
+			Ambiguous abbreviations forma challenge to language understanding since identification of the correct expansion is often important.
+			The query NLP, for example, returns pageswhich refer to Neuro-linguistic programming formost web search engines, pages which are of limited value to those interested in Natural LanguageProcessing.
+			In some cases this problem could beobviated by altering the query terms, for exampleincluding Natural, Language and Processing.
+			However, this will not help when the abbreviationsexpansion does not occur within the document.
+			Fredand Cheng (1999) point out that this is often the casein biomedical documents, in this domain ubiquitousabbreviations (such as DNA and mRNA) often appear without an expansion.
+			It has been reported that misinterpretation of abbreviations in biomedical documents has lead tomedical practitioners making fatal errors (Fred andCheng, 1999).
+			However, identifying the correct expansion is not a straightforward task since an abbreviation may have several possible expansions.Chang et al.
+			(2002) reported that abbreviations inbiomedical journal articles consisting of six characters or less have an average of 4.61 possible meanings and Pustejovsky et al.
+			(2002) mention that thesimple abbreviation AC is associated with at least10 strings in different biomedical documents including atrioventricular connection, anterior colporrhaphy procedure, auditory cortex and atypicalcarcinoid.
+			The problem of identifying the correct expansionof an ambiguous abbreviation can be viewed as aWord Sense Disambiguation (WSD) task where thevarious expansions are the senses of the abbreviation.
+			In this paper we approach the problem in thisway by applying a WSD system which has previously been applied to biomedical text (Stevenson etal., 2008).
+			The WSD system uses a variety of information sources, including those traditionally appliedto the WSD problem in addition to two knowledgesources that are specific to the biomedical domain.
+			Evaluation of systems for disambiguating ambiguous abbreviations has been hindered by the fact 71 that there is no freely available benchmark corpusagainst which approaches can be compared.
+			We describe a process whereby such a corpus can be created by automatically mining abstracts from Med-line.
+			This corpus is being made publicly availableto encourage comparative research in this area.
+			Ourabbreviation disambiguation system was evaluatedagainst this corpus and found to identify the correctabbreviation with up to 99% accuracy.
+			The remainder of this paper is organised as follows.
+			The next section describes relevant previouswork on disambiguation of abbreviations.
+			Section3 describes a supervised learning WSD system tailored specifically to the biomedical domain.
+			Section4 describes the automatic creation of a corpus of ambiguous abbreviations designed specifically for thetraining and evaluation of abbreviation disambiguation systems.
+			Section 5 describes the evaluation ofour system on this corpus.
+			Our conclusions are presented in Section 6.
+	
+	
+			Gaudan et al.
+			(2005) distinguish two types of abbreviations: global and local.
+			Global abbreviations arethose found in documents without the expansion explicitly stated, while local abbreviations are definedin the same document in which the abbreviation occurs.
+			Our work is concerned with the problem ofdisambiguating global abbreviations.
+			Gaudan et al.(2005) point out that global abbreviations are oftenambiguous.Various researchers have explored the problemof disambiguating global abbreviations in biomedical documents.
+			Liu et al.
+			(2001)(2002) used several domain-specific knowledge sources to identifyterms which are semantically related to each possible expansion but which have only one sense themselves.
+			Instances of these terms were identified ina corpus of biomedical journal abstracts and usedas training data.
+			Their learning algorithm uses avariety of features including all words in the abstract and collocations of the ambiguous abbreviation.
+			They report an accuracy of 97% on a small setof abbreviations.
+			Liu et al.
+			(2004) present a fullysupervised approach.
+			They compared a variety ofsupervised machine learning algorithms and foundthat the best performance over a set of 15 ambigu ous abbreviations, 98.6%, was obtained using NaiveBayes.
+			Gaudan et al.
+			(2005) use a Support VectorMachine trained on a bag-of-words model and report an accuracy of 98.5%.
+			Yu et al.
+			(2006) experimented with two supervised learning algorithms:Naive Bayes and Support Vector Machines.
+			Theyextracted a corpus containing examples of 60 abbreviations from a set of biomedical journal articleswhich was split so that abstracts in which the abbreviations were defined were used as training data andthose in which no definition is found as test data.Abbreviations in the test portion were manually dis-ambiguated.
+			They report 79% coverage and 80%precision using a Naive Bayes classifier.
+			Pakhomov (2002) applied a maximum entropy model toidentify the meanings of ambiguous abbreviations in10,000 rheumatology notes with around 89% accuracy.
+			Joshi et al.
+			(2006) disambiguated abbreviationsin clinical notes using three supervised learning algorithms (Naive Bayes, decision trees and SupportVector Machines).
+			They used a range of features andfound that the best performance was obtained whenthese were combined.
+			Unfortunately direct comparison of these methods is made difficult by the fact thatvarious researchers have evaluated their approacheson different data sets.
+			A variety of approaches have also been proposedfor the problem of disambiguating local abbreviations in biomedical documents.
+			This task is equivalent to identifying the abbreviations expansion inthe document.
+			The problem is relatively straightforward for abbreviations which are created by selecting the first character from each word in the expansion, such as angiotensin converting enzyme(ACE), but is more difficult when this conventionis not followed, for example acetylchlinesterase(ACE), antisocial personality (ASP) and catalase (CAT).
+			Okazaki et al.
+			(2008) recently proposed an approach to this problem based on dis-criminative alignment that has been shown to perform well.
+			However, the most common solutionsare based on heuristic approaches, for exampleAdar (2004) and Zhou et al.
+			(2006).
+			Pustejovskyet al.
+			(2002) used hand-built regular expressions.Schwartz and Hearst (2003) describe an approachwhich starts by identifying the set of candidate expansions in the same sentence as an abbreviation.The most likely one is identified by searching for the 72 shortest candidate which contains all the charactersin the abbreviation in the correct order.
+	
+	
+			Our abbreviation disambiguation system is based ona state-of-the-art WSD system that has been adaptedto the biomedical domain by augmenting it with additional knowledge sources.
+			The system on whichour approach is based (Agirre and Martinez, 2004)participated in the Senseval3 challenge (Mihalceaet al., 2004) with a performance close to the bestsystem for the lexical sample tasks in two languageswhile the version adapted to the biomedical domainhas achieved the best recorded results (Stevenson etal., 2008) on a standard test set consisting of ambiguous terms (Weeber et al., 2001).
+			This system is based on a supervised learning approach with features derived from text around theambiguous word that are domain independent.
+			Werefer to these as general features.
+			This feature sethas been adapted for the disambiguation of biomedical text by adding further linguistic features and twodifferent types of domain-specific features: CUIs (asused by McInnes et al.
+			(2007)) and Medical Subject Heading (MeSH) terms.
+			This set of features ismore diverse than have been explored by previousapproaches to abbreviation disambiguation.
+			3.1 FeaturesOur feature set contains a number of parameters(e.g. thresholds for unigram and CUI frequencies).These parameters were set to the same values thatwere used when the system was applied to general biomedical terms (Stevenson et al., 2008) sincethese were found to perform well.
+			We also use theentire abstract as the context of the ambiguous termfor relevant features rather than just the sentencecontaining the term.
+			Effects of altering these variables are consistent with previous results (Liu et al.,2004; Joshi et al., 2005; McInnes et al., 2007) andare not reported here..
+			General features: The system uses a wide rangeof domain-independent features that are commonlyemployed for WSD.
+			 Local collocations: A total of 41 features whichextensively describe the context of the ambiguous word and fall into two main types: (1) bigrams and trigrams containing the ambiguous word constructed from lemmas, wordforms or PoS tags and (2) preceding/followinglemma/word-form of the content words (adjective, adverb, noun and verb) in the same sentence as the ambiguous abbreviation.
+			For example, consider the sentence below with thetarget abreviation BSA.
+			Lean BSA was obtained from heightand lean body weight ... The features would include the following:left-content-word-lemma lean BSA, right-function-word-lemma BSA be, left-POS JJNNP, right-POS NNP VBD, left-content-word-form Lean BSA, right-function-word-form BSA was, etc.  Salient bigrams: Salient bigrams within the abstract with high log-likelihood scores, as described by Pedersen (2001).
+			 Unigrams: Lemmas of all content words in theabstract and words within a 4-word windowaround the target word, excluding those in a listof stopwords.
+			In addition, the lemmas of anyunigrams appearing at least twice in the entirecorpus and which are found in the abstract arealso included as features.
+			Concept Unique Identifiers (CUIs): We followthe approach presented by McInnes et al.
+			(2007) togenerate features based on UMLS Concept UniqueIdentifiers (CUIs).
+			The MetaMap program (Aron-son, 2001) identifies all words and terms in atext which could be mapped onto a UMLS CUI.MetaMap does not disambiguate the senses of theconcepts, instead it enumerates likely candidate concepts.
+			For example, MetaMap will segment thephrase Lean BSA was obtained from height andlean body weight ... into four chunks: LeanBSA, obtained, from height and lean bodyweight.
+			The first chunk will be mapped ontothree CUIs: C1261466: BSA (Body surface area),C1511233: BSA (NCI Board of Scientific Advisors) and C0036774: BSA (Serum Albumin,Bovine).
+			The chunk lean body weight is mappedonto two concepts: C0005910: Body Weight 73 and C1305866: Body Weight (Weighing patient)1.CUIs occurring more than twice in an abstract are included as features.
+			CUIs have been used for variousdisambiguation tasks in the biomedical domain, including disambiguation of ambiguous general terms(McInnes et al., 2007) and gene symbol disambiguation (Xu et al., 2007), but not, to our knowledge, forabbreviation disambiguation.
+			Medical Subject Headings (MeSH): The final feature is also specific to the biomedical domain.
+			Medical Subject Headings (MeSH) (Nelsonet al., 2002) is a controlled vocabulary for indexing biomedical and health-related information anddocuments.
+			MeSH terms are manually assigned toabstracts by human indexers.
+			The latest version ofMeSH (2009) contains over 25,000 terms organisedinto an 11 level hierarchy.
+			The MeSH terms assigned to the abstract in whicheach ambiguous word occurs are used as features.For example, the abstract containing our examplephrase has been assigned 16 terms including BodySurface Area, Body Weight, Humans and Organ Size . MeSH terms have previously been usedfor abbreviation disambiguation by Yu et al.
+			(2006).
+			3.2 Learning Algorithms.
+			We compared three machine leaning algorithmswhich have previously been shown to be effectivefor WSD tasks.
+			The Vector Space Model (VSM) is a memory-based learning algorithm which was used by Agirreand Martinez (2004).
+			Each occurrence of anambiguous word is represented as a binary vector in which each position indicates the occurrence/absence of a feature.
+			A single centroid vectoris generated for each sense during training.
+			Thesecentroids are compared with the vectors that represent new examples using the cosine metric to compute similarity.
+			The sense assigned to a new exampleis that of the closest centroid.
+			The Naive Bayes (NB) classifier is based on aprobabilistic model which assumes conditional independence of features given the target classification.
+			It calculates the posterior probability that an 1The first of these, C0005910, refers to the weight ofa patient as a property of that individual while the second,C1305866, refers to the process of weighing a patient as partof a diagnostic procedure.
+			instance belongs to a particular class given the priorprobabilities of the class and the conditional probability of each feature given the target class.
+			Support Vector Machines (SVM) have beenwidely used in classification tasks.
+			SVMs mapfeature vectors onto a high dimensional space andconstruct a classifier by searching for the hyper-plane that gives the greatest separation between theclasses.
+			We used our own implementation of the VectorSpace Model and Weka implementations (Wittenand Frank, 2005) of the other two algorithms.
+	
+	
+			The most common method for generating corporato train and test WSD systems is to manually annotate instances of ambiguous terms found in textwith the appropriate meaning.
+			However, this processis both time-consuming and difficult (Artstein andPoesio, 2008).
+			An alternative to manual tagging isto find a way of automatically creating sense taggedcorpora.
+			For the translation of ambiguous Englishwords Ng et al.
+			(2003) made use of the fact that thevarious senses are often translated differently.
+			Forexample when bank is used in the financial institution sense it is translated to French as banqueand bord when it is used to mean edge of river.However, a disadvantage of this approach is that itrelies on the existence of parallel text which maynot be available.
+			In the biomedical domain Liu et al.(2001)(2002) created a corpus using unambiguousrelated terms (see Section 2) although they foundthat it was not always possible to identify suitablerelated terms.
+			4.1 Corpus Creation.
+			Liu et al.
+			(2001) also made use of the fact thatwhen abbreviations are introduced they are often accompanied by their expansion, for example BSA(bovine serum albumin).
+			This phenomenon wasexploited to automatically generate a corpus of abbreviations and associated definitions by replacingthe abbreviation and expansion with the abbreviation alone.
+			For example, the sentence The adsorption behavior of bovine serum albumin (BSA) ona Sepharose based hydrophobic interaction supporthas been studied. becomes The adsorption behav 74 BSA AND body surface area NOT bovine serum albuminBSA AND bovine serum albumin NOT body surface area Figure 1: Example queries for abbreviation BSA ior of BSA on a Sepharose based hydrophobic interaction support has been studied. We used this approach to create a corpus of sensetagged abbreviations in biomedical documents usinga set of 21 three letter abbreviations used in previous research on abbreviation disambiguation (Liu etal., 2001; Liu et al., 2002; Liu et al., 2004).
+			Possible expansions for the majority of these abbreviations were listed in these papers.
+			For the few remaining ones possible expansions were taken fromthe Medstract database (Pustejovsky et al., 2002).We searched for instances of these abbreviations inMedline, a database containing more than 18 million abstracts from publications in biomedicine andthe life sciences.
+			For each abbreviation we queriedMedline, using the Entrez interface, to identify documents containing one of its meanings.
+			For example the abbreviation BSA has two possible expansions: body surface area and bovine serum alumin.
+			Medline is searched to identify documentsthat contain each possible expansion of the abbreviation using the queries shown in Figure 1.
+			Eachquery matches documents containing the abbreviation and relevant expansion and no mentions of theother possible expansion(s).
+			The retrieved documents are then processed toremove the expansions of each abbreviation.
+			TheSchwartz and Hearst (2003) algorithm for identifying abbreviations and the relevant expansion (seeSection 2) is then run over each of the retrieved abstracts to identify the correct expansion.
+			The expansion is removed from the document and stored separately, effectively creating a sense tagged corpus.For convenience the abstracts are converted into aformat similar to the one used for the NLMWSDcorpus (Weeber et al., 2001).
+			The resulting corpus consists of 55,655 documents.
+			For each abbreviation Table 1 shows thenumber of abstracts retrieved from Medline (in thecolumn labeled Abstracts) and the number of expansions (Count column).
+			The column labelledRare lists the number of expansions that account for fewer than 1% of the occurrences of an abbreviation and Frequent lists the percentage of occurances represented by the most frequent expansion.It can be seen that there is a wide variation betweenthe number of abstracts retrieved for each abbreviation.
+			CSF occurs in 14,871 abstracts and ASP injust 71.
+			There is also a wide variation between thefrequency of the most common expansion with over99% of the occurrences of CSF representing oneexpansion (cerebrospinal fluid) while for ASPtwo of the five possible expansions (antisocial personality and aspartate) each account for almost34% of the documents.
+			In addition, several abbreviations have expansions which occur only rarely.
+			Forexample, two of the expansions of APC (atrialpressure complexes and aphidicholin) each haveonly a single document and account for just 0.03%of the instances of that abbreviation.
+			4.2 Corpus Reduction.
+			Given the diversity of the abbreviations which weredownloaded from Medline, both in terms of number of documents and distribution of senses, subsets of this corpus that are more suitable for WSDexperiments were created.
+			Corpora containing 100,200 and 300 randomly selected examples of each abbreviation were generated and these are referred toas Corpus.100, Corpus.200 and Corpus.300 respectively.
+			Some of the 21 abbreviations were not suitablefor inclusion in these corpora.
+			Abbreviations werenot included in the relevant corpus if an insufficientnumber of examples were retrieved from Medline.For example, only 71 abstracts containing ASPwere retrieved and it is is not included in any of thethree corpora.
+			Similarly, ANA and FDP are notincluded in Corpus.200 or Corpus.300 and DIPnot included in Corpus.300.
+			In addition, rare senses,those which represent fewer than 1% of the occurrences of an abbreviation in all retrieved abstracts,were discarded.
+			Finally, two abbreviations (ACEand CSF) have only one sense that is not Rare 75 ExpansionsAbstracts Count Rare Frequent ACE 3105 3 2 98.7ANA 100 3 0 58.0APC 3146 5 2 39.4ASP 71 5 0 33.8BPD 1841 3 0 46.7BSA 5373 2 0 86.4CAT 4636 3 1 55.2CML 2234 4 2 91.7CMV 7665 2 0 96.7CSF 14871 3 2 99.1DIP 209 2 0 75.1 EMG 2052 2 0 88.4FDP 130 4 0 78.5LAM 325 4 1 48.3MAC 955 5 1 64.3MCP 815 5 1 50.2PCA 2442 5 1 68.9PCP 1642 2 0 57.8PEG 607 2 0 94.1PVC 234 2 2 78.2RSV 3202 2 0 76.7 Average 2650 3.2 0.6 70.8 Table 1: Properties of abbreviations corpus retrievedfrom Medline (see Table 1) and these were also excluded from thereduced corpora.
+			Consequently, Corpus.100 contains 18 abbreviations (ACE, ASP and CSF are excluded), Corpus.200 contains 16 (ANA and FDP are alsoexcluded) and Corpus.300 contains 14 (DIP andPVC also excluded).
+			Where an abbreviation is included in more than one corpus, all the examples inthe smaller corpus are included in the larger one(s).For example, the 100 examples of APC in Corpus.100 are also included in Corpus.200 and Corpus.300.
+	
+	
+			Various combinations of learning algorithms andfeatures were applied to the three reduced corporadescribed in Section 4.2.
+			Performance of the WSDsystem is measured in terms of the proportion of abbreviation instances for which the correct expansion is identified.
+			10-fold cross validation was used forall experiments and all quoted results refer to the average performance across the 10 folds.
+			Results areshown in Table 2.
+			The baseline figures, based onselecting the most frequent expansion for each abbreviation, are shown for each corpus.
+			Note thatthese figures vary slightly across the three corporabecause of the different abbreviations each contains(see Section 4.2).
+			A first observation is that performance of theWSD system is consistently better than the baseline for the relevant corpus and, with a few exceptions, above 90%.
+			As might be expected, performance improves as additional training examples areadded.
+			However, even when the number of examples is relatively low, just 100, performance of thebest configuration (VSM learning algorithm with allthree types of feature) is 97.4%.
+			The best result, 99% (300 training examples,VSM learning algorithm with all feature types), exceeds reported performance of previous abbreviationdisambiguation systems (see Section 2).
+			Althoughthese results are not directly comparable, since thesestudies used different evaluation corpora, the setof ambiguous abbreviations used in this study andmethodology for corpus creation are similar to thoseused by Liu et al.
+			(2001)(2002)(2004).
+			The best performance for each learning algorithmis obtained when all three types of features are combined.
+			The difference between performance obtained using all three feature types and using onlythe MeSH or CUI features is statistically significant(Wilcoxon Signed Ranks test, p < 0.01) althoughthe difference between this and performance usingjust the linguistic features is not.
+			The VSM learning algorithm generally performsbetter than either the SVM or Naive Bayes learningalgorithms.
+			The difference between performance ofVSM and the other algorithms is statistically significant for Corpus.100 but not for the other two, suggesting that this learning algorithm is better able tocope with small number of training examples thanNaive Bayes and Support Vector Machines.
+			Strongperformance of the VSM algorithm is consistentwith previous work which has shown that this algorithm performs well on the disambiguation of ambiguous terms in both biomedical and general text(Agirre and Martinez, 2004; Stevenson et al., 2008).
+			76 FeaturesAlgorithm Linguistic Linguistic CUI+ Linguistic+Linguistic CUI MeSH +CUI +MeSH MeSH MeSH+CUICorpus.100 (Baseline = 69.0%) SVM 0.934 0.900 0.949 0.947 0.946 0.938 0.954NB 0.940 0.917 0.949 0.951 0.947 0.944 0.958 VSM 0.968 0.937 0.888 0.970 0.971 0.939 0.974Corpus.200 (Baseline = 69.1%) SVM 0.957 0.911 0.964 0.964 0.964 0.947 0.965NB 0.966 0.926 0.962 0.969 0.971 0.955 0.972 VSM 0.979 0.930 0.894 0.982 0.981 0.947 0.984Corpus.300 (Baseline = 68.7%) SVM 0.966 0.914 0.970 0.968 0.974 0.954 0.975NB 0.971 0.933 0.960 0.971 0.976 0.960 0.978 VSM 0.981 0.938 0.894 0.987 0.985 0.957 0.990 Table 2: Performance of WSD system using various combinations of learning algorithms and features.
+			Performance of our system on this task is higherthan would be expected for most WSD tasks suggesting that the problem of abbreviation disambiguation is simpler than the disambiguation of general terms.
+			The most probable reason for this is thatthe various expansions of abbreviations in our corpus are more distinct and better defined than sensesfor general terms.
+			For example, the three possible expansions for ANA in our corpus are a professional body (American Nurses Association), atype of medical test (antinuclear) and a neurotransmitter (Anandamide).
+			It is likely that thesediverse meanings will tend to occur in very different contexts and in documents with different topics.On the other hand it is widely accepted that distinctions between possible meanings of words in natural language are often vague (Kilgarriff, 1993).
+			Itis likely that clearer distinctions between possibleexpansions of abbreviations make the task of identifying the correct one more straightforward thanidentifying meanings of ambiguous words.
+			In addition, the creation of annotated data for WSD is often hampered by the difficulty in obtaining sufficientagreement between annotators (Artstein and Poesio,2008; Weeber et al., 2001) and this problem does notapply to our automatically-generated corpus.Results in Table 2 indicate that CUIs are useful features in the disambiguation of abbreviations.This is in contrast with previous experiments on am biguous terms in biomedical documents (Stevensonet al., 2008) in which it was found that the bestperformance as obtained using only linguistic andMeSH features.
+			It is likely that the clear distinctionbetween expansions of abbreviations is the reasonbehind this difference.
+			CUIs are assigned automatically by the MetaMap program (Aronson, 2001).However, this assignment is very noisy.
+			It is likelythat the various expansions of abbreviations are distinct enough for this noise to be tolerated by thelearning algorithms while it causes problems whenthe meanings are closer together, such as in the caseof ambiguous terms.
+			5.1 Performance of Individual Abbreviations.
+			Table 3 shows the performance of the best WSD system (VSM learning algorithm with all features) foreach abbreviation in the three subsets of our corpus.Our system performs well for all abbreviations.
+			Accuracy is no lower than 92% for any abbreviationusing Corpus.100 and no lower than 97% for Corpus.300, demonstrating that the approach is robust.In fact, the approach still performs well for abbreviations with low baseline scores, such as APC,BPD and LAM.It is interesting to note that the abbreviations withthe lowest performance tend to have expansions thatare closely related.
+			For example, the two expansionsof EMG are electromyography and electromyo 77 Corpus100 200 300 ANA 0.980 - -APC 0.980 1.000 1.000BPD 1.000 1.000 1.000BSA 0.970 0.970 0.982CAT 0.990 0.990 1.000 CML 0.960 0.963 0.978CMV 0.970 0.970 0.970DIP 1.000 1.000EMG 0.920 0.960 0.980FDP 0.970 - LAM 0.960 0.980 0.980MAC 0.970 0.990 0.989MCP 0.980 0.978 1.000PCA 0.960 0.987 0.992PCP 0.990 1.000 1.000PEG 0.980 0.982 1.000PVC 0.990 1.000RSV 0.960 0.972 0.978 Overall 0.974 0.984 0.990 Table 3: Performance of WSD system over individual abbreviations in three reduced corpora gram while for LAM one expansion (Lymphangioleiomyomatosis) is a rare lung disease and theother (Lipoarabinomannan) a molecule associatedwith another lung disease (tuberculosis).
+			On theother hand, abbreviations that are more accuratelydisambiguated tend to have expansions with moredistinct meanings.
+			For example, BPD can be anacronym for borderline personality disorder (a psychiatric diagnosis), bronchopulmonary dysplasia(a lung disease) or biparietal diameter (diameter ofa foetus head in an ultrasound) and the expansionsof DIP are desquamative interstitial pneumonia(a lung disease) and distal interphalangeal joints(types of joints in the human hand and foot).
+	
+	
+			This paper has presented an approach to the disambiguation of ambiguous abbreviations in biomedical documents.
+			We treat this problem as a formof WSD and apply a system that combines a widerrange of features than have been previously applied,including those which are commonly used within WSD systems in addition to information from twodomain-specific knowledge sources.
+			The approachis evaluated using a corpus of abbreviations automatically mined from Medline and found to identify the correct expansion with accuracy of up to99%.
+			This figure is higher than previously reportedresults for abbreviation disambiguation systems, although direct comparison is difficult due to the useof different data sets.
+			It was also found that best performance could be obtained using a simple machinelearning algorithm and a diverse range of knowledgesources.
+			Performance of our system is higher than isnormally achieved by WSD systems when appliedto general terms and we suggest that the reason forthis is that the various expansions of abbreviationsare better defined and more distinct than the sensesof ambiguous words.
+			This study has been limited to the disambiguationof abbreviations consisting of exactly three letters.Possibilities for future work include experimentingwith abbreviations of various lengths.
+			Data The corpus described in Section 4 has beenmade freely available for research and maybe obtained from http://nlp.shef.ac.uk/BioWSD/downloads/abbreviationdata/.
+	
+	
+	

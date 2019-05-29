@@ -1,0 +1,67 @@
+
+	
+		This paper presents a Chinese word segmentation system submitted to the closed training evaluations of CIPSSIGHAN-2010 bakeoff.
+		The system uses a conditional random field model with one simple feature called term contributed boundaries (TCB) in addition to the “BI” character-based tagging approach.
+		TCB can be extracted from unlabeled corpora automatically, and segmentation variations of different domains are expected to be reflected implicitly.
+		The experiment result shows that TCB does improve “BI” tagging domain- independently about 1% of the F1 measure score.
+	
+	
+			The CIPSSIGHAN-2010 bakeoff task of Chinese word segmentation is focused on cross- domain texts.
+			The design of data set is challenging particularly.
+			The domain-specific training corpora remain unlabeled, and two of the test corpora keep domains unknown before releasing, therefore it is not easy to apply ordinary machine learning approaches, especially for the closed training evaluations.
+	
+	
+			2.1 The “BI” Character-Based Tagging of.
+			Conditional Random Field as Baseline The character-based “OBI” tagging of Conditional Random Field (Lafferty et al., 2001) has been widely used in Chinese word segmentation recently (Xue and Shen, 2003; Peng and McCallum, 2004; Tseng et al., 2005).
+			Under the scheme, each character of a word is labeled as ‘B’ if it is the first character of a multiple-character word, or ‘I’ otherwise.
+			If the character is a single-character word itself, “O” will be its label.
+			As Table 1 shows, the lost of performance is about 1% by replacing “O” with “B” for character-based CRF tagging on the dataset of CIPSSIGHAN-2010 bakeoff task of Chinese word segmentation, thus we choose “BI” as our baseline for simplicity, with this 1% lost bearing in mind.
+			In tables of this paper, SC stands for Simplified Chinese and TC represents for Traditional Chinese.
+			Test corpora of SC and TC are divided into four domains, where suffix A, B, C and D attached, for texts of literature, computer, medicine and finance, respectively.
+			Table 1.
+			OBI vs. BI; where the lost of F > 1%, such as SC-B, is caused by incorrect English segments that will be discussed in the section 4.
+			2.2 Term Contributed Boundary.
+			The word boundary and the word frequency are the standard notions of frequency in corpus- based natural language processing, but they lack the correct information about the actual boundary and frequency of a phrase’s occurrence.
+			The distortion of phrase boundaries and frequencies was first observed in the Vodis Corpus when the bigram “RAIL ENQUIRIES” and tri- gram “BRITISH RAIL ENQUIRIES” were examined and reported by O'Boyle (1993).
+			Both of them occur 73 times, which is a large number for such a small corpus.
+			“ENQUIRIES” follows “RAIL” with a very high probability when it is preceded by “BRITISH.” However, when “RAIL” is preceded by words other than “BRITISH,” “ENQUIRIES” does not occur, but words like “TICKET” or “JOURNEY” may. Thus, the bigram “RAIL ENQUIRIES” gives a misleading probability that “RAIL” is followed by “ENQUIRIES” irrespective of what precedes it.
+			This problem happens not only with word-token corpora but also with corpora in which all the compounds are tagged as units since overlapping N- grams still appear, therefore corresponding solutions such as those of Zhang et al.
+			(2006) were proposed.
+			We uses suffix array algorithm to calculate exact boundaries of phrase and their frequencies (Sung et al., 2008), called term contributed boundaries (TCB) and term contributed fre quencies (TCF), respectively, to analogize similarities and differences with the term frequencies (TF).
+			For example, in Vodis Corpus, the original TF of the term “RAIL ENQUIRIES” is 73.
+			However, the actual TCF of “RAIL ENQUI RIES” is 0, since all of the frequency values are contributed by the term “BRITISH RAIL EN QUIRIES”.
+			In this case, we can see that ‘BRIT ISH RAIL ENQUIRIES’ is really a more frequent term in the corpus, where “RAIL EN QUIRIES” is not.
+			Hence the TCB of “BRITISH RAIL ENQUIRIES” is ready for CRF tagging as “BRITISH/TB RAIL/TB ENQUIRIES/TI,” for example.
+	
+	
+			Besides submitted results, there are several different experiments that we have done.
+			The configuration is about the trade-off between data sparseness and domain fitness.
+			For the sake of OOV issue, TCBs from all the training and test corpora are included in the configuration of submitted results.
+			For potentially better consistency to different types of text, TCBs from the training corpora and/or test corpora are grouped by corresponding domains of test corpora.
+			Table 2 and Table 3 provide the details, where the baseline is the character-based “BI” tagging, and others are “BI” with additional different TCB configurations: TCBall stands for the submitted results; TCBa, TCBb, TCBta, TCBtb, TCBtc, TCBtd represents TCB extracted from the training corpus A, B, and the test corpus A, B, C, D, respectively.
+			Table 2 indicates that F1 measure scores can be improved by TCB about 1%, domain-independently.
+			Table 3 gives a hint of the major contribution of performance is from TCB of each test corpus.
+			R P F OOV SC-A BI TCBall 0.896 0.907 0.901 0.508 0.917 0.921 0.919 0.699 SC-B BI TCBall 0.850 0.763 0.805 0.327 0.876 0.799 0.836 0.456 SC-C BI TCBall 0.888 0.886 0.887 0.551 0.900 0.896 0.898 0.699 SC-D TC-A BI TCBall 0.888 0.891 0.890 0.419 0.910 0.906 0.908 0.562 BI TCBall 0.856 0.884 0.870 0.674 0.871 0.891 0.881 0.670 TC-B BI TCBall 0.894 0.920 0.907 0.551 0.913 0.917 0.915 0.663 TC-C BI TCBall 0.891 0.914 0.902 0.674 0.900 0.915 0.908 0.668 TC-D BI TCBall 0.908 0.922 0.915 0.722 0.929 0.922 0.925 0.732 Table 2.
+			Baseline vs. Submitted Results Table 3a.
+			Simplified Chinese Domain-specific TCB vs. TCBall Table 4.
+			F1 measure scores before and after English Problem Fixed Table 3b.
+			Traditional Chinese Domain-specific TCB vs. TCBall
+	
+	
+			The most significant type of error in our results is unintentionally segmented English words.
+			Rather than developing another set of tag for English alphabets, we applies post-processing to fix this problem under the restriction of closed training by using only alphanumeric character information.
+			Table 4 compares F1 measure score of the Simplified Chinese experiment results before and after the post-processing.
+			The major difference between gold standards of the Simplified Chinese corpora and the Traditional Chinese corpora is about non-Chinese characters.
+			All of the alphanumeric and the punctuation sequences are separated from Chinese sequences in the Simplified Chinese corpora, but can be part of the Chinese word segments in the Traditional Chinese corpora.
+			For example, a phrase “服用 / simvastatin / （ / statins 類 / 的 / 一 / 種 / ）” (‘/’ represents the word boundary) from the domain C of the test data cannot be either recognized by “BI” and/or TCB tagging approaches, or post-processed.
+			This is the reason why Table 4 does not come along with Traditional Chinese experiment results.
+			Some errors are due to inconsistencies in the gold standard of non-Chinese character, For ex ample, in the Traditional Chinese corpora, some percentage digits are separated from their per centage signs, meanwhile those percentage signs are connected to parentheses right next to them.
+	
+	
+			This paper introduces a simple CRF feature called term contributed boundaries (TCB) for Chinese word segmentation.
+			The experiment result shows that it can improve the basic “BI” tagging scheme about 1% of the F1 measure score, domain-independently.
+			Further tagging scheme for non-Chinese characters are desired for recognizing some sophisticated gold standard of Chinese word segmentation that concatenates alphanumeric characters to Chinese characters.
+	
+	
+			The CRF model used in this paper is developed based on CRF++, http://crfpp.sourceforge.net/ Term Contributed Boundaries used in this paper are extracted by YASA, http://yasa.newzilla.org/
+	

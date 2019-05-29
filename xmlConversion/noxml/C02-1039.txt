@@ -1,0 +1,165 @@
+
+	
+		We describe an algorithm for Word Sense Disambiguation (WSD) that relies on a lazy learner improved with automatic feature selection.
+		The algorithm was implemented in a system that achieves excellent performance on the set ofdata released during the SENSEVAL2 competition.
+		We present the results obtained and discuss the performance of various features in the context of supervised learning algorithms for WSD.
+	
+	
+			The task of Word Sense Disambiguation consists in assigning the most appropriate meaning to a polysemous word within a given con text.
+			A large range of applications, includingmachine translation, knowledge acquisition, in formation retrieval, information extraction, andothers, require knowledge about word mean ings, and therefore WSD algorithms represent anecessary step in all these applications.
+			Start ing with SENSEVAL1 in 1999, WSD has received growing attention from the Natural LanguageProcessing community, and motivates a continuously increasing number of researchers to de velop WSD systems and devote time for finding solutions to this challenging problem.
+			The SENSEVAL1 competitions provided a goodenvironment for the development of super vised WSD systems, making freely available large amounts of sense tagged data.
+			During SENSEVAL1 in 1999, data for 35 words wasmade available adding up to about 20,000 examples tagged with respect to the Hector dic tionary.
+			The size of the tagged corpus increasedwith SENSEVAL2 in 2001, when 13,000 additional examples were released for 73 polyse lhttp://www.itri.bton.ac.uk/events/senseval/mous words.
+			This time, the semantic annota tions were performed with respect to WordNet.
+			The experiments and results reported in thispaper pertain to the SENSEVAL2 data.
+			How ever, similar experiments were performed on the SENSEVAL1 data with comparable results.Most of the efforts in the WSD field were concentrated so far towards supervised learning algorithms, and these are the methods that usu ally achieve the best performance at the cost of low recall.
+			Each sense tagged occurrence of a particular word is transformed into a featurevector, suitable for an automatic learning pro cess.
+			Two main decisions need to be made in the design of such a system: the set of features to be used and the learning algorithm.
+			Commonly used features include surrounding words and their part of speech(Bruce and Wiebe, 1999),context keywords (Ng and Lee, 1996) or context bigrams (Pedersen, 2001), various syntac tic properties (Fellbaum et al., 2001) etc. As for the learning methodology, a large range ofalgorithms have been employed, including neu ral networks (Leacock et al., 1998), decision trees (Pedersen, 2001), decision lists (Yarowsky, 2000), memory based learning (Veenstra et al.,2000) and others.
+			An experimental comparison of seven learning algorithms used to disambiguate the meaning of the word line is pre sented in (Mooney, 1996).
+			We investigate in this paper the use of a lazy learner, namely instance based learning, to solve the semantic ambiguity of words in context.The main advantage of instance based learn ers is the fact that they consider every single training example when making a classification decision.
+			This characteristic proves particularly useful for NLP problems, where training datais usually expensive and exceptions are impor tant.
+			On the other side, lazy learners, including instance based learners, have the disadvantage of being easily misled by irrelevant features.
+			Inthe algorithm described in this paper, this draw back is solved by improving the learner with a scheme for automatic feature selection.
+			The methodology presented here is integralpart of a larger system that has the capabil ity of performing both supervised and open-text WSD (Mihalcea, 2002).
+			For reasons of clarity and space, we focus in this paper only on the description of the supervised component.
+			To our knowledge, instance based learning with per word automatic feature selection is a new approach in the WSD field, and we show that it leads to very good results.
+			Previous work has considered the application of instance based learning with automatic feature selection for the problem of pronoun resolution (Cardie, 1996).
+			In WSD, the work that is closest to ours was reported by (Bruce and Wiebe, 1999), where decomposable probabilistic models are used in combination with eager Naive Bayes algorithms.
+	
+	
+			selection Learning mechanisms for disambiguating word sense have a long tradition in the WSD field,including a large range of algorithms and fea ture types.
+			For our system, we have decidedfor an instance based algorithm with informa tion gain feature weighting.
+			The reasons for this decision are threefold.
+			First, it has been advocated that forgetting exceptions is harmful in language learning applications (Daelemans et al., 1999), and instance based algorithms areknown for their property of taking into con sideration every single training example when making a classification decision.
+			Second, this type of algorithms have been successfully usedin WSD applications (Veenstra et al., 2000).
+			Fi nally, the last reason for our decision was the running time efficiency of these algorithms.
+			Wehave initially used the MLC++2 implementation, and later on switched to TiMBL3 (Daele mans et al., 2001).
+			2 Machine Learning library available at.
+			http://www.sgi.com/tech/m1c/docs.html
+	
+	
+			TiMBL runs were made with the default settings, namelyIB1 algorithm with gain ratio feature weighting, k NN classification, no modified value difference metric (MVDM).The main disadvantage of lazy learners, in cluding instance based learning algorithms, istheir high sensitivity to irrelevant features.
+			Se vere degradation in accuracy may result as a consequence of too many such features in thetraining examples.
+			It turns out that a critical factor influencing the performance of an in stance based learner is the selection of features employed during the learning process.Our intuition was that different sets of fea tures have different effects depending on theambiguous word considered.
+			Rather than creat ing a general learning model for all polysemous words, a separate feature space is built for each individual word.
+			Usually, features are weightedusing weighting schemes that are based on information gain, gain ratio, chi-squared or other in formation content measures.
+			Feature weightingwas clearly proven to be an advantageous approach for a large range of applications, including WSD.
+			Still, weights are computed independently for each feature and therefore this strat egy does not always guarantee to provide thebest results.
+			Sometimes it is better to leave fea tures out than assign them even a small weight.We therefore face the problem of defining a pro cedure for feature selection that would ideally minimize the disambiguation error.Variable sets of features have been successfully used in other Artificial intelligence applica tions.
+			(Cardie, 1996) proposes a linguistic and cognitive biased approach for relative pronounresolution.
+			In (Aha and Bankert, 1994), fea tures are selected using searching algorithms, with increased performance obtained in theproblem of cloud types classification.
+			(Domin gos, 1997) introduces an algorithm for contextsensitive feature selection, with different fea tures selected for each instance in the training set.
+			Various efficient search algorithms for thedetection of optimal feature subsets are proposed in (Moore and Lee, 1994) with success ful experiments performed on several synthetic datasets.
+			In our algorithm, features are automatically selected using a forward search algorithm.
+			The classic approach is to build word experts via a learning process that determines the values for a pre-selected set of features.
+			Instead, we first learn the set of features that would best model the word characteristics, and therefore we are exploiting at maximum the idiosyncratic nature of words.
+			It is only at a second stage that we actually build the word experts by determiningthe values for the set of features previously de termined.With this approach, we combine the advan tages of instance based learning mechanisms that have the nice property of &amp;quot;not forgetting exceptions&amp;quot;, with an optimized feature selection scheme.
+			3 Main Algorithm.
+			The corpus provided for each ambiguous word is first run through a preprocessing stage, where the text is annotated with lexical tags.
+			Next,each example is transformed into a feature vec tor.
+			Features are selected from a pool of features using an automatic selection algorithm.
+			The train and test instances will therefore include only the features in the subset determined to be optimal by the selection algorithm.
+			Notice that training and testing corpora are extracted for each ambiguous word.
+			This means that examples pertaining to the compound &amp;quot;dress down&amp;quot; are separated from the examples for the single word &amp;quot;dress&amp;quot;.
+			3.1 Preprocessing.
+			During the preprocessing stage, SGML tags are eliminated, the text is tokenized, part of speech tags are assigned using Brill tagger (Brill, 1995), and Named Entities (NE) are identified withan in-house implementation of an NE recog nizer.
+			To identify collocations, we determinesequences of words that form compound con cepts defined in WordNet (Miller, 1995).
+			There are two possible problems with this approach.
+			The first one concerns subsuming concepts, asin &amp;quot;United States&amp;quot; and &amp;quot;United States of Amer ica&amp;quot;.
+			In such cases, priority is given to thelongest sequence of words.
+			The second possi ble conflict regards overlapping concepts, likethe two different compounds &amp;quot;English Chan nel&amp;quot; and &amp;quot;Channel Tunnel&amp;quot; found in the text &amp;quot;English Channel Tunnel&amp;quot;.
+			Here, we break the tie by keeping the last encountered collocation, with the only reason for this decision being the ease of implementation.
+			3.2 Algorithm for Automatic Feature.
+			Selection The algorithm for automatic feature selection is sketched below.
+			funct ion AutomaticFeatureSelection o generate a pool of features PF = o initialize the set of selected features with the empty set SF={0} o extract training and testing corpora for the given target ambiguous word.
+			o loop: for each feature Fi E PF - run a 10-fold cross validation on the training set; each example in the training set contains the features in SF and the feature F. - determine the feature Fi leading to the best accuracy - remove Fi from PF and add it to SF o got o loop until no improvements are obtained
+	
+	
+			of word sense There are several features acknowledged as good indicators of word sense, including surroundingwords, part of speech tags, collocations, syntac tic roles, keywords in contexts.
+			More recently, other possible features have been investigated:bigrams in context, named entities, semantic re lations with other words in context, etc. We distinguish three types of features: 1.
+			0param features, which may be included in the optimal subset or not, without any parameters to set.
+			For instance, the part ofspeech of a surrounding word is a zero parameters feature, since any learning exam ple can either contain or omit this feature, without having to indicate a specific value.
+			2.
+			1param features, which, once selected, have one variable parameter that can be setto a specific value (alternatively, this pa rameter is left with its default value).
+			As an example, consider the context feature (CF), which includes the words in a surrounding window of length K. Deciding the value for K implicitly means setting one parameter for this feature.3.
+			2param features with two parameters as sociated.
+			For example, one can select MX keywords representative for the context ofan ambiguous word, where a keyword is de fined as a word that occurs at least MN times.
+			Therefore, two parameters have to be set for this feature, MX and MN.
+			All features that have been considered so far are presented below.
+			They form the pool of features PF from which features are selected using the algorithm described in Section 3.2.
+			In the following, the ambiguous word is denoted with AW.CW Current word (0param) The word AW itself.
+			No tation: CW CP Current part of speech (0param) The part of speech of the word AW.
+			Notation: CP CF Contextual features (1param) The words andparts of speech of K words surrounding AW.
+			No tation: CF[=K], default=3 COL Collocations (1param) Collocations (Ng and Lee, 1996) formed with maximum K words surrounding AW.
+			Notation: COL[=K], default=3 HNP Head of noun phrase (0param) The head of thenoun phrase to which AW belongs, if any.
+			Nota tion: HNP SK Sense specific keywords (2param) Maximum MX keywords occurring at least MN times (Ng and Lee,1996) are determined for each sense of the ambigu ous word.
+			The value of this feature is either 0 or 1, depending if the current example contains one of the determined keywords or not.
+			Notation: SK[=MN,MXJ, default=5,5B Bigrams (2param) Maximum MX bigrams occurring at least MN times are determined for all train ing examples.
+			The value of this feature is either 0 or 1, depending if the current example contains oneof the determined bigrams or not.
+			Bigrams are or dered using the Dice coefficient (Pedersen, 2001).
+			Notation: B[=MN,MX], default=5,20 VB Verb before (0param) The first verb found before AW.
+			Notation: VB VA Verb after (0param) The first verb found after AW.
+			Notation: VA NB Noun before (0param) The first noun found before AW.
+			Notation: NB NA Noun after (0param) The first noun found after AW.
+			Notation: NA NEB Named Entity before (0param) The first Named Entity found before AW.
+			Notation: NEB NEA Named Entity after (0param) The first Named Entity found after AW.
+			Notation: NEA PB Preposition before (0param) The first preposition found before AW.
+			Notation: PB PA Preposition after (0param) The first preposition found after AW.
+			Notation: PA PRB Pronoun before (0param) The first pronoun found before AW.
+			Notation: PRB PRA Pronoun after (0param) The first pronoun found after AW.
+			Notation: PRA DT Determiner (0param) The determiner, if any, found before AW.
+			Notation: DT New features can be easily added to the pool, with no changes required in the main algorithm.
+			The system was initially tested with the SENSEVAL1 data, and additional features were considered at that time to help towards performance.
+			We decided not to use them in the current experiments, mainly for time considerations, since parsing is a highly computational intensive task.PPT Parse path (1param) Maximum K parse compo nents found on the path to the top of the parse tree (sentence top).
+			Notation: PPT[=KJ, default=10.
+			For instance, the value of this feature for the word school, given a parse tree (S (NP (JJ big) (NN house))), is NN, NP, S.SPC Same parse phrase components (1param) Max imum K parse components found in the same phrase as AW.
+			Notation: SPC[=KJ, default=3.
+			For the example above, this feature would be set to JJ, NN.
+	
+	
+			The overall performance of the system eval uated on the test words released during the SENSEVAL2 English lexical sample task is 63.8%for fine-grained scoring (71.2% for coarse grained scoring).
+			These results are comparable with the best performing systems participating in the competition.
+			Table 1 presents the results obtained for thelexical sample task, for 73 ambiguous words, in cluding 29 nouns, 15 adjectives and 29 verbs.For each word, the table shows: number of ex amples in the training and test sets; featuresautomatically selected as a result of the algo rithm in Section 3.2; 10-fold cross validation precision obtained on the training data with the selected features; the precision for fine-grained and coarse-grained scoring when all features inPF are considered (i.e. no per word feature selection is performed); finally, we show the preci sion for fine-grained and coarse-grained scoringcomputed on the test data when features are automatically selected on an individual word ba sis.
+			For the 1param and 2param features, thereis a range of values allowed for their parame ters.
+			This range was empirically set to [15] for the 1param features, respectively [110] for the 2param features.
+			It means that, for instance, CF can be set to CF=1, CF=2, CF=3, CF=4or CF=5.
+			The selection of the best value is per word.pos Size Features 10-fold All features Feature selection valid, train test fine coarse fine coarse art.n 194 98 CF=1 HNP 3=2,5 VB NB 60.6% 67.3% 69.4% 71.4% 74.5% authority.n 183 92 CW CP COL=1 VB NB 62.2% 75.0% 91.4% 70.7% 91.3% bar.n 264 151 CW CP CF=1 COL=1 B=5,3 VB NB NEA 60.8% 55.6 64.2% 62.3% 74.5% bum.n 80 45 CW NA NEA 86.2% 80.0% 82.2% 77.8% 80.0% chair.n 137 69 CW 92.3% 85.5% 87.0% 85.5% 88.4% channel.n 138 73 CP NB 43.0% 49.3% 57.5% 46.6% 56.2% child.n 129 64 CW CP CF=1 COL=1 B=5,3 NB NEB DT 76.1% 60.9% 60.9% 68.8% 68.8% church.n 128 64 CW CP CF=2 COL=1 B=5,1 64.4% 54.7% 58.8% 56.2% 56.2% circuit.n 169 85 CP CF=3 B=5,1 VB 51.6% 58.8% 64.7% 58.8% 62.4% day.n 289 145 CP CF=2 HNP NEB PB 78.0% 69.7% 69.7% 76.1% 77.3% detention.n 63 32 any - 90.6% 90.6% 87.5% 87.5% dyke.n 58 28 CW CF=2 SK=5,2 91.4% 85.7% 85.7% 89.3% 89.3% facility.n 114 58 CP COL=1 VB PRB 74.5% 72.4% 100.0% 79.3% 98.3% fatigue.n 76 43 CP B=5,3 NB 86.6% 81.4% 86.0% 88.4% 90.7% feeling.n 102 51 CP CF=1 COL=3 HNP NEA 64.0% 66.7% 68.6% 74.5% 74.5% grip.n 100 51 CP CF=3 COL=2 PB DT 60.0% 35.3% 56.9% 41.2% 58.8% hearth.n 64 32 CP CF=1 HNP 66.7% 59.4% 81.2% 75.0% 87.5% holiday.n 62 31 CP 96.0% 93.5% 96.8% 93.5% 96.8% lady.n 103 53 CW HNP 84.0% 79.2% 96.2% 88.7% 94.3% material.n 140 69 CW CP COL=1 B=2,5 VA NEA 53.3% 60.9% 68.1% 56.5% 60.9% mouth.n 118 60 CP COL=1 VB NB PB 65.7% 58.3% 93.3% 65.0% 93.3% nation.n 75 37 CP 80.0% 51.4% 51.4% 54.1% 54.1% nature.n 92 46 CP DT 58.0% 76.1% 82.6% 69.6% 80.4% post.n 150 79 CW CP CF=1 COL=2 74.6% 46.4% 49.3% 64.6% 68.4% restraint.n 91 45 CP COL=2 HNP B=2,5 VB NB PA 67.3% 62.2% 73.3% 62.2% 71.1% sense.n 107 53 CP CF=1 B=3,3 NEB PB 74.5% 71.7% 73.6% 75.5% 74.4% spade.n 64 33 CP CF=1 COL=2 94.0% 78.8% 78.8% 97.0% 97.0% stress.n 78 39 CP COL=2 B=5,2 68.0% 48.7% 82.1% 64.1% 89.7% yew.n 57 28 CF=1 94.0% 82.1% 100.0% 89.3% 100.0% TOTkL.N 3,523 1,759 - - 65.6% 73.9% 69.5% 76.6% blind.a 105 55 HNP 70.0% 74.5% 74.5% 85.5% 85.5% colourless.a 68 35 CW CP CF=1 COL=1 SK=3,3 85.7% 54.3% 54.3% 48.6% 48.6% cool.a 103 52 CF=1 COL=2 HNP VB PB PRB DT 56.1% 44.2% 44.2% 51.9% 51.9% faithful.a 47 23 CW 68.0% 65.2% 65.2% 87.0% 87.0% fine.a 139 70 CP CF=2 HNP B=5,1 NA 46.0% 51.4% 51.4% 54.3% 54.3% fit.a 57 29 CF=1 B=3,3 VB NA 85.0% 79.3% 79.3% 82.8% 82.8% free.a 165 82 CP CF=1 COL=2 65.0% 52.4% 52.4% 58.5% 58.5% graceful.a 56 29 CW 87.0% 86.2% 86.2% 79.3% 79.3% green.a 190 94 CP VA 80.0% 76.6% 76.6% 79.8% 79.8% local.a 75 38 CP NA 88.0% 71.1% 71.1% 81.6% 81.6% natural.a 205 103 CP CF=1 HNP VB NB NEB PRA 50.0% 52.4% 52.4% 56.3% 56.3% oblique.a 56 29 CW CP CF=1 COL=4 B=3,3 84.0% 79.3% 79.3% 86.2% 86.2% simple.a 130 66 CP CF=1 COL=2 HNP NA PB PRA DT 53.3% 40.9% 40.9% 53.0% 53.0% solemn.a 52 25 CP COL=1 DT 92.8% 96.0% 96.0% 96.0% 96.0% vital.a 74 38 CW CP NB 88.7% 92.1% 92.1% 94.7% 94.7% TOTkL.
+			k 1,535 768 - - 63.4% 63.4% 68.8% 68.8% begin.v 557 280 CF=1 NA 80.40% 86.8% 86.8% 87.5% 87.5% call.v 132 66 CF=1 COL=2 VB NB DT 70.00% 40.9% 66.7% 40.9% 66.7% carry.v 132 66 CW CP COL=1 NB 35.00% 42.4% 53.0% 39.4% 50.0% collaborate.v 57 30 CW CP CF=1 95.80% 90.0% 90.0% 90.0% 90.0% develop.v 133 69 CW CP B=2,5 NA PB 22.50% 31.9% 50.7% 36.2% 49.3% draw.v 82 41 CF=2 COL=2 NEB 11.00% 24.4% 34.1% 31.7% 43.9% dress.v 119 59 CP CF=1 NB NA PB 57.50% 50.8% 86.4% 57.6% 86.4% drift.v 63 32 CW CP CF=2 COL=3 HNP NEB PA 22.00% 53.1% 53.1% 59.4% 62.5% drive.v 84 42 CW CP CF=2 PRA DT 45.00% 52.4% 76.2% 52.4% 69.0% face.v 186 93 CP 84.00% 75.3% 89.2% 81.7% 90.3% ferret.v 2 1 any - 100.0% 100.0% 100.0% 100.0% find.v 132 68 CP CF=2 SK=5,2 10.00% 25.0% 36.8% 29.4% 39.7% keep.v 133 67 CP B=3,3 38.00% 40.3% 40.3% 44.8% 46.3% leave.v 132 66 CP CF=1 COL=3 NEA 28.90% 40.9% 45.5% 47.0% 53.0% live.v 129 67 CP NA 63.00% 61.2% 61.2% 67.2% 68.7% match.v 86 42 CW CP HNP SK=5,5 NA 26.40% 45.2% 64.3% 40.5% 59.5% play.v 129 66 CW CP CF=4 COL=4 VB NA 21.00% 34.8% 37.9% 50.0% 51.5% pull.v 122 60 CP COL=1 HNP B=2,10 SK=5,5 23.00% 56.7% 70.0% 48.3% 68.3% replace.v 86 45 CP COL=3 SK=5,1 B=3,2 54.00% 42.2% 93.3% 44.4% 88.9% see.v 131 69 CW CP CF=2 SK=4,4 PB 23.00% 33.3% 37.7% 37.7% 42.0% serve.v 100 51 CP CF=4 HNP B=5,5 VA NEB PRB PRA 36.00% 56.9% 60.8% 49.0% 54.9% strike.v 104 54 CW CP CF=2 NEB 23.00% 42.6% 48.1% 38.9% 51.9% train.v 125 63 CW CP CF=2 COL=4 NA PB PA DT 34.00% 38.1% 55.6% 41.3% 52.4% treat.v 88 44 CP CF=3 COL=2 VB NEA PA PRB PRA 36.00% 38.6% 56.8% 63.6% 79.5% turn.v 131 67 CP CF=2 VB NA PA PRB 30.70% 31.3% 47.8% 35.8% 53.7% use.v 147 76 CW CP NA VA PRB 65.00% 60.5% 84.2% 72.4% 84.2% wander.v 100 50 CP PA 81.00% 66.0% 84.0% 74.0% 90.0% wash.v 25 12 CW CP CF=2 C0L=2 5K=3,5 NEA 32.00% 66.7% 75.0% 66.7% 83.3% work.v 119 60 CW CP CF=2 COL=2 B=3,3 NA PA 42.00% 35.0% 50.0% 43.3% 58.3% TOTkL.V 3,673 1,857 - - 52.5% 64.3% 56.4% 67.0% Table 1: Training and test sizes, optimal feature sets and precisions for (1) 10-fold cross validation on training data; fine-grained and coarse-grained on test data using (2) all features; (3) per word feature selection.
+			formed using the same algorithm.As mentioned earlier, collocations are identified since the preprocessing stage and the learn ing process is applied separately on each word.
+			Therefore, the compound &amp;quot;call for&amp;quot; has training and test data different from the verb &amp;quot;call&amp;quot;, and consequently features are selected in a distinct process.
+			Due to space limitations, Table 1 shows the features selected only for single words.
+			When no training data is provided (as it wasthe case with the SENSEVAL2 verb &amp;quot;keep go ing&amp;quot;), the first sense is applied by default.
+			Also, when the training set size is smaller than 15examples, the automatic feature selection algo rithm is not invoked, instead a default set of features is used (CW CP CF=1 COL=1).
+			5.1 Discussion.
+			Table 2 lists the number of times each fea ture was used in the semantic disambiguationof nouns, verbs and adjectives.
+			The most of ten used features turn out to be CW, CP, CFand COL, which are also the features most fre quently mentioned in the literature.
+			Almost all words took advantage of the current part of speech (CP) feature.
+			This is in agreement with(Stevenson and Wilks, 2001), who have empha size the major role played by part of speech in WSD.
+			It is interesting to observe that in terms of words in context, bigrams seem to be more effective than simple keywords.
+			Also, the best setting for the CF feature was found to be one or two words window.
+			Part of speech Noun Verb Adjective Total Words 29 29 15 73 Features CW 10 13 9 32 CP 22 25 14 61 CF 14 18 8 40 COL 13 12 6 31 HNP 6 4 5 15 SK 1 6 3 10 B 10 6 3 19 VB 7 4 3 14 VA 1 2 1 4 NB 8 3 2 13 NA 1 10 4 25 NEB 3 4 1 8 NEA 4 3 0 7 PB 4 4 2 10 PA 1 6 0 7 PRB 1 4 1 6 PRA 0 3 2 5 DT 3 3 3 9 Total 109 130 66 306 Table 2: Feature distribution for nouns, verbs, adjectives In terms of average number of features, the semantic disambiguation of nouns requires the smallest number of features (3.7), followed byadjectives (4.4) and verbs (4.5).
+			These statistics are not yet conclusive, since they are com puted for a small number of words, but they areindicative for the complexity of the task for var ious parts of speech.
+			Further investigations and larger amounts of data will eventually confirm this preliminary conclusion.
+			The overall performance of the system whenthe module for per word feature selection is dis abled and all features in PF are employed is 59.8% (68.1%).
+			The increase in error rate is therefore about 11% with respect to the case when per word feature selection is employed.
+			We also performed an experiment where the feature selection algorithm consists in finding features that perform best over all 73 words.The set of feature determined with this simpli fied approach is &amp;quot;CW CP CF=1 COL=1&amp;quot;.
+			The overall performance when this constant set of features is employed is 59.6% (67.4%).
+			Again,the per word feature selection is proved to pro duce better results.
+			Additionally, there were several interesting cases encountered in the SENSEVAL data, justifying our approach of using automatic feature selection.
+			The influence of a feature greatly depends on the target word: a feature can increase the precision for a word, while making things worse for another word.
+			For instance, a word such as free does not benefit from the SK feature, whereas colourless gains almost 7% in precision when this feature is used.
+			free.a[CW CP CF=1 SK=3,3] 57.85% free.a[CW CP CF=1] 63.57% colorless.a[CW CP CF=1] 78.57% colorless.a[CW CP CF=1 SK=3,3] 85.71% Another interesting example is constituted bythe noun chair, disambiguated with high precision by simply using the current word (CW) fea ture.
+			This is explained by the fact that the most frequent senses are Chair meaning person andchair meaning furniture, and therefore the dis tinction between lower and upper case spellingsmakes the distinction among the different mean ings of this word.
+			The noun detention has the same precision computed during several 10-fold cross validation runs, independent on the feature or combination of features used.
+			This is because one of its two senses occurs in 97% of the examples, and hence it statistically dominates the other sense.There were several other interesting cases, in cluding the adjective local with a 20% gain in precision by simply using the feature NA, the word faithful best disambiguated with the CW feature, and others.
+	
+	
+			Instance based learning with automatic feature selection is a new approach in the WSD field.
+			The algorithm was implemented in a system that achieves excellent performance on the data released during the SENSEVAL2 English lexical task.
+			The feature selection process is completely automated and it practically creates a classifier tailored to the behaviour of each specific word.
+	
+	
+			The author would like to thank the anonymousreviewers for their helpful suggestions and con structive comments, which helped improving the quality of this manuscript.
+	

@@ -1,0 +1,98 @@
+
+	
+	
+	
+			Conversational feedback is mostly performedthrough short utterances such as yeah, mh, okaynot produced by the main speaker but by one ofthe other participants of a conversation.
+			Such utterances are among the most frequent in conversational data (Stolcke et al., 2000).
+			They alsohave been described in psycho-linguistic modelsof communication as a crucial communicative toolfor achieving coordination or alignment in dialogue (Clark, 1996).
+			The general objective of the project (ANRCoFee: Conversational Feedback)1(Prevot andBertrand, 2012) in which this work takes placeis to propose a fine grained model of theform/function relationship concerning feedbackbehaviors in conversation.
+			The present study isfirst exploration aiming at knowing better the distribution of these items in one of our corpus.
+			Moreprecisely, we would to verify how much inter-individual variability we will face in further studyand whether we can identify a structure in thisvariability (e.g speaker profiles).
+			Second, we tried 1See the project website: http://cofee.hypotheses.org to check there some strong trends in terms of evolution of use of these items in the course of theconversation.
+			This later point was not conclusiveand is not developed in this paper.
+			Some data-intensive works exist for English(Gravano et al., 2012), Japanese (Kamiya et al.,2010; Misu et al., 2011) or Swedish (Allwood etal., 1992; Cerrato, 2007; Neiberg et al., 2013) butnot on many other languages such as French forexample.
+			On French, the work of (Muller andPrevot, 2003; Muller and Prevot, 2009) concerneda smaller scale (A hour corpus) and very specifictask.
+			(Bertrand et al., 2007) was focussed on thefeedback inviting cues and also on a smaller scale(2  15 minutes).
+			They showed that particularpitch contours and discursive markers play a systematic role as inviting-cues both for vocal andgestural back-channels.
+			The paper is structured as follow.
+			Section 2presents the conversational corpus used for thisstudy, then section 3 presents how this corpus hasbeen processed.
+			Section 4 is related to general figures for the feedback lexical items, followed bymore detailed information about inter-individualvariability (section 5).
+	
+	
+			The Corpus of Interactional Data (CID) (Bertrandet al., 2008; Blache et al., 2009)2 is an audio-videorecording of 8 hours of spontaneous French dialogues, 1 hour of recording per session.
+			Each dialogue involved two participants of the same gender.
+			One of the following two topics of conversation was suggested to participants: conflicts intheir professional environment or unusual situations in which participants may have found themselves.
+			It features a nearly free conversationalstyle with only a single theme proposed to the participants at the beginning of the experiment.
+			This 2http://www.sldr.org/sldr000027/en 87 corpus is fully transcribed and forced-aligned atphone level.
+			Moreover, it has been annotated withvarious linguistic information (Prosodic Phrasing,Discourse units, Syntactic tags, ...)
+			(Blache et al.,2010) which will allow us later to take advantageof these levels of analysis.
+			Numerous studies have been carried out in prepared speech.
+			However, conversational speechrefers to a more informal activity, in which participants have constantly to manage and negotiateturn-taking, topic changes (among other things)without any preparation.
+			As a consequence, numerous phenomena appear such as hesitations, repeats, backchannels, etc. Phonetic phenomenasuch as nonstandard elision, reduction phenomena, truncated words, and more generally, nonstandard pronunciations are also very frequent.All these phenomena can impact on the phonetization, then on alignment.
+	
+	
+			The transcription process is done following specific conventions derived from that of the GARS(BlancheBenveniste and Jeanjean, 1987).
+			Theresult is what we call an enriched orthographictranscription (EOT), from which two derived transcriptions are generated automatically : the standard orthographic transcription (the list of orthographic tokens) and a specific transcription fromwhich the phonetic tokens are obtained to beused by the grapheme-phoneme converter.
+			Fromthe phoneme sequence and the audio signal, thealigner outputs for each phoneme its time localization.
+			This corpus has been processed with severalaligners.
+			The first and main one (Brun et al., 2004)is HMM-based, it uses a set of 10 macro-classesof vowel (7 oral and 3 nasal), 2 semi-vowels and15 consonants.
+			Finally, from the time alignedphoneme sequence plus the EOT, the orthographictokens is time-aligned.
+			The alignment for this paper is another version that has been carried out using SPPAS3 (Bigi,2012).
+			SPPAS is a tool to produce automatic annotations which include utterance, word, syllabic andphonemic segmentations from a recorded speechsound and its transcription.
+			Alignment of items of the list given in (1) werethen manually verified.
+			Largest errors were corrected to obtain reliable alignments.
+			DM prononciations are the standard ones except3http://www.lplaix.fr/~bigi/sppas/ for a few cases.
+			There are only two items withnon standard cases that are over 2 occurrences:sampa: m.w.e.) that is an hybrid between mhand ouais, and sampa w.a.l.a, a reduction ofv.w.a.l.a voila`.
+			The extraction themselves have been realizedby the authors with a Python script and all thestatistical analyses and plots have been producedwith R statistical analysis tool.
+	
+	
+			All the lexical items of the list given in (1) wereautomatically extracted and categorized into twocategories: (i) Isolated items are items or sequenceof items surrounded by pauses of at least 200 msand not including any extra material than the itemsof this list ; (ii) Initial items (or sequence items)are located in front of some other items (but thereis no other material within the sequence).
+			Mostof these items also occur in final or even surrounded positions but we did not consider thesecases since they do are not clearly related to feedback.
+			More precisely surrounded items are mostlyconsisting in breaks of disfluencies or genuinelyintegrated construction (e.g jetais daccord aveclui / I agreed with him).
+			Final ones can play arole in eliciting feedback or sometimes bring somekind of closure at the end of the utterance (whathas been described as Pivot Ending in (Gravano etal., 2012)).
+			(1) ah (ah), bon (well), ben (well), euh (err,uh), mh (mh), ouais (yeah), oui (yes), non(no), daccord (agreed), OK (okay), voila`(thats it, right) Strictly speaking, the list (1) is not exhaustive.However, other items are already in the thin partof the distributions tail.
+			Moreover, some of theitems such as euh / err are not necessarily relatedto feedback.
+			However, by crossing lexical valueswith position we expect to get close enough thefull set of tokens involved in feedback.
+			For example, initial euh not followed by a feedback relateditem will not be included in the final dataset.
+			Thisis also an objective of the present work to identifythese situations.
+			The different markers exhibit very different figures with regard to their location as it can be seenin 1.
+			While some are specialized in isolated feedback such as the continuer mh which is most of the 88 time backchanneled, others are found at the beginning of utterances such as euh, ah.
+			The later makessense since euh is also a filled pause.
+			ah ah_ ouai s ah_ oui ben bon dacc ord eu h mh mh_ mh no n ou ais ou ais _oua is ou i voila 0 100 200 300 400 500 initialisolated Figure 1: Distribution of isolated vs. initial position for the most frequent lexical items In total 197 different combinations of the basic markers were identified.
+			The most frequentare the simple repetitions of items such as ouais(up to nine times) or mh.
+			There are also morecomplex structures as exhibited in (2) that seemto mix two kinds of items: base ones and modifiers (ah, euh).
+			The base ones seem by defaultto carry general purpose communicative functionsas described in (Bunt, 2009; Bunt, 2012) while theothers can also be produced alone but are generallydealing specific dimension such as turn-taking, attitude expression or time management.
+			(2) a. ah ouais daccord ok (ah yeah rightokay) b. voila` oui non (thats it yes no) With regard to duration, the data is rather messyconcerning the very long items.
+			There are extremelengthening on these units.
+			Aside that and the filleruh that exhibit a wide spread, the other items arenot produced with huge variations.
+			Monosyllabicremain well centered around 150250 ms while di-syllabic and repeated items are distributed in the250500 ms range.
+			This is important for our nextstep in which automatic acoustic analysis of theseitems will be performed.
+			l l ll l l lll l l l l lllll ll ll l l l l l l l ll l l l ll ll l ll l l l l l lll l l l lll ll l lll l ll l ll ll lllll l l lll lll l l l l lll llllllll ll lll l llllllllll l l l l lllllll lll l l l lll ll l ll l l l ll l l ll ah ah_ ouai s ah_ oui ben bon dacc ord eu h mh mh_ mh no n ou ais ou ais _oua is ou i voila 0.0 0.5 1.0 1.5 2.0 Figure 2: Duration (in seconds) of each lexicaltype
+	
+	
+			Inter-individual variation is a big issue on the wayto the generalizability.
+			We would like to understand some of the feedback producing profiles.Our intuitions coming from familiarity of the datais that there are strong variation but they correspond to a few different speaking styles.
+			In future work, we would like to see in a second stepwhether we can identify and characterize thesestyles.
+			l 150 200 250 300 350 400 450 Figure 3: Number of feedback items per speakerFigure 3 illustrates the total figures of feedbackper speaker.
+			As expected variation is huge, from132 to 425 but with in fact with few outliers witha nice batch of speaker in the 200300 range.The wider spread of the distribution in the highrange comes from two factors.
+			First of all, thereare participants producing a high quantity of feed 89 back items.
+			They produce a massive amount oflight backchannels (mh, ouais) compared to low-quantity feedback producers.
+			The later also produce feedback during the long pauses of the mainspeaker but they produce much less overlappingbackchannels.
+			This should be double checkedwith a specific measure (adding overlapping as afactor).
+			However, a second effect seems importantfor at least one speaker (the outlier): the amountto time holding the floor.
+			In fact the speaker producing the most feedback did so because she wasrarely the main speaker.
+			In order to get a global idea of the different usesof these items, Figure 5 represents the proportionof each item per speaker.
+			As expected, the variation is important but one can spot some tendencies.For examples for the most frequent items, the rankseems to preserved across speakers.
+			CID_ AB CID_ AC CID_ AG CID_ AP CID_ BX CID_ CM CID_ EB CID_ IM CID_ LJ CID_ LL CID_ MB CID_ MG CI D_M L CI D_NH CI D_SR CI D_YM voilaouiouais_ouaisouaisnonmh_mhmheuhdaccordbonbenah_ouiah_ouaisah 0.0 0.2 0.4 0.6 0.8 1.0 Figure 4: Distribution of the lexical items Based on their feedback profile (proportion ofuse of each items as illustrated in Figure 5), weattempted to cluster the participants as showed in5.
+			While the lower parts of the dendrogram arehard to interpret the higher part matches well withthe impression acquired by listening to the corpus(no backchannels and rather formal feedback vs.lots of backchannels and very colloquial style).
+	
+	
+			About this first batch of analyses, we will complete the analysis of the evolution during the conversation.
+			More precisely, we will go at theindividual level looking for time-based changes AB AG IM ML YM BX AP EB LJ NH CM SR AC MB LL MG 0.1 0.2 0.3 0.4 0.5 Dendrogram of diana(x = distSpForm) diana (*, "NA")distSpForm Hei ght Figure 5: Dendrogram of the participants clusterbased on their feedback profile in their profiles as well as looking at the pairsfor tracking potential convergence effect either interms of distribution of lexical marker types or intheir duration.
+			In parallel to this work, we are launching independent prosodic and kinesic analyses of theforms, as well as a discourse analysis of the functions.
+			Moreover the work is being extended byadding two corpora in the study in order to allowfor a better situation generalisability: A FrenchMapTask; and a third corpus consisting in a lesscooperative situation.
+			The idea is later to bringtogether the observations from the different levelsin order to propose a multidimensional model forfeedback in French dialogues.
+			Those are steps toward more extensive studiesin the spirit of (Gravano et al., 2012) or (Neiberget al., 2013) on French language and in which wehope to address more directly the issue of discourse situation generalisability.
+	
+	
+	

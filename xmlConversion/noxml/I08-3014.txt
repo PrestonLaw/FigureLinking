@@ -1,0 +1,267 @@
+
+	
+		Handling of human language by computer is a very intricate and complex task.
+		In natural languages, sentences are usually part of discourse units just as words are part of sentences.
+		Anaphora resolution plays a significant role in discourse analysis for chopping larger discourse units into smaller ones.
+		This process is done for the purpose of better understanding and making easier the further processing of text by computer.
+		This paper is focused on the discussion of various factors and their optimal order that play an important role in personal anaphora resolution in Urdu.
+		Algorithms are developed that resolves pronominal anaphoric devices with 7780% success rate.
+	
+	
+			In written text, cohesion occurs when some elements in a discourse are dependent on others and that refer to items backward in the text, both in the spoken or written text (Halliday and Hassan, 1976).
+			Consider the following example (1.1) Shah Rukh Khan is off to one of his favorite cities- London, with his family.
+			Now he is looking for another destination, not so much for holidaying though.
+			(The News Islamabad: June 2006) (1.2) Bollywood actress Bipasha Basu has been signed for her new film Corporate.
+			She is a single working woman, wants to get somewhere in life, on her own terms.
+			(The News Islamabad: June 2006) 81 Cohesion in examples 1.1 and 1.2 is introduced due to the terms he, his, her, she and interpretation of these references depends upon some preceding terms.
+			These referring terms are called anaphors or anaphoric devices (ADs).
+			Halliday and Hassan described anaphora as ‘cohesion which points back to some previous items’ (Halliday and Hassan, 1976).
+			The ‘pointing back’ words or phrases are called the anaphors (Halliday and Hassan, 1976) and the entities to which these point are called antecedents and the procedure of determining the antecedents of anaphors and subsequent replacement in some particular discourse is called anaphora resolution.
+			According to Halliday and Hassan when anaphors are replaced by their corresponding antecedents, cohesion no more exists.
+			Personal anaphoric devices (ADs) are the most widely used variety of ADs in Urdu text.
+			These are further classified as first person, second person and third person anaphoric devices.
+			Examples of first person ADs are ،ﮟﻴﻣ ،اﺮﻴﻣ ،ﯼﺮﻴﻣ ﻮﮑﻤه ،ﯼرﺎﻤه ،ارﺎﻤه ،ﻢه ،ﻮﮑﻬﺠﻣ ،ﮯﻬﺠﻣ،،ﮟﻴﻤه ےرﺎﻤه ([mæIri], [mæIra], [mæñ], [mʊʤheI], [mʊʤhkəƱ], [hΛm], [hΛmɒrɒ], [hΛmɒri], [hΛmkəƱ], [hΛmeIñ], [hΛmɒreI]).
+			Examples of second person ADs are،ﻢﺗ ﻮﮑﻤﺗ ،ﯼرﺎﻬﻤﺗ ،ارﺎﻬﻤﺗ، ﺎﻬﻤﺗ،ﮟﻴﻬﻤﺗ،ےرﻮﮑﭘﺁ ،ﯽﮑﭘﺁ ،ﺎﮑﭘﺁ ،پﺁ ([tʊm], [tʊmhɒrɒ], [tʊmhɒri], [tʊmkƏƱ], [tʊmheIñ], [tʊmhɒreI], [a:p] [a:pkɒ], [a:pki], [a:pkƏƱ]).
+			Examples of third person ADs are ،ﮦو ،ﮯﺳا ،ﺎﮑﺳا ،ﯽﮑﺳا ،ﮯﮑﺳا ،ﻮﮑﺳا ،نا ،ﯽﮑﻧا ،ﮯﮑﻧا ،ﺎﮑﻧا ﮟﻴﻬﻧا ([vәƱh], [ʊseI], [ʊskɒ], [ʊski], [ʊskeI], [ʊskƏƱ], [ʊn], [ʊnki], [ʊnkeI], [ʊnkɒ], [ʊnheIñ]).
+			A lot of work has been done in English for the purpose of anaphora resolution and various Proceedings of the IJCNLP08 Workshop on NLP for Less Privileged Languages, pages 81–90, Hyderabad, India, January 2008.
+			Qc 2008 Asian Federation of Natural Language Processing algorithms have been devised for this purpose (Aone and Bennette, 1996; Brenan , Friedman and Pollard, 1987; Ge, Hale and Charniak, 1998; Grosz, Aravind and Weinstein, 1995; McCarthy and Lehnert, 1995; Lappins and Leass, 1994; Mitkov, 1998; Soon, Ng and Lim, 1999).
+			Work has also been done in South Asian Languages such as Hindi and Malayalam for the purpose of anaphora resolution (Prasad and Strube, 2000; Sobha, 1998).
+			Prasad and Strube (2000) worked on anaphora resolution in Hindi.
+			Their approach relies on the discourse salience factors and is primarily inspired by the central idea of Centering theory (Grosz, Aravind and Weinstein, 1995).
+			Centering theory has also guided the development of pronoun resolution algorithms, such as the BFP algorithm (Brenan, Friedman and Pollard, 1987) and the S-list algorithm developed by Strube (Strube, 1998).
+			Prasad and Strube (2000) applied these algorithms to the resolution of pronouns in Hindi texts.
+			They showed that the BFP algorithm cannot be successfully implemented for pronoun resolution in Hindi.
+			They argued that better results can be obtained with an algorithm that does not use the Centering notions of the backward-looking center and the centering transitions for the computation of pronominal antecedents, such as the S-list algorithm (Prasad and Strube, 2000).
+			Prasad and Strube used well established approaches for Hindi anaphora resolution.
+			Sobha (1998) used knowledge poor rule based approach for reference resolution in Hindi and Malayalam languages that stands on very limited syntactic information.
+			In Urdu language very little work has been done on discourse level especially in the field of anaphora resolution.
+			Although, most of the anaphoric devices in Urdu and Hindi are same but the style and organization of discourses are bit different that causes the difference in anaphora resolution.
+			Kulsoom et al worked on Urdu anaphora resolution but it appears to be the tip of an iceberg (Kalsoom and Rashida, 1993).
+			Kulsoom et al (1993) only considered the morphological and lexical filters for the resolution of anaphora in Urdu discourses.
+			However, these filters are not sufficient for Urdu anaphora resolution.
+			The rest of the paper is organized as follows: Section-2 describes the factors that play a vital role in Urdu anaphora resolution.
+			Section-3 presents algorithms, implementation and evaluation for the resolution of personal anaphora; this is followed by the conclusion.
+	
+	
+			anaphora resolution Factors that can play a very important role in Urdu anaphora resolution beside morphological and lexical filters are topicalized structures, subject preferences, object preferences, repetitions, section heading and distance.
+			How these factors are helpful in anaphora resolution in English language was worked out by Mitkov (Mitkov, 1998), but their role in Urdu discourse for the resolution of personal pronouns is more cherished.
+			How these factors are helpful in the resolution of anaphoric devices in Urdu is done by Khan et al (Khan, Ali and Aamir, 2006).
+			Ali et al also worked on these factors for the resolution of demonstrative ADs in Urdu discourse (Ali, Khan and Aamir, 2007).
+			2.1 Morphological and lexical filters.
+			Consider an example in which anaphora is resolved on the basis of morphological filters.
+			ﮯﻧ ﻦﻳد ﻞﻀﻓ ،ﯼد ﻞﭼ ﮯﮔﺁ روا ﺎﻳﺎﻬﭨا ﺎﺘﻬﮔ ﺎﺳ اﮍﺑ ﺎﮐ ےرﺎﭼ ﮯﻧ ﯽﻬﮑﻠﻣ رﺪﻧا ﮦو ںﻮﻴﮐ ﮯﻧﺎﺟ ہﻧ ﻦﮑﻴﻟ ﺎﻬﺗ ﺎﮨﺎﭼ ﺎﻧﮍﮑﭘ وزﺎﺑ ﺎﮐ ﯽﻬﮑﻠﻣ ﺮﮐ هﮍﺑ ﮯﮔﺁ ﺎﻬﺗ ﺎﻴﮔ ﮦر ﺮﮐ ﮍﮑﺳ (2۔0) )ﻲﻤﺷﺎﮨ ﮦﺮﺋﺎﺳ -ﺞﻧﻮﮔ ﻲﮐ ﮯﭨﺎﻨﺳ ( [mɒlΛkhi] [neI] [ʧɒreI] [kɒ] [bǝ(r)ɒ] [sɒ] [ghΛthɒ] [Ʊ:thɒyɒ] [ɒǝƱr] [a:geI] [ʧΛl] [di].
+			[fΛzl] [dIn] [neI] [a:geI] [bhǝ(r)] [kǝ(r) [mɒlΛkhi] [kɒ] [bɒzƱ] [pɒkǝ(r)nɒ] [ʧɒhɒ] [thɒ] [leIkIn] [nɒ] [ʤɒneI] [kIyƱñ] [vǝƱh] [Λndǝ(r)] [sƱkǝ(r)] [kǝ(r)] [rǝh] [gIyɒ] [thɒ].
+			Mlukhi took the bundle of grass and moved ahead.
+			Fazal Din had come forward to catch the arm of Mlukhi, but he did not have the courage to do so.
+			In Urdu, the word ﮦو ([vǝƱh])refers to both masculine and feminine antecedents.
+			Also, it is used for translation of ‘that’.
+			Here the morphological filters are used for anaphoric disambiguation.
+			In the above discourse, terminal of sentence is ﺎﻬﺗ ([thɒ]) that indicates the third person AD ﮦو refers to singular and masculine NP i.e. ﻦﻳد ﻞﻀﻓ ([fΛzl][dIn]).
+			In this way, ﻲﻬﮑﻠﻣ ([mɒlΛkhi]) will be ruled out to become the antecedent.
+			Similarly, consider the example ﺎﮑﺳا ﮯﺻﺮﻋ ہﻬﭽﮐ -ﯽﻬﭩﻴﺑ ﻮﻬﮐ ساﻮﺣو شﻮه ﮯﻨﭘا ﮯﮐ هﮍﭘ ﻂﺧ ہﻠﻴﻧا (ہﻴﺳﺪﻗ ﻮﻧﺎﺑ -ﻞﻴﺑﺮﻣا) (2۔1) -ﺊﮔ ﻮه ﺮﺘﮩﺑ ﮦو ﺮﻬﭘ ﺎهر ﺎﺗﻮه جﻼﻋ [ə|nIlɒ] [xΛt] [pə(r)h] [keI] [ə|pneI] [hәʊ∫] o [hɒvɒs] [khәʊ] [beIthi] [kʊʧ] [ΛrseI] [ʊskɒ] [ælɒʤ] [hәʊta] [rɒhɒ] [phIr] [vәʊh] [bəhtə(r)] [hәʊ] [gɒi].
+			After reading the letter Aneela lost her senses.
+			She was treated for sometime and then she got better.
+			Since the terminal of sentence is ﺊﮔ ([gɒi]), so it means ﮦو ([vəʊh]) refers to some feminine antecedent that is ہﻠﻴﻧا ([ə|nIlɒ]) in the above text.
+			The lexical filters are used to resolve anaphora on the basis of number and gender information.
+			For example 2.2 Topicalized structures.
+			In Urdu, topicalized structures are more frequently used.
+			Consider the example ﺮﻬﮐ حﺎﺻ مﺎﻋ ﺮﻈﻨﻣ ﺐﺟ ڈرﻻ لڈﻮﻴﻓ ئﺎﻣ ! بﺮﭘ ﻞﻤﻋ در ﺎﮐ پﺁ ﻮﺗ ئﺁ -ﺎﻬﺗ ﺎﻴﮐ(2۔4) [khә(r)] [sɒhIb]!
+			[mɒi] [fʊdәl] [lɒrd] [ʤΛb] [mΛnzǝ(r)] [ɒm] [pǝ(r)] [a:i] [tәʊ] [a:p] [kɒ] [rΛdeI] [Λml] [kIyɒ] [thɒ].
+			Mr. Kher!
+			When the book “My Feudal” Lord came into the market, what was your reaction.
+			ﯼﺪﻠﺟ تﺎﻧﺎﺤﺘﻣا ےرﺎﻤه" ﯽﮐ ﺖﺳاﻮﺧرد ﻮﮐ ﺐﺣﺎﺻ ﻞﭙﺴﻧﺮﭘ ﮯﻨںﻮﮐﮍﻟ ﮟﻴﮩﮐ ہﻧ ﮟﻴﮩﮐ ﺮﮐ ڑا ٹﻮﺑ ﮯﻠﺴﻧﻮﻬﮔ ؟ںوﺮﮐ ﺎﻴﮐ ﺎﮐ ںودﺎﻳ ﯼرﺎﻬﻤﺗ !ہﻤﻃﺎﻓ نﻮﺧ مﺎﺷ و ﺢﺒﺻ ﻮﺗ ٹﻮﺑ ﮦدﺮﮐ ﺎﻄﻋ ےرﺎﻬﻤﺗ ﻦﮑﻴﻟ ﮟﻴه ﮯﺗﺎﺟ ﮯﻠﭼ ﮦدﺎﻳز سﺎﭘ ےرﺎﻤه ﮱﻠﻴﮐﮯﻧﺮﮐ ﭧﮑﻴﺟاﺮﭘ ﮟﻴﻣ ﺪﻌﺑ ہﮐﺎﺗ ﮟﻴﺋﺎﺟ ﮯﻳد اوﺮﮐ (2۔2)"-ﻮه ﺖﻗو ﮦدﺎﻳز ﮯﺳ [lә(r)kәʊ] [neI] [prInsIpΛl] [sɒhIb] [kәʊ] [də(r)khәʊɒst] [kI] [hɒmɒreI] [Imti:hɒnɒt] [ʤΛldi] [kərvɒ] [dIyeI] [ʤɒa:eIñ] [tɒkeI] [bɒd] [meIñ] [prɒjǝct] [kǝ(r)neI] [KeIlIyeI] [hɒmɒreI] [pɒs] [zIyɒdɒ] [seI] [zIyɒda] [vΛkt] [hәʊ].
+			Students submitted application to the Principal “our exams should be arranged earlier so that we will have maximum time for our project” In 2.2, following the number information, the antecedent for ےرﺎﻤه ([hɒmɒreI]) will be ںﻮﮐﮍﻟ ([lә(r)kәʊ]).
+			So, the remaining candidate ﻞﭙﺴﻧﺮﭘ ﺐﺣﺎﺻ ([prInsIpΛl] [sɒhIb]) is ruled out on the basis of number mismatch.
+			Here is another example in which antecedents for third person anaphoric devices are found on the basis of morphological and lexical filters.
+			In the following discourse, antecedent for third person AD ﮦو ([vǝƱh]) is singular, feminine noun (ہﻴﺳﺪﻗ ﻮﻧﺎﺑ -ﻞﻴﺑﺮﻣا)(2۔5) -ﮟﻴه ﮯﺘﮕﻧﺎﻣ ﺎﮔﻮﭼ ﺎﮐ ﺮﮕﺟ [fɒtImɒ]!
+			[tʊmhɒri] [yɒdǝƱñ] [kɒ] [kIyɒ] [kə(r)ʊñ]?
+			[ghǝƱsəleI] [bʊt] [ʊr] [kə(r)] [kɒhi:ñ] [nɒ] [kɒhi:ñ] [ʧɒleI] [ʤɒteI] [hæñ] [leIki:n] [tʊmhɒreI] [a:tɒ] [kə(r)dɒ] [bʊt] [tәʊ] [sʊbh] o [∫ɒm] [xƱneI] [ʤIgə(r)] [kɒ] [ʧәʊgɒ] [mɒñgteI] [hæñ] Fatima!
+			What should I do with your memories?
+			Every thing vanishes with the passage of time but your memories are like unripe grain which needs my blood to flourish.
+			In 2.4, the word پﺁ ([a:p]) refers to topicalized structure ﺮﻬﮐ حﺎﺻب ([khə(r)] [sɒhIb]).
+			Similarly, in discourse 2.5 ADs ﯼرﺎﻬﻤﺗ ([tʊmhɒri])andےرﺎﻬﻤﺗ ([tʊmhɒreI]) refer to ہﻤﻃﺎﻓ ([fɒtImɒ]).
+			It must be noted that whenever topicalized structures appear in the Urdu discourses these become preferred antecedents for second person anaphoric devices.
+			2.3 Count of occurrences.
+			phrase ﯽﺑ ﯽﺑ ﻞﻀﻓ [fΛzǝl ] [bIbI] ) since the It can be the case that in a particul ar discour se if a terminal of sentence is ﮯه ﯽﺘﮨﺎﭼ ([ʧɒhti] [hæ]).
+			ےﺮﺳود ﮯﮐ ناﺪﻧﺎﺧ ﮯﻧ سا ﻮﺗ ﺎﻴﻟ ﺮﮐ ہﻠﺼﻴﻓ ہﻳ ﺐﺟ ﮯﻧ ﯽﺑ ﯽﺑ ﻞﻀﻓ ںؤﺎﮔ ےرﺎﺳ ﻮﺗ ںﻮﻳ-ﮯه ﯽﺘﮨﺎﭼ ﺎﻨهﮍﭘ ﯽﻬﺑ ﮦو ہﮐ ﺎﻳﺎﺘﺑ ﯽﻬﺑ ﻮﮐ داﺮﻓا ﯽﮑﺳا ﻮﮑﺳا ﮟﻴﻣ ﮯﻠﻣﺎﻌﻣ سا ﻦﮑﻴﻟ ﮯﻬﺗ ﮯﺗﺮﮐ تﺰﻋ ﺖﮩﺑ ﯽﮑﺳا ﮯﻟاو certain NP appears more frequently then it will be the potential antecedent for pronouns appearing in that text.
+			For example, consider the following discourse -ﺊﮔ ﯽﮐ ﺶﺷﻮﮐ ﯽﮐ ﮯﻧﺎﻬﺠﻤﺳ ﮯﺳ ﮯﻟاﻮﺣ ﮯﮐ ںﻮﻴﭽﺑ (2۔3) راﺪﺒﻧﺎﺟ ﺮﻴﻏ ﮏﻳا ﻮﭩﻨﻣ-ﮟﻴﮨ تﺎﺣﻮﺟو ﺊﮐ ﯽﮑﺳا ، ﺎﻴﮔ ﺎﺗﺮﺑ ﺎﻔﺧا ﮯﺳ ﻮﭩﻨﻣ (قﻼﺧا نﺎﻤﻌﻧ -ﮦزﺎﻴﻤﺧ) -ﺎﻬﺗ ﺐﻳدا ﮯﺳ ﯽﻣﻼﮐ ﺰﻴﺗ روا ﮯﻳور ﮯﮐ سا ﺐﻳدا ﺮﺻﺎﻌﻣ ﮯﮐ ﻮﭩﻨﻣ [fΛzǝl] [bIbI] [neI] [ʤΛb] [yǝh] [fæslɒ] ۔ﮯﻬﺗ ںﻻﺎﻧ ﯽﺷﻮﻧ باﺮﺷ ﻼﻬﮐ ﻢﻠﻬﮐ -ﺎﻬﺗ ﮦﺪﻳﺪﻨﺴﭘﺎﻧ ﮦوﮯﺳ ہﺟو ﯽﮐ ﻮﭩﻨﻣ [kǝ(r)] [lIyɒ] [tǝƱ] [Ʊs] [neI] [xɒndɒn] [keI] ﮯﻧ تﺎﻣﺪﻘﻣ ﮯﮐ ﯽﺷﺎﺤﻓ ﮯﭘ ردﮯﭘﺮﭘ ﮯﺳا ہﻘﺛ ںﻮﮔﻮﻟ ﯽﮐ ﮟﻴﻣ ﺮﻈﻧ [dǝƱsɒreI] [Λfrɒd] [kǝƱ] [bhi] [bɒtɒyɒ] [kǝh] نﻮﻌﻠﻣﺎﻬﺗ ﺎﻳد ﺎﻨﺑ (2۔6) [vǝƱh] [pǝ(r)hnɒ] [ʧɒhti] [hæ].
+			[yƱñ] [tǝƱ] [sɒreI] [gɒƱñ] [vɒleI] [Ʊski] [bɒhƱt] [Izǝt] [kǝ(r)teI] [theI] [lækIn] [Is] [mƱɒmɒleI] [meIñ] [ƱskǝƱ] [Ʊski] [bΛʧIyƱñ] [keI] [hɒvɒleI] [seI] [sΛmʤɒneI] [ki] [kǝƱ∫I∫] [ki] [gɒi].
+			When Fazal Bibi decided she informed other family members that she also wants to study.
+			Although, she was respectable for the whole village but in this matter she was advised keeping in view her daughters.
+			(ﯽﮔﺎﻧ ﺲﻴﻧا -ﯽﻧﺎﮩﮐ ﯽﮐ ﻮﭩﻨﻣ ﻦﺴﺣ تدﺎﻌﺳ) [mΛntƱ] [seI] [Λxfɒ] [bə(r)tɒ] [gIyɒ].
+			[Iski] [kɒi] [vɒʤʊhɒt] [hæñ].
+			[mΛntu:] [ǝk] [gheIr] [ʤɒnIbdɒr] [ә|di:b] [thɒ] [mΛntƱ] [keI] [mɒa:sIr] [ә|di:b] [ʊskeI] [rɒvIyeI] [ɒәʊr] [teIz] [kɒlɒmi] [seI] [nɒlɒñ] [theI].
+			[khʊlΛm] [khʊlɒ] [∫ɒrɒb] [nәʊ∫i] [ki] [vΛʤhɒ] [seI] [vәʊh] [nɒpɒsΛndIdɒ] [thɒ].
+			[mΛntƱ] [pə(r)] [pæ] [də(r)] [pæ] [fɒhɒ∫i] [keI] [mu:kΛdmɒt] [neI] [ʊseI] [sΛkɒ] [lәʊgәʊn] [ki] [nΛzə(r)] [meIñ] [mΛlƱ:n] [bɒnɒ] [dIyɒ] [thɒ].
+			Anger was shown to Muntoo.
+			It has several reasons.
+			Muntoo was an unbiased writer.
+			Due to his aggressive attitude, his fellows were always angry with him.
+			He was not liked because he used to drink openly.
+			Due to continuous court cases regarding obscenity, he was not liked by gentlemen community.
+			Here the proper noun ﻮﭩﻨﻣ ([mΛntƱ]) appears repeatedly.
+			So, on the basis of repetition, it will be the potential antecedent for most of personal pronouns e.g. ﮦو ([vәʊh]),ﮯﺳا ([ʊseI])and ﮯﮑﺳا ([ʊskeI]) appearing in the above text.
+			2.4 Section headings.
+			2.5 Distance.
+			Distance plays an important role in finding the antecedents.
+			For each anaphoric device such as ﮏﺳا ،ﻮﮑﺳا ،ﮯﺳا ، سااا ،نا ،ﯽﮑﺳا ،نﮎا ﯽﮑﻧا ،([Ʊs], [ƱseI], [ƱskǝƱ] [Ʊskɒ] [Ʊski] [Ʊn], [ʊnkɒ], [Ʊnki]), preference is given to the nearest object present in the same or immediate previous sentence.
+			Consider following discourse رﻮﻧا ﺮﮐ ﭻﻨﮩﭘ ﺐﻳﺮﻗ ﮯﮐ ﻞﻴﻬﺟ ﮏﻳا ﺪﻌﺑ ﺮﻳد ﯼڑﻮﻬﺗ ﮯﺳ بﺎﺘﻓﺁ عﻮﻠﻃ ﻮﮐ ﮉﻧاﺮﮕﻴﻟ ﮯﻧ سا روا ﺎﻳد ﻢﮑﺣ ﺎﮐ ﮯﻨﮐر ﻮﮐ ںﻮﻴﻬﺗﺎﺳ ﮯﻨﭘا ﮯﻧ ﯽﻠﻋ ﮯﺳ ںﻮﻠﻴﻬﺗ ﮯﻧ ںﻮﻴهﺎﭙﺳ ﺾﻌﺑ -ﺎﻳد ﺎﭩﻟ ﺮﭘ ﻦﻴﻣزﺮﮐ رﺎﺗا ﮯﺳ ےڑﻮﻬﮔ ﮯﮐ ﻞﻴﻬﺟ ﮦو روا ﮟﻴﮐ ﻢﻴﺴﻘﺗ ﮟﻴﻣ ںﻮﻴﻬﺗﺎﺳ روا ﮟﻴﻟﺎﮑﻧ ںﺎﻴﭨور ﯽﺳﺎﺑ ﺎﺘﻬﮐر ہﺑﺮﺠﺗ ﺎﮐ ﯽﺣاﺮﺟ ﯽﻬﺗﺎﺳ ﮏﻳا ﺎﮐ ﯽﻠﻋ رﻮﻧا -ﮱﮔ ہﻬﭩﻴﺑ ےرﺎﻨﮐ Section headings get high preference to become ﺪﻌﺑ ﮯﮐ ﮯﻧﺮﮐ ہﻨﻴﺋﺎﻌﻣ ﺎﮐ ﻢﺧز ﮯﮐ ﮉﻧاﺮﮕﻴﻟ ﺮﮐ لﻮﻬﮐ ﯽﭩﭘ ﮯﻧ سا -ﺎﻬﺗ antecedents for most of personal pronouns in Urdu ﻢﺧز ﮯﮐ لﺎﮑﻧ ﯽﻟﻮﮔ ﮟﻴﻣ ﻮﺗ ﮟﻳد تزﺎﺟا پﺁ ﺮﮔا" ﺎﮩﮐ ﮯﺳ ﯽﻠﻋ رﻮﻧا discourses.
+			Consider the following example ﺮﮔا" -ﺎﮩﮐ ﺪﻌﺑ ﮯﮐ ﮯﻨﻬﮐﺮﭘ ﺾﺒﻧ ﯽﮐ ﮉﻧاﺮﮕﻴﻟ ﮯﻧ سا "-ںﻮه ﺎﺘﻳد غاد ﺮﺘﺧا ﺐﻴﻌﺷ ٹﻮﭨ راﻮﻠﺗ روا) (2۔8) | "-ﺎﺗﻮه نﺎﺳﺁ مﺎﮐ اﺮﻴﻣ ﻮﺗﺎﺗﻮه ہﻧ ﺰﻴﺗ ﺎﻨﺗا رﺎﺨﺑ ﺎﮑﻧا (ﯼزﺎﺠﺣ ﻢﻴﺴﻧ -ﺊﮔ ﺪﻨﻴﮔ ﻮﺟ ﮟﻴﮨ ﮯﮑﭼ ﻦﺑ ﻻڈﻻ ﺎﻬﮐﻮﻧا ﮦو ﮱﻠﻴﮐ ڈرﻮﺑ ﭧﮐﺮﮐ ﺮﺘﺧا ﺐﻴﻌﺷ ﮟﻴه ﺮﻟؤﺎﺑ ﺪﺣاو ﮦو -ﮟﻴهﮯﺗﺮﮐ ﺎﻨﻤﺗ ﯽﮐ ﺪﻧﺎﭼ ۓﺎﺠﺑ ﯽﮐ ﮯﻨﻠﻴﻬﮐ ﮯﺳ ﭧﻴﺑ ﮦو -ﮯه ﺎﻴﮐ مارﺁﺮﮐ ﻮه ﭧﻓ نا ﺎﻨﺘﺟ ﯽﻠﻴﻬﮐ ﮟﻴﮩﻧ ﭧﮐﺮﮐ ﯽﻨﺗا ﮯﻧ ںﻮﮩﻨﺟ ،ﮟﻴه ﯼڑﻼﻬﮐ ﺖﻤﺴﻗ شﻮﺧ ﺖﻳﺎﮩﻧﮯﺳ ظ ﺎﺤﻟ ﮯﮐ ﺖﻴﻟﻮﺒﻘﻣ روا تﺮﮩﺷ [tɒlƱeI] [ә ftɒb] [seI] [thәʊri] [deIr] [bɒd] [ɒeIk] [ʤhi:l] [keI] [kɒrIb] [pәʊñʧ] [kə(r)] [Λnvə(r)] [Λli] [neI] [ɒpneI] [sɒthIyәʊñ] [kәʊ] [rʊkneI] [kɒ] [hʊkum] [dIyɒ] [ɒәʊr] [ʊsneI] [ləgrɒñd] [kәʊ] [gәʊreI] [seI] [ʊtɒr] [kə(r)] ﮯﮑﺴﺟ -ﮟﻴه ﺮﻟؤﺎﺑ ﻦﻳﺮﺗ ﺰﻴﺗ ﮯﮐ ﺎﻴﻧد ﮦو ہﮐ ﮯه ہﻳ ﯽﺑﻮﺧ ﺪﺣاو ﯽﮑﺴﺟ [zɒmIñ ] [pə(r) ] [lItɒ] [dIyɒ] . [bɒz] [sIpɒy әʊñ] ﯽﻠﻤﻴﻓ") (2۔7) -ﮟﻴه ﮯﺗﺎﺟ ۓﺎﻬﭨا ﮦدﺎﻳز ﯽﻬﺑﮯﺳ ناﺮﻤﻋ ےﺮﺨﻧ ( 2 0 0 6 ن ﻮ ﺟ " ﻦ ﻳ ﺰ ﮕ ﻴ ﻣ [∫Ʊæb] [Λxtə(r )] [neI] [th eIlәʊñ] [se I] [bɒ si] [rә ʊtiyɒñ] [nIkɒli:ñ] [ɒәʊr] [sɒthIәʊñ] [meIñ] [tΛksIm] [ki:ñ] [ɒәʊr] [vәʊh] [ʤhi:l] [keI] [kɒrIb] [bæIth] [g ɒyeI] [ә| nvə(r)] [ɒ li] [k ɒ] [ә k] [∫Ʊæb] [Λxtə(r)] [krIkIt] [bƏƱrd] [keIlIyeI] [vəƱh] [anƏƱkhɒ][lɒdlɒ] [bΛn] [ʧƱkeI] [hæñ] [ʤƏƱ] [geInd] [bæt] [seI] [kheIlneI] [ki] [bɒʤæI] [ʧɒnd] [ki] [tɒmΛnnɒ] [kə(r)teI] [hæñ].
+			[vəƱh] [vɒhid] [bƏƱlə(r)] [hæñ] [ʤInhƏƱñ] [neI] [Itni] [kIrkət] [nɒhIñ] [kheIli] [ʤitna:] [ΛnfIt] [hƏƱ] [keI] [a:rɒm] [kIyɒ] [hæ].
+			[vəƱh] [∫ƏƱhrΛt] [ɒƏƱr] [mΛkbʊlIət] [keI] [lIhɒz] [seI] [nIhɒyΛt] [xƱ∫] [kIsmΛt] [khIlɒri] [hæñ] [ʤIski] [vɒhId] [khʊbi] [yəh] [hæ] [kəh] [vәƱh] [dʊnyɒ] [keI] [teIz] [tɒri:n] [bƏƱlə(r)] [hæñ].
+			[ʤIskeI] [nΛkhreI] [Imrɒn] [seI] [bhi] [zIyɒdɒ] [ƱthɒeI] [jɒteI] [hæñ].
+			Shoaib Akhter Shoaib Akhter has become a burden over the cricket board.
+			He is the only bowler in Pakistani cricket team who has not played much cricket rather always took rest because of being unfit.
+			He is lucky to become popular only because he is the fastest bowler in the world.
+			He is given more importance even compared to Imran.
+			In the above discourse, ﺮﺘﺧا ﺐﻴﻌﺷ ([∫Ʊæb] [Λxtə(r)])is section heading, so it will be the preferred antecedent for most of anaphoric devices appearing in the discourse and all other NPs will [sɒthi] [ʤɒrɒhi] [kɒ] [tɒʤʊrbɒ] [rΛrktɒ] [thɒ] [ʊsneI] [pΛti] [khәʊl] [kə(r)] [lәgrɒñd] [keI] [zΛxΛm] [kɒ] [mƱ:ænɒ] [kə(r)neI] [keI] [bɒd] [Λnvə(r)] [Λli] [seI] [kɒhɒ] “[agə(r)] [a:p] [IʤɒzΛt] [deIñ] [tәʊ] [mæñ] [gәʊli] [nIkɒl] [kə(r)] [zɒxΛm] [dɒg] [deItɒ] [hʊñ].
+			[ʊsneI] [lәgrɒñd] [ki] [nΛbz] [pɒrΛkhneI] [keI] [bɒd] [kɒhɒ] “[agə(r)] [Inka] [bʊ:xɒr] [Itnɒ] [teIz] [nɒ] [hәʊtɒ] [tәʊ] [meIrɒ] [kɒm] [a:sɒn] [hәʊtɒ]” A little after the sun rise, when they reached the lake Anwer Ali ordered his colleagues to stop and laid Legrand on the ground taking him from horseback.
+			Some soldiers took the dried bread from bags and distributed them among other soldiers and sat on the bank of the lake.
+			One friend of Anwer Ali had the experience of surgery.
+			He asked Anwer Ali after inspecting the wounds of Legrand, “ if you permit me , I can do the surgery after taking out the bullet from his body”.
+			The friend further added, “Had his fever not this much the job would have been easier”.
+			In discourse 2.8, the preferred antecedents for ﮯﻧ سا ([ʊsneI]) are lying in the same or in the immediate previous sentence.
+			Similarly, in (2.3), the antecedents for third person ADs be ruled out to become the potential antecedents.
+			ﯽﮑﺳا ،ﻮﮑﺳا ،ﮯﺳا ،ﮯﻧ سا ([ʊsneI], [ʊseI], [ʊskǝʊ], [ʊski]) are resolved on the basis of distance.
+			2.6 Subject and object preference.
+			In Urdu, especially for the resolution of personal ADs (first person, second person and third person), subject and object preference plays a very important role.
+			Consider the example ﺎﻬﺗ ﺎﻬﮑﻟﮯﻧ ﯽﻠﻋ داﺮﻣ ۔ﺎﻴﮐ عﺮﺷ ﺎﻨهﮍﭘ نﻮﻤﻀﻣ ﺎﮐ ﻂﺧﮯﻧ ﯽﻠﻋ رﻮﻧا ﮯﻨﺋﺎﻌﻣ ﮯﮐ ںﻮﻴﮐﻮﭼ ﯽﻋﺎﻓد ﯽﮐ ﺪﺣﺮﺳ ﮟﻴﻣ ۔ﻢﮑﻴﻠﻋ مﻼﺳا نﺎﺟ ئﺎﻬﺑ"۔ ہﻧ باﻮﺟ ﺎﮐ طﻮﻄﺧ ﮯﮐ نﺎﺟ ﯽﺑﺎﻬﺑ روا پﺁﮯﻴﻠﺳا ،ﺎﻬﺗ اﻮه ﺎﻴﮔ ﮯﻴﻠﻴﮐ ﮯﻧﺁ ﺮﻬﮔ ﮟﻴﻣ ﻦﮑﻴﻟ ﮯه ﺊﮔ ﻞﻣ ﯽﭩﻬﭼ ﯽﮐ ﮯﻨﻴﮩﻣ ﮏﻳا ﮯﻬﺠﻣ ۔ﺎﮑﺳ ےد ٹﻮﭨ راﻮﻠﺗ روا) (2۔9) ںﻮهﺎﺘهﺎﭼ ﺎﻧﺎﺟ سﺎﭘ ﮯﮐ نﺎﺧ ﺮﺒﮐا ﺎﭽﭼ ﮯﻠﮩﭘ ﮯﺳ (ﯼزﺎﺠﺣ ﻢﻴﺴﻧ -ﺊﮔ [Λnwә(r)] [Λli] [neI] [xΛt] [kɒ] [mΛzmƱn] [pә(r)nɒ] [∫Ʊrʊ] [kIyɒ].
+			[mʊrɒd] [Λli] [neI] [lIkhɒ] [thɒ] “[bhɒi] [ʤɒn]!
+			[ə|sɒleImuleIkʊm] [mæñ] [sǝ(r)həd] [ki] [dIfɒyi] [ʧәʊkIyʊñ] [keI] [mƱæneI] [keIlIyeI] [gIyɒ] [hʊvɒ] [thɒ] [IslIyeI] [a:p] [ɒәʊr] [bhɒbi] [ʤɒn] [keI] [xɒtƱt] [kɒ] [ʤɒvɒb] [nɒh] [deI] [sΛkɒ].
+			[mu:ʤheI] [æk] [mɒhIneI] [ki] [ʧƱti] [mIl] [gɒi] [hæ] [lækIn] [mæñ] [ghə(r)] [a:neI] [seI] [peIhleI] [ʧΛʧa:] [ə|kə(r)] [xɒn] [keI] [pɒs] [ʊmru:] [neI] [Λmɒrɒ] [kәʊ] [kɒhɒ] “[a:әʊrΛt] [kәʊ] [kәhnɒ] [tʊmhæñ]/ tʊumkәʊ] [nɒʤɒ∫i] [kɒ] [teIl] [lɒgɒeI] [ʤәʊ] [dʊ:sɒrɒ] [kәʊi] [nɒhIñ] [lɒgɒ][sΛktɒ]” Umroo asked Ammara “Ask the woman to massage you with the oil of Najashi that is not possible by any other”.
+			"ﮯه ﺎﻴﮐ مﺮﺟ ﮯﺳ ﯼرﺎﻴﺷﻮه روا ئﺎﻔﺻ ﺖﮩﺑ ﮯﻧ ﻢﺗ"-ﮯﺳ مﺰﻠﻣ ﺞﺟ ﮯﻧ ںﻮﻬﻨﺠںﻴه ﯽﻣدﺁﮯﻠﮩﭘ پﺁ بﺎﻨﺟ ہﻳﺮﮑﺷ" -ﮯﺳ ﺞﺟ ﺎﺑاﻮﺟ مﺰﻠﻣ (2۔12) "-ﯽﮐ ﻒﻳﺮﻌﺗ ﯽﮐ ﻦﻓ ےﺮﻴﻣ [ʤΛʤ] [mʊlzIm] [seI] “[tʊm] [neI] [bɒhʊt] [sɒfɒyi] [ɒəʊr] [həʊ∫Iɒri] [seI] [ʤʊrm] [kIyɒ] [hæ].
+			[mʊlzIm] [ʤavabΛn] [ʤΛʤ] [seI] “[∫ʊkrIɒ] [ʤɒnɒb] [a:p] [pəhleI] [a:dmi] [hæñ] [ʤInhәʊñ] [neIn] [mæreI] [fΛn] [ki] [tɒrIf] [ki]” Judge said to the accused, “you did the crime very professionally and cleverly”.
+			Accused replied “thanks sir, you are the first person who praised my expertise”.
+			Again, 2.10, 2.11 and 2.12 are in the form of direct speech.
+			In all above discourses, second person ADs پﺁ ﯼرﺎﻬﻤﺗ ،ارﺎﻬﻤﺗ ،ﮟﻴﻬﻤﺗ ،ﻮﮑﻤﺗ ،ﻮﺗ ،ﻢﺗ ([tʊm], [tʊ], [tʊmkəʊ], [tʊmhæñ], [tʊmhɒrɒ], [tƱmhɒri],[a:p]) have direct [jɒnɒ] [ʧɒhtɒ] [hʊñ] Anwer Ali started reading the letter.
+			Murad Ali had written “my objects such as ﺞﺟ ،مﺰﻠﻣ ،ﮦرﺎﻤﻋ ([Λmɒrɒ] brother!
+			Regards, I have gone for the inspection of defense posts.
+			Therefore, I was unable to send reply to yours and your Mrs. letters.
+			I have got leave for one month.
+			However, before coming home I want to visit uncle Akber Khan” Discourse 2.9, consists of frequent use of first person anaphoric devices ﮟﻴﻣ ،ﮯﻬﺠﻣ ([mu:ʤheI], [mæñ]).
+			Discourse 2.9 is in the form of direct speech.
+			In such type of discourse, for resolution of first person anaphoric devices highest, preference will be given to subject of the main clause i.e. the clause just before the reported speech starts.
+			داﺮﻣ ﯽﻠﻋ ([mƱrɒd] [Λli]) is the subject of the main clause so all first person anaphoric devices will refer to ﯽﻠﻋ داﺮﻣ ([mƱrɒd] [Λli]).
+			Similarly, in case of second person anaphoric devices, object preference will be the highest.
+			ہﻬﺗﺎﺳ ےر ﺎﻬﻤﺗ ﮟﻴﻣ -ﻮه ﮯهر وﺮں ﻮﻴﮐ ﻢﺗ" – ﺎﮩﮐ ﮯﺳ جار ﮯﻧ ﺎﻳﺮﭘ (2۔10)"-ﯽﮔ ںؤﺎﻬﺒﻧ ہﻬﺗﺎﺳ ارﺎﻬﻤﺗ ہﺸﻴﻤه -ںﻮه [prIya] [neI] [rɒʤ] [seI] [kɒhɒ] “[tʊm] [mʊlzIm], [ʤΛʤ])of the main clause as their potential antecedents.
+			Here is an example in which for the resolution of third person anaphoric device ﮦو ([vǝƱh]), potential antecedents are found using subject preference filter.
+			ﺎﮐ ںﻮﻳرﺎﻴﺗ ﯽﮐ نﺎﻄﻠﺳ ﻮﭙﻴﭨ ﮱﻠﻴﮐ ﮓﻨﺟ ﻦﮐ ہﻠﺼﻴﻓ ﻮﮐ ﺲﻟاﻮﻧرﺎﮐ ڈرﻻ ﺎﻨﻳد لﻮﻃ ﺎﮐ ﮓﻨﺟ ﮟﻴﻣ تﻻﺎﺣ ﮦدﻮﺟﻮﻣ ہﮐ ﺎﻬﺗ ﺎﺘﻧﺎﺟ ﻪﻳ ﮦو -ﺎﻬﺗ ﻢﻠﻋ ےرﺎﺑﮯﮐ تﻻﺎﺣ ﮯﻟاو ﮯﻧﺁ ﮯﮐ ﮓﻨﺟ ﮦو -ﮯه ﺎﺘﮑﺳ ﻮه ﮦد نﺎﺼﻘﻧ (ﯼزﺎﺠﺣ ﻢﻴﺴﻧ -ﺊﮔ ٹﻮﭨ راﻮﻠﺗ روا)(2۔13) -ﺎﺘﮕﻟ ﮯﻧﻮه نﺎﺸﻳﺮﭘ ﻮﺗ ﺎﺘﭼﻮﺳ [lɒrd] [kɒrnIvɒlIs] [kəʊ] [fæslɒ] [kʊn] [ʤΛg] [keIlIyeI] [ti:pƱ] [sʊltɒn] [ki] [tIyɒrIyʊ:ñ] [kɒ] [Ilm] [thɒ].
+			[vəʊh] [yəh] [ʤɒntɒ] [thɒ] [kəh] [məʊʤʊdɒ] [hɒlɒt] [meIñ] [ʤΛg][kɒ] [tƱ:l] [deInɒ] [nʊksɒn] [dəh] [həʊ] [sΛktɒ] [hæ].
+			[vəʊh] [ʤΛñg] [keI] [a:neI] [vɒleI] [hɒlɒt] [keI] [bɒreI] [səʊʧtɒ] [təʊ] [prI∫ɒn] [həʊneI] [lΛgtɒ].
+			Lord Kernevalis was aware of the preparations of Tipu Sultan about the final war.
+			He knew that it will be quite dangerous to lengthen the war and he was worried to think about the results of the war.
+			[kIyʊñ] [rәʊ] [rɒheI] [hәʊ] [mæñ] [tʊmhɒreI] Here, terminals of the sentence are ﺎﻬﺗ ،ﺎﺘﮕﻟ [sɒth] [hʊñ] [hɒmeI∫ɒ] [tʊmhɒrɒ] [sɒth] [nIbhɒʊñ] [gi]”.
+			Priya said to Raj,“Why are you weeping, I am with you and will ([lΛgtɒ], [thɒ]) that are used for personal singular and masculine NP, but the problem is that always be with you” ﻮﭙﻴﭨ ، ﺲﻟاﻮﻧرﺎﮐ ڈرﻻ([lɒrd] [kɒrnIvɒlIs], ﻞﻴﺗ ﺎﮐ ﯽﺷﺎﺠﻧ ﻮﮑﻤﺗ / ﮟﻴﮩﻤﺗ ﺎﻨﮩﮐ ﻮﮐ ترﻮﻋ"-ﺎﮩﮐ ﻮﮐ ﮦرﺎﻤﻋ ﮯﻧ وﺮﻤﻋ (2۔11`) (ﺮﺒﻤﻧ لﻮﺳر -شﻮﻘﻧ) "-ﺎﺘﮑﺳ ﺎﮕﻟ ﮟﻴﮩﻧ ﯽﻬﺑ ئﻮﮐ اﺮﺳود ﻮﺟ-ۓﺎﮕﻟ ([tIpʊ]) both are personal, singular and masculine NPs.
+			So the question arises that ﮦو ([vəʊh]) refers to which NP in the preceding sentence.
+			Here, the subject preference will be high.
+			So, ﮦو ([vəʊh]) refers to ﺲﻟاﻮﻧرﺎﮐ ڈرﻻ.
+			2.7 NP followed by certain words.
+			Certain NPs in Urdu discourse are followed by words فﺮﻃ ﯽﮐ ،ےرﺎﺑﮯﮐ ،ﻖﻠﻌﺘﻣﮯﮐ ([keI][mʊtalək]], [keI][bareI], [kI] [tǝ(r)f]).
+			In such circumstances, these NPs will be given highest priority to become the antecedents.
+			For example, ﺎﮐ ﺖﺳﺎﻴﺳ ﻮﮑﺳا/ﮯﺳا ہﮐ-ﺎﻳﺎﺘﺑ ےرﺎﺑ ﮯﮐ ﯽﭩﻴﺑ ﯽﻨﭘا ﮯﻧرﺪﺑﺮﻴﮕﻧﺎﮩﺟ زﺮﭩﺳﺎﻣ ﮯﻧ سا-ﮯه قﻮﺷ ﺎﮐ ﻢﻴﻌﺗ ﯽﻠﻋا ﮯﺳا ںﺎﮨ، ﮟﻴﮩﻧ ق ﻮﺷ ئﻮﮐ (2۔14)-ﮯه ﺎﻬﮐرﺮﮐ ﮦدارا ﺎﮐ ﮯﻧﺮﮐ (Interview with Jehangir Badar) [ʤɒhɒñgi:r] [bΛdə(r)] [neI] [Λppni] [beIti] [keI] [bɒreI] [btɒyɒ]] [kәh] [ʊseI/ʊskәʊ] [sIyɒs∧t] [kɒ] [kəƱei] [ʃəƱk] [nɒhIñ] [hɒñ] [ʊseI] [a:lɒ] [ta:lIm] [kɒ] [∫əƱq] [hæ].
+			[ʊsneI] [ma:stə(r)z] [kә(r)neI] [ka:] [æra:dha:] [kə(r)] [rΛkhɒ] [hæ].
+			Jihangir Badder told about his daughter that she has no interest in politics, However, she is interested in higher education.
+			She has the intention to do her masters degree.
+			ﮦو ہﮑﻧ ﻮﻴﮐ ﯽﻬﺗ ﯽﮨر ﻮه نﺎﺑﺮﻗ ﮯﮐ ہﻬﮑﻳد ہﻬﮑﻳد فﺮﻃ ﯽﮐ ﯽﻤﻠﺳ ںﺎﻣ ﯽﻠﻬﺑ ﺖﮩﺑ/(2۔15)-ﯽﻬﺗ ﯽﮨر ہﻬﮐد [ma:ñ] [sΛlmɒ] [ki] [tǝ(r)f] [deIkh] [deIkh] [keI] [kƱrbɒn] [hǝƱ] [rahi] [thi] [kIyƱkǝh] [vǝƱh] [bɒhƱt] [bhΛli] [dhIkh] [rɒhi] [thi].
+			The Mother was looking towards Salma very lovingly since she seemed very beautiful.
+			It is the ﯽﻤﻠﺳ who is looking beautiful not the ںﺎﻣ ([ma:ñ]), since ﯽﻤﻠﺳ ([sΛlmɒ]) is followed by certain class of words.
+	
+	
+			An informal algorithm for the resolution of first person anaphoric devices is as follows: 1.
+			Examine the next clause in the discourse.
+			If no.
+			clause exists then finish.
+			2.
+			If the current clause consists of first person.
+			anaphoric devices then go to step-3 else go to step-1.
+			3.
+			Access the previous clause..
+	
+	
+			headings, noun phrase followed by certain words then assign weight to these filters else assign priority to noun or noun phrase appearing as a subject of the clause.
+	
+	
+			Similarly, an informal algorithm for the resolution of second person ADs is as follows: 1.
+			Examine the next clause in the discourse.
+			If no.
+			clause exists then finish.
+			2.
+			If the current clause consists of second person.
+			anaphoric devices then go to step-3 else go to step-1.
+			3.
+			Access the previous clause..
+			4.
+			If the current clause consists of topicalized.
+			structures then assign weight to these filters else assign priority to noun or noun phrase appearing as an object of the clause.
+			5.
+			If no object exists then go to step-3..
+			In the same way an informal algorithm for the resolution of third person ADs is as follows: 1.
+			Examine the next clause in the discourse and if.
+			no clause exists then go to step-9.
+			2.
+			If the current clause consists of third person.
+			anaphoric devices then go to step-3 else go to step 1.
+			3. Access the previous clause..
+			4.
+			Apply the lexical and morphological filters to.
+			assign the weight to nouns or noun phrases that follow the morphological and lexical filters.
+			5.
+			If current clause consists of section headings or.
+			topicalized structures or noun phrase preceded / followed by certain class of words then assign the weight of these filters.
+	
+	
+			phrase as subject and objects (direct, indirect) then assign the weight value for these filters.
+	
+	
+			noun phrase as subject, object or contains no section headings, topicalized structures and noun phrase preceded by certain words then go to step- 3.
+	
+	
+			and increment their corresponding weights for each repetition.
+	
+	
+			Algorithms are implemented in Visual C++.
+			Implemented algorithm gets the input that is constructed manually.
+			For this purpose each discourse is divided into clauses and is stored as Unicode text file for input to anaphora resolution program.
+			For better understanding, consider the example of discourse 2.8 and its division into clauses.
+			clause(sub(ﯽﻠﻋ رﻮﻧا,sng,msc),dob(ںﻮﻴﻬﺗﺎﺳ,plu,msc),vb(sng,msc)).
+			clause(sub(سا),dob(ﮉﻧاﺮﮕﻴﻟ,sng,msc),vb(sng,msc)).
+			clause(sub(ںﻮﻴهﺎﭙﺳ,plu,msc),dob(ںﺎﻴﭨور,fem,plu),vb(plu,msc)).
+			clause(sub(nill),dob(ںﻮﻴﻬﺗﺎﺳ,plu,msc),vb(plu,msc)).
+			clause(sub(ﮦو),dob(ﻞﻴﻬﺟ,sng,fem), vb(plu,msc)).
+			clause(sub((ﯽﻬﺗﺎﺳ,sng,msc),dob(ﯽﺣاﺮﺟ,sng,msc),vb(sng,msc)).
+			clause(sub(سا),dob(ﮉﻧاﺮﮕﻴﻟ,sng,msc),vb(sng,msc)).
+			clause(sub(ﯽﻬﺗﺎﺳ,sng,msc),dob(ﯽﻠﻋ رﻮﻧا,msc,sng),vb(sgn,msc)).
+			clause(sub(پﺁ),dob(nill),vb(plu,msc)).
+			clause(sub(ﮟﻴﻣ),dob(ﻢﺧز,msc,sng),vb(sng,msc)).
+			clause(sub(سا),dob(ﮉﻧاﺮﮕﻴﻟ,sng,msc),vb(sng,msc)).
+			clause(sub(ﺎﮑﻧا),dob(رﺎﺨﺑ,msc,sng),vb(sng,msc)).
+			clause(sub(nill),dob(اﺮﻴﻣ),vb(sng,msc)).
+			Fig 1 Table-1, Table-2 and Table-3 show the order of weights assigned to various filters for the resolution of first person, second person and third person anaphoric devices.
+			The implemented algorithm aims to determine the efficiency in terms of accuracy and reliability of the proposed order of factors.
+			For this purpose various experiments were conducted over various text genres.
+			To evaluate the success rate of every experiment, precision is calculated as defined below.
+			The average length of each discourse in sentences was 46.
+			the highest weight for second person ADs.
+			Consider the following output (Fig-2) produced by anaphora resolution program, for the resolution of second person anaphoric device ﺎﮑﭘﺁ in the discourse 2.4, topicalized structure ﺐﺣﺎﺻ ﺮﻬﮐ gets high priority to become the antecedent.
+			Clause 1, SUB ( ﺎﮑﭘﺁ ) RESTO (2 ﺐﺣﺎﺻ ﺮﻬﮐ ) Fig 2 Again, in case of third person anaphoric devices weights as shown in Table-3 have been assigned in descending order (top - bottom).
+			It means the weight of section heading filter will be larger in value than that of subject filter.
+			Consider a noun or noun phrase which is section heading as well as a repeated noun and also lexical filter applies on it.
+			For this noun or noun phrase all the weights will be summed up.
+			A noun with highest weight will be given preference to become the antecedent for third person anaphoric device.
+			This is demonstrated by the following output generated for discourse (2.8) by our anaphora resolution system.
+			This discourse contains total 13 clauses from 0 – 12.
+			Clause 1 contains third person anaphoric device سا ([ʊs]) that is resolved to Precision = Number of correctly resolved anaphors / Number of anaphors ﯽﻠﻋ رﻮﻧا which is assigned weight 12 on the basis attempted to be resolved The results of the three experiments are as follows Experiment# Precision of lexical filter and distance preference, so, ںﻮﻴﻬﺗﺎﺳ is ruled out to become the antecedent since its weight is 1.
+			Similarly for the third person anaphoric device ﮦو, that appears in clause 4, antecedent with highest weight 50 is ںﻮﻴﻬﺗﺎﺳ.
+			By the same token, for the resolution of the first person anaphoric device اﺮﻴﻣ, preference has been given to 1 78% the noun ﯽﻬﺗﺎﺳ (Fig-2) that is the subject in the 2 80% 3 80% Table-1 shows that in case of first person anaphoric devices the priority has been assigned on the basis of section heading, noun phrase followed previous clause.
+			clause 1 , SUB ( سا ) RESTO ( 12 ﯽﻠﻋ رﻮﻧا )( 1 ںﻮﻴﻬﺗﺎﺳ ) clause 4 , SUB ( ﮦو ) RESTO ( 50 ںﻮﻴﻬﺗﺎﺳ )( 12 ﯽﻠﻋ رﻮﻧا )( 12 ںﻮﻴهﺎﭙﺳ )( 11 ﮉﻧاﺮﮕﻴﻟ )( 11 ںﺎﻴﭨور ) clause 6 , SUB ( سا ) RESTO ( ﯽﻠﻋ رﻮﻧا )( 12 ںﻮﻴﻬﺗﺎﺳ )( 7 ﮉﻧاﺮﮕﻴﻟ )( 7 ﻞﻴﻬﺟ )( 7 ﯽﻬﺗﺎﺳ ) clause 8 , SUB ( پﺁ ) RESTO (5 ﯽﻠﻋ رﻮﻧا )( 3 ںﻮﻴﻬﺗﺎﺳ )( 3 ﮉﻧاﺮﮕﻴﻟ )( 3 ﯽﻬﺗﺎﺳ )( 1 ںﺎﻴﭨور )( 1 ںﻮﻴهﺎﭙﺳ ) clause 9 , SUB ( ﮟﻴﻣ ) RESTO ( 14 ﯽﻬﺗﺎﺳ )( 6 ﮉﻧاﺮﮕﻴﻟ )( 2 ﻞﻴﻬﺟ )( 1 ںﻮﻴهﺎﭙﺳ )( 0 ںﺎﻴﭨور )( 0 ںﻮﻴﻬﺗﺎﺳ ) clause 10 , SUB ( سا ) RESTO ( 31 ﯽﻬﺗﺎﺳ )( 30 ﮉﻧاﺮﮕﻴﻟ )( 12 ںﻮﻴﻬﺗﺎﺳ )( 11 ﻢﺧز )( 7 ﻞﻴﻬﺟ )( 2 ںﻮﻴهﺎﭙﺳر) clause 11 , SUB ( ﺎﮑﻧا ) RESTO ( 49 ﮉﻧاﺮﮕﻴﻟ )( 30 ںﻮﻴﻬﺗﺎﺳ )( 13 ﯽﻬﺗﺎﺳ )( 8 ںﻮﻴهﺎﭙﺳ )( 7 ںﺎﻴﭨور ) by certain words and then subject.
+			It means that if no section heading or noun phrase followed by certain words are present then the subject in the clause 12 , DOB ( اﺮﻴﻣ ) RESTO ( 14ﯽﻬﺗﺎﺳ )( 10 ﮉﻧاﺮﮕﻴﻟ )( 7 Fig 3 ﯽﻠﻋ رﻮﻧا )( 2 ﻞﻴﻬﺟ )( 2 ﻢﺧز )( 2 رﺎﺨﺑ ) main or previous clause will be the potential antecedent for first person anaphoric devices.
+			Similarly, Table-2 for second person anaphoric devices, exhibits that weights will be assigned in descending order (left – right).
+			It means that the leftmost filter that is topicalized structure will get Algorithms fail to correctly resolve the anaphora for discourses as follows نا ﮯﻧ ںﻮﮩﻧا ﻮﺗ ﯽﮐ ﺖﺳاﻮﺧﺮﺑ ﺖﻣﻮﮑﺣ زاﻮﻧ ﮯﻧ فﺮﺸﻣ ﺰﻳوﺮﭘ (3۔15)-ﯽﮐ ﯼرﺎﺟ ﭧﻴﺷ جرﺎﭼ فﻼﺧ ﮯﮐ [pǝ(r)veIz] [mƱ∫Λrf] [neI] [nɒvɒz] [hɒkƱmǝt] [bǝ(r)kxƱɒst] [ki] [tǝƱ] [ƱnhǝƱñ] [neI] [ƱnkeI] [xIlɒf] [ʧɒrʤ] [∫i:t] [ʤɒri] [ki].
+			Pervaiz Musharaf when expelled Nawaz Government.
+			He issued the charge sheet against him.
+			In the above discourse, the anaphoric device ںﻮﮩﻧا ([ƱnhǝƱñ]) is resolved correctly to have antecedent فﺮﺸﻣ ﺰﻳوﺮﭘ ([pǝ(r)veIz] [mƱ∫Λrf]) on the basis of distance and subject preference filter but نا (ʊn]) is not resolved correctly to have antecedent زاﻮﻧ ([nɒvɒz]).
+			Table 1: Priority Order for First Person ADs S e c o n d P e r s o n A n a p h o r i c D e v i c e s P r i o r i t y O r d e r ( L e f t t o R i g h t ) ﰎ، ﻮﺗ [tʊ ], [tʊ m] T o p i c a li z e d S t r u c t u r e O b j e c t ﻮﮑﻤﺗ ،ﮟﻴﮩﻤ ﺗ [ t ʊ m h æ ñ ] , [ t ʊ m k ǝ ʊ ] T o p i c a li z e d S t r u c t u r e O b j e c t ﯼرﺎﮩ ﻤﺗ [tʊ mhɒ ri] T o p i c a li z e d S t r u c t u r e O b j e c t ارﺎﮩﻤ ﺗ [tʊ mhɒ rɒ] T o p i c a li z e d S t r u c t u r e O b j e c t ےرﺎ ﮩﻤﺗ [tʊ mhɒ reI ] T o p i c a li z e d S t r u c t u r e O b j e c t پﺁ [a: p] T o p i c a li z e d S t r u c t u r e O b j e c t ﻮﮑﭘﺁ [a:p kǝʊ ] T o p i c a li z e d S t r u c t u r e O b j e c t ﯽﮑﭘﺁ [a:p ki] T o p i c a l i z e d S t r u c t u r e O b j e c t ﺎﮑﭘﺁ [a:p kɒ] T o p i c a li z e d S t r u c t u r e O b j e c t ﮯﮑﭘﺁ [a:p keI] T o p i c a li z e d S t r u c t u r e O b j e c t Table 2: Priority Order for Second Person ADs Table 3: Priority Order for Third Person ADs 4 Conclusion.
+			One central question addressed in this paper is to determine the optimal order of the factors to find the preferred antecedents for the personal ADs in Urdu text.
+			Rule based algorithms for the resolution of personal anaphoric devices are presented which are capable of resolving these anaphoric devices with 7880% success rate in all kind of text genres.
+			This success rate can be increased with improvement in certain rules especially for third person anaphoric devices.
+	

@@ -1,0 +1,172 @@
+
+	
+		Sumo is a formalism for universal segmentation of text.
+		Its purpose is to provide a framework for the creation of segmentation applications.
+		It is called "universal" as the formalism itself is independent of the language of the documents to process and independent of the levels of seg­ mentation (e.g. words, sentences, paragraphs, morphemes...)
+		considered by the target applica­ tion.
+		This framework relies on a layered struc­ ture representing the possible segmentations of the document.
+		This structure and the tools to manipulate it arc described, followed by detailed examples highlighting some features of Sumo.
+	
+	
+			Tokenization, or word segmentation, is a fun­ damental task of almost all NLP systems.
+			In languages that use word separators in their writ­ ing, tokenization seems easy: every sequence of characters between two whitespaces or punctu­ ation marks is a word.
+			This works reasonably well, but exceptions are handled in a cumber­ some way.
+			On the other hand, there arc lan­ guages that do not use word separators.
+			A much more complicated processing is needed, closer to morphological analysis or part-of-speech tag­ ging.
+			Tokenizers designed for those languages arc generally very tied to a given system and language.
+			However, the gap becomes smaller when we look at sentence segmentation: a simplistic ap­ proach would not be sufficient because of the ambiguity of punctuation signs.
+			And if we consider the segmentation of a document into higher-level units such as paragraphs, sections, and so on, we can notice that language becomes less relevant.
+			These observations lead to the definition of our formalism for segmentation (not just tok enization) that considers the process indepen­ dently from the language.
+			By describing a seg­ mentation system formally, a clean distinction can be made between the processing itself and the linguistic data it uses.
+			This entails the abil­ ity to develop a truly multilingual system by us­ ing a common segmentation engine for the vari­ ous languages of the system; conversely, one can imagine evaluating several segmentation meth­ ods by using the same set of data with different strategies.
+			Sumo is the name of the proposed formal­ ism, evolving from initial work by (Quint, 1999; Quint, 2000).
+			Some theoretical works from the literature also support this approach: (Guo, 1997) shows that some segmentation techniques can be generalized to any language, regardless of their writing system.
+			The sentence segmenter of (Palmer and Hearst, 1997) and the issues ra.isecl by (Habert et a!., 1998) prove that even in En­ glish or French, segmentation is not so trivial.
+			Lastly, (AltMokhtar, 1997) handles all kinds of presyntactic processing in one step, arguing that there are strong interactions between segmenta­ tion and morphology.
+			1 The Framework for Segmentation.
+			1.1 Overview.
+			'fhe framework revolves around the document representation chosen for Sumo, which is a layered structure, each layer being a view of the document at a given level of segmentation.
+			These layers are introduced by the author of the segmentation application as needed and are not imposed by Sumo.
+			The example in section 3.1 uses a two-layer structure (figure 4) correspond­ ing to two levels of segmentation, characters and words.
+			To extend this to a sentence segmenter, a third level for sentences is added.These levels of segmentation can ha.ve a lin guistic or structural level, but "artificial" levels can be introduced as well when needed.
+			lt is also interesting to note that severa.l layers can belong to the same level.
+			Jn the example of section :3.:3, the result structure can have an indefinite num­ ber of levels, and all levels arc of the same kind.
+			We call item the segmentation unit of a doc­ ument at a given scgmcnt<ttion level (e.g. items of the word level are words).
+			The document is then representee!
+			at every segmentation level in terms of its items; because segmentation is usu­ ally ambiguous, item gmphs arc used to factorize all the possible segmentations.
+			Ambiguity issues anfurther addressed in section 2.:3.
+			The main processing paradigms of Sumo arc identification ancltmnsfonnalion.
+			With identifi­ cation, new item graphs are built by identifying items from a source graph using a segmentation resoun:c. 'fhcse graphs arc then modified by transformation processes.
+			Section 2 gives the details about both identification and transfor­ mation.
+			1.2 Item Graphs.
+			The item graphs arc directed acyclic graphs; they arc similar to the word graphs of (Amtrup et a.l., l99G) or the string graphs of (Colmcr­ auer, 1970).
+			They arc a.ctua.lly represented by means of finite-state automata (sec section :2.1).
+			!11 order to facilitate tlwir manipulation, two ad­ ditional properties arc enforced: thcs<atttomata always have a single start-state and finite-state, and no dangling arcs (this is verified by pruning the automata after modifications).
+			The exam­ ple::; of scctiou 3 s!Jow various item graphs.
+			An item is an arc in the automaton.
+			An arc is a complex structure containing a label (gen­ erally the surface form of tile item), named at­ tributes and relations.
+			Attributes arc used to hold informa.tion on the item, like part of speech tags (sec section 3.2).
+			These attributes can also be viewed as annotations in the same sense as the annotation graphs of (Bird ct al., 2000).
+			1.:3 Relations Relations are links between levels.
+			Items from a given graph arc linked to items of the graph from which they were identified.
+			We call the first graph the lower graph and the graph that was the source for the identification the upper graph.
+			Relations exist bctvvcen a. path in the upper graph and either a path or a subgra.ph in the lower graph.
+			Figure 1 illustrates the first kind of relation, called palh relation.
+			This example in French is a. relation between the two characters of the word "clu" which is really a contraction of "de lc".
+			Figure 1: A pat!J relation Figme 2 illustrates the other kind of relation called subgmph relation.
+			J n this example the sentence "A BCDEFC ."
+			(we can imagine that i\ through G arc Chinese characters) is related to scvcra.l possible segmentations.
+			Figure 2: A graph relation The interested reader may refer to (Planas, 1998) for a comparable stntctun(multiple lay­ ers of a document and relations) used in trans­ lation memory.
+	
+	
+			2.1 Description of a Document.
+			The core of the document representation is the item graph, which is represented by a finite­ state automaton.
+			Since regular expressions de­ fine finite-state automata, they can be used to describe an item graph.
+			However, our expres­ sions arc extended because the items arc more complex than simple symbols; new operators are introclucccl: • attributes are introduced by an@ sign; • path relations arc delimited by { and }; • the information concerning a given item are parenthesized using [ and ] . As an exemplc, the relation of figure 1 is de­ scribed by the following expression: [de le {d u }] 2.2 Identification.
+			Identification is the process of identifying new items from a source graph.
+			Using the source graph and a. segmentation resource, new items arc built to form a. new graph.
+			A segmentation resource, or simply resource, describes the vo­ cabulary of the language, by defining a mapping between the source and the target level of seg­ mentation.
+			A resource is represented by a. finite­ state transducer in Sumo; identification is per­ formed by applying the transducer to the source automaton to produce the target automaton, like in regular finite-state calculus.
+			Resources can be compiled by regular expres­ sions or indcntifica.tion rules.
+			Jn the former case, one can usc the usual operations of finite-state calculus to compile the resource: union, inter­ section, composition, ctc.1 A benefit of the usc of Sumo structures to represent resources is that new resources can be built easily from the doc­ ument that is being processed.
+			(Quint, 1999) shows how to extract proper nouns from a. text in order to extend the lexicon used by the seg­ menter to provide more acurate results.
+			In the latter case, rules arc specified as shown in section 3.3.
+			The left hand side of a rule de­ scribes a subpath in the source graph, while the right hand side describes the associated subpath in the target graph.
+			A path relation is created between the two sequences of items.
+			ln an iden­ tification rule, one can introduce variables (for callback), and even calls to transformation func­ tions (sec next section).
+			Naturally, these possi­ bilities cannot be expressed by a strict finite­ state structure, even with our extended formal­ ism; hence, calculus with the resulting struc­ tures is limited.
+			A special kind of identification is the auto­ matic segmentation that takes place at the entry point of the process.
+			A character graph can be created automatically by segmenting an input text document, knowing its encoding.
+			This text document can be in raw form or XML format.
+			Another possibility for input is to usc a graph 1The semantics of these operations is broadened to accomodate the more complex nature of the items.
+			of items that was created previously, either by Sumo, or converted to the format recognized by Sumo.
+			2.3 Transformation.
+			Ambiguity is a central issue when talking about segmentation.
+			The absence or ambiguity of word separators can lead to multiple segmen­ tations, and more than one of them can have a. meaning.
+			As (Sproat ct a.l., 1996) testify, several native Chinese speakers do not always agree on one unique tokeniza.tion for a. given sentence.
+			Thanks to the use of item graphs, Sumo can handle ambiguity efficiently.
+			Why try to fully disambiguate a tokeniza.tion when there is no agreement on a single best solution?
+			Moreover, segmentation is usually just a basic step of pro­ cessing in an NLP system, and some decisions may need more information than what a seg­ menter is able to provide.
+			i\n uninformed choice at this stage can affect the next stages in a. neg­ ative way.
+			Transformations are a way to mod­ ify the item graphs so that the "good" paths (segmentations) can be kept and the "bad" ones discarded.
+			We can also of course provide full disambiguation (see section 3.1 for instance) by means of transformations.
+			In Sumo transformations are handled by transformation functions that manipulate the objects of the formalism: graphs, nodes, items, paths (a special kind of graph), etc. These func­ tions are written using an imperative language illustrated in section 3.1.
+			A transformation can either be applied directly to a graph or attached to a graph relation.
+			In the latter case, the orig­ inal graph is not modified, and its transformed counterpart is only accessible through the rela­ tion.
+			Transformation functions allow to control the flow of the process, using looping and condition­ als.
+			An important implication is that a same resource can be applied iteratively; as shown by (Roche, 1994) this feature allows to implement segmentation models much more powerful than simple regular languages (see section 3.3 for an example).
+			Another consequence is that a Sumo application consists of one big transformation function returning the completed Sumo struc­ ture as a. result.
+	
+	
+			3.1 Maxinnun tokenization.
+			Some classic heuristics for tokeuizatiou a.re classified by (Guo, 1997) under the collective moniker of maximum lokcnizalion.
+			This section describes how to implement a "maximum tok­ enizer" that tokeniY:es raw text documents in a given language and character encoding (e.g. En­ glish in ASCll, French in JsoLatin-1, Chinese in Big5 or GB).
+			3.1.1 Conunon setup Our tokenizer is built with two levels: the in­ put level is the character level, a.utoma.tically segnwutecl using the encoding information.
+			The token level is built from these characters, first by an exl1austive icleutification of the tokens, then by reducing tlw number of paths to the one con­ siclerccl the best by the JVIa.ximum Tokeniy;a.tion heuristic.
+			The system works in three steps, with com­ plete code shown in figure :3.
+			First, the charac­ ter level is created by automatic segmentation (lines l-5, input level being the :-;pecial graph tha.t is automatically created from a raw file through stdin).
+			The second step is to create the word graph by identifying words from character usiug a. dictionary.
+			J\ rcsomce called ABCdic is created from a transducer rile (lines 68), theu the graph words is created by identifying items from the source level characters using tltc re­ source ABCdic (lines 9-J 2).
+			The third step is tlw disam bigua.tion of the word level by applying a Maximum 'l'okcniY:a.tion heuristic (line J :1).
+			1 characters: input level { 2 encoding: <ASCII, UTF8, BigS...> 3 type: raw; 4 from: stdin; 5 } 6 ABCdic: resource {.
+			7 file: ''ABCdic.sumo''; 8 } 9 words: graph <- identify { 10 source: characters; 11 resource: ABCdic; 12 } 13 words<- ft(words.start-node); Figure 3: Maximum 'J'okeniy;er in Sumo Figure ;J illustrates the situation for the in­ put string "A BCDEFG" where i\ through G arc characters and A, AB, B, BC, BCDEF, C, CD, D, DE, E, F, FG and G a.re words found in the resource ABCdic.
+			The situation shown is after line 12 and before line 13.
+			Figure 4: Exhaustive tokenization of the string ABCDEFG We will see in the next three subsections the diff'crent heuristics and their implementations in Sumo.
+			3.1.2 Forward Maximum Tokenization Forward Maximum 'l'okeniY:ation consists of scanning the string from left to right and select­ ing the token of maximum length any time an ambiguity occurs.
+			On the example of figure 4, the resu It.
+			tokeniY:ation of the iurmt string would be J\BjCD/E/FG.
+			Figure 5 shows a function called ft that builds a path recursively by traversing the token graph, appending the longest item to the path at each node.
+			ft takes a node as input and rctums a. path (line J).
+			H the node is final, the empty path is returned (lines 2-:l), otlwrvvise the array of items of the uodes (n. i terns) is searched and the lougest item stored in longest (lines 410).
+			Tile returned path consists of this longest item prepencled to the longest path starting from the destination node of this item (line 11).
+			3.1.3 Backward Maxim.mu Tokenization l3ackward Maximum 'J'okeniY:a.tion is the same as Forvvard Maximum 'J'okenization except that the string is scanned from right to left, instead of left to right.
+			On the example of figure !J, the tokenization of the input string would yield A/BC/DE/FG under Backward Maximum 'J'o­ kenization.
+			A function bt can be written.
+			lt is very sim­ ilar to ft, except that it works backward by looking at incoming arcs of the considered node.
+			bt is called on the final state of the graph and 1 function ft (n: node) -> path { 2 if final(n) { 3 return(); 4 }else { 5 longest: item <- n.items[1]; 6 foreach it in n.items[2..]{ 7 if it.length > longest.length { 8 longest <- it; 9 } 10 } 1 function st (g:graph) -> path { 2 d: list<- (); II distances 3 p: list<- (); II predecessors 4 foreach n in (g.nodes){ 5 d[n] = integer.max; II ''infinite'' 6 } 7 foreach n: node in t_sort(g.nodes){ 8 foreach it in n.items { 9 if (d[it.dest]> d[n]+ 1)then { 10 d[it.dest] = d[n] + 1; 11 return (longest# ft(longest.dest)); 11 p[it.dest] = n; 12 } 13 } Figure 5: The ft function stops when at the initial node.
+			Another imple­ mentation of this function is to apply ft on the reversed graph and then reversing the path ob­ tained.
+			3.1.4 Shortest Tokenization Shortest Tokenilmtion is concerned with mini­ mizing the overall number of tokens in the text.
+			On the example of figure 4, the tokenir,ation of the input string would yield A/BCDEF/G un­ der shortest tokenization.
+			Figure 6 shows a function called st that finds the shortest path in the graph.
+			This function is adapted from an algorithm for single-source shortest paths discovery in a DAG given by (Carmen et al., 1990).
+			lt calls another func­ tion, t_sort, returning a list of the nodes of the graph in topological order.
+			The initializations are clone in lines 26, the core of the algorithm is in the loop of lines 714 that computes the short­ est path to every node, storing for each node its "predecessor".
+			Lines 1520 then build the path, which is returned in line 21.
+			3.1.5 Combination of Maximum Tokenization techniques One of the features of Sumo is to allow the com­ parison of different segmentation strategies us­ ing the same set of data.
+			As we have just seen, the three strategies described above can indeed be compared efficiently by modifying only part of the third step of the processing.
+			Letting the system run three times on the same set of input documents can then give three different sets of results to be compared by the author of the sys­ tem (against each other and against a reference tokenization, for instance).
+			12 } 13 } 14 } 15 n <- g.end; II end state 16 sp: path<- (n); II path 17 while (n != g.start) { 18 n = p[n]; 19 sp = (n # sp); 20 } 21 return sp; 22 } Figure 6: the st function And yet a different setup for our "maximum tokenizer" would be to select not just the op­ timal path according to one of the heuristics, but the paths selected by the three of them, as shown in figure 7.
+			Combining the three paths into a graph is performed by changing line 1:3 in figure 3 to: words <- ft(words.start-node) I bt(words.end-node) I st(words.start-node); Figure 7: Three maximum tokenizations 3.2 Statistical Tokenization and Part of.
+			Speech Tagging This example shows a more complicated tok­ enization system, using the same sort of setup as the one from section 3.1, with a disambigua­ tion process using statistics (namely, a big ram model).
+			Our reference for this model is the Chasen Japanese tokenizer and part of speech tagger documented in ( J\11 a.tsumoto et a.l., 1999).
+			1'his example is a. high-level description of how to implement a simila.r system with Sumo.
+			The setup for this example adds a. uew level to the previous example: the "bigra.m level."
+			The word level is still built by id( ntifica.tion us­ ing dictionaries, then the bigram level is built by computing a. connectivity cost betvvecn each pair of tokens.
+			'J'his is the level that will be used for disambiguation or selection of the best solutions.
+			Figure 9: Connectivity costs for W with its modified cost.
+			We write the following rule and apply it to the word graph to create the bigram graph: 3.2.1 Exhaustive Segmentation All possible segmentations are derived from the [$w1 = . ©.]
+			[$w2 -> eval(f($w1, $2)) . ©.]
+			character level to create the word level.
+			The resource used for this is a. dictionary of the lan­ guage that maps the surface form of the words (in terms of their characters) to their base form, part of sp( ech, and a cost (Chasc11 a.lso adds pronunciation, conjugation type, and sema.nt.ic information).
+			J\ ll this inform at ion is stored iu the item as attributes, the base form being used a.s the la.bel for the item.
+			Figure t3 shows the identification of the word "ca.ts" which is identi­ fied as "cat", with category "noun" (i.e. @CAT:=N) a.ncl with some cost/;; (@COST=k).
+			o c ·0 a < _ ) t ...o_ -s ,..( 1 "( /_) cat @CATN @COST k(_)- - -- Figure 8: lclentifica.tion of the word "cats" 3.2.2 Statistical Disambiguation The disambiguation method relics on a bigram model: each pa.ir of successive items has a "con­ nectivity cost".
+			In the bigram level, the "cost" attribute of' an item \V will be the connectiv­ ity cost of W and a following item X. Note that if a same W can be followed by several items X, Y, etc. with different connectivity costs for This ndc can he read as: for any word $w1 with any attribute(" . 11 matches any label,"@ . 11 any set of attributes) followed by any word $w2 with any attribute ("_11 being a context separa­ tor), create the item returned by the function f ($w1, $w2).
+			Disam bigua.tion is then be performed by se­ lecting the path with optimal cost in this graph; but we can also select all paths with a cost cor­ responding to a certain threshold or the n best pathR, etc. Note also tl1at this model is easily ex­ tensible to any kind of n-grams.
+			A new function f ($w1, ...
+			, $wn) must be provided to com­ pute the connectivity costs of this sequence of items, and the above rule must be modified to take a. larger context into accmu1t.
+			3.3 A Fonnal Example This last exam pie is more formal and serves as an illustration of some powerful features of Sumo.
+			(Colmerauer, 1970) has a Rimilar exam­ ple implemented using Q systems.
+			ln both cases the goal is to transform an input string of the form anlJ''c"", n ::0: 0 into a single item 8 (as­ suming th<tt the input alphabet does not contain S'), meaning that the input string is a word of this language.
+			The setup here is once again to start with a lower level automatically created from the input, each pair then W will be replicated with a. dif­ then to build intermediat e levels until a final level containing only the item S is produced (at ferent "cosC1 attribute.
+			Figure 9 shows a word W followed by either X or Y, with two different connectivity costs /.; and /;;'.
+			'J'he implementation ofthis tcclmique in Sumo is straightforward.
+			Assume there is a fundiou f that, given two items1 computee> their connec­ tivity cost (depending on both of their category, individual cost, etc.) and returns the first item which point the input is recognized), or until the process can no longer carry on (at which point the iuput is rejected).
+			The building of intermediary levels is handled by tile identification rule below: # S?
+			a [$A=a*]b [$B=b*] c [$c=c*] # -> S $A $B $C What this rule docs is identify a string of the form S?aa*bb*cc*, storing all a's but the first one in the variable $A, all b's but the first one in $B and all c's but the first one in $C. The flrst triplet abc (with a possible S in front) is then absorbed by S, and the remaining a's, b's and c's are rewritten after S. Figure 10 illustrates the first application of this rule to the input sequence aabbcc, creating the first intermediate level; subsequent applica­ tions of this rule will yield the only item 8.
+			Figure 10: First application of the rule Conclusion We have described the main features of Sumo, a dedicated formalism for segmentation of text.
+			i\ document is represented by item graphs at dif­ ferent levels of segmentation, which allows mul­ tiple segmentations of the same document at the same time.
+			Three detailed examples illus­ trated the features of Sumo discussed here.
+			For the sake of simplicity some aspects could not be evoked in this paper, they include: manage­ ment of the segmentation resources, efficiency of the systems written in Sumo, larger applica­ tions, evaluation of segmentation systems.
+			Sumo is currently being prototyped by the au­ thor.
+	

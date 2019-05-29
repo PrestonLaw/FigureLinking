@@ -1,0 +1,124 @@
+
+	
+		When we express some idea or story, it is inevitable to use words that are semantically related to each other.
+		When this phenomena is exploited from the aspect of words in the language, it is possible to infer the level of semantic relationship between words by observing their distribution and use in discourse.
+		From the aspect of discourse it is possible to model the structure of the document by observing the changes in the lexical cohesion in order to attack high level natural language processing tasks.
+		In this research lexical cohesion is investigated from both of these aspects by first building methods for measuring semantic relatedness of word pairs and then using these methods in the tasks of topic segmentation, summarization and keyphrase extraction.
+		Measuring semantic relatedness of words requires prior knowledge about the words.
+		Two different knowledge-bases are investigated in this research.
+		The first knowledge base is a manually built network of semantic relationships, while the second relies on the distributional patterns in raw text corpora.
+		In order to discover which method is effective in lexical cohesion analysis, a comprehensive comparison of state-of-the art methods in semantic relatedness is made.
+	
+	
+			are present in the literature.
+			While some of these confine the relationships only to word repetition or strong semantic relationships like synonymy, no other work uses the semantic relatedness measures that can be calculated for any two word pairs in the vocabulary.
+			Our experiments suggest that topic segmentation performance improves methods using both classical relationships and word repetition.
+			Furthermore, the experiments compare the performance of different semantic re- latedness methods in a high level task.
+			The detected topic segments are used in v summarization, and achieves better results compared to a lexical chains based method that uses WordNet.
+			Finally, the use of lexical cohesion analysis in keyphrase extraction is investigated.
+			Previous research shows that keyphrases are useful tools in document retrieval and navigation.
+			While these point to a relation between keyphrases and document retrieval performance, no other work uses this relationship to identify keyphrases of a given document.
+			We aim to establish a link between the problems of query performance prediction (QPP) and keyphrase extraction.
+			To this end, features used in QPP are evaluated in keyphrase extraction using a Naive Bayes classifier.
+			Our experiments indicate that these features improve the effectiveness of keyphrase extraction in documents of different length.
+			More importantly, commonly used features of frequency and first position in text perform poorly on shorter documents, whereas QPP features are more robust and achieve better results.
+			Keywords: Lexical Cohesion, Semantic Relatedness, Topic Segmentation, Sum- marization, Keyphrase Extraction.
+	
+	
+			I would like to thank Prof. I˙lyas C¸ i¸cekli who has supervised and supported me since the day I started my graduate studies.
+			I am indebted to Prof. Fazlı Can for all the encouragement and guidance he has provided me. Their support, expertise and invaluable recommendations were crucial in this long academic journey.
+			I would like to thank all my committee members for spending their time and effort to read and comment on my dissertation.
+			Many thanks to the former and current members of the Computer Engineering Department.
+			It was both a pleasure and honour to get to know and work with you all.
+			I would like to express my deepest gratitude to my family, Nurhayat-Sadık Ercan and I˙lkay-G¨orkem Ercan and Berrin G¨ozen for their patience and support throughout this long journey.
+			Finally I thank and dedicate this dissertation to my wife Pınar who has given me both strength and courage to take on this challenge.
+			Contents 1 Introduction 1.
+			1.1 Goals and Contributions . . .
+			9.
+			1.2 Outline . . .
+			11.
+	
+	
+			2.1 Related Linguistic Theories . . .
+			13.
+			2.1.1 Semiotics and Meaning . . .
+			14 2.1.2 Analytic View . . .
+			15 2.1.3 Generative Grammar and Meaning . . .
+			15 2.2 Linguistic Background . . .
+			16.
+			2.2.1 Morphology . . .
+			17 2.2.2 Syntax . . .
+			22 2.2.3 Coherence . . .
+			23 2.2.4 Cohesion . . .
+			24 2.2.5 Lexical Cohesion . . .
+			25 2.3 Literature Survey . . .
+			26.
+			CONTENTS x 2.3 .1 S e m an tic R el at ed ne ss . . .
+			2 7 2.3 .2 T o pi c S e g m en ta tio n . . .
+			3 1 2.3 .3 S u m m ar iz ati o n . . .
+			3 6 2.3 .4 K ey ph ra se E xt ra cti o n . . .
+			4 1
+	
+	
+			3.1 Semantic Relatedness Methods . . .
+			45.
+			3.1.1 WordNet Based Semantic Relatedness Measures . . .
+			46 3.1.2 WordNet based Semantic Relatedness Functions . . .
+			51 3.1.3 Corpora Based Semantic Relatedness Measures . . .
+			58 3.1.4 Building the Vocabulary . . .
+			59 3.1.5 Building the Co-occurrence Matrix . . .
+			61 3.1.6 Dimension Reduction . . .
+			64 3.1.7 Similarity of Term Vectors . . .
+			67 3.1.8 Raw Text Corpora . . .
+			67 3.2 Intrinsic Evaluation of Semantic Relatedness Measures . . .
+			70.
+			3.2.1 Word Pair Judgements . . .
+			70 3.2.2 Semantic Space Neighbors to WordNet Mapping . . .
+			72 3.2.3 Near Synonymy Questions . . .
+			74 3.3 Results and Model Selection . . .
+			75.
+			3.3.1 Effect of Pruning the Vocabulary . . .
+			76 3.3.2 Effect of Dimension Reduction and Weighting Function . . 78 CONTENTS xi 3.3.3 Effect of Co-occurrence Window Size . . .
+			80 3.3.4 Effect of the Number of Dimensions Retained . . .
+			82 3.3.5 Comparison of Semantic Space and WordNet based Measures 84 3.3.6 Comparison to the State-of-the-art Methods . . .
+			86 3.3.7 Semantic Spaces and Classical Relationship Types . . .
+			86 3.4 Discussion of the Results . . .
+			88.
+	
+	
+			4.1 Semantic Relatedness Based Topic Segmentation Algorithm . . .
+			92.
+			4.1.1 Number of Topics is Known . . .
+			92 4.1.2 Number of Topics is Unknown . . .
+			96 4.2 Dataset and Evaluation . . .
+			99.
+			4.3 Results . . .
+			100.
+			4.3 .1 Ef fe ct of S e m an tic S pa ce P ar a m et er s . . .
+			10 0 4.3 .2 C o m p ar is o n wi th W or d N et b a s e d S e m a nt ic R el at e d n e ss F u n cti o n s . . .
+			10 3 4.3 .3 E ff e ct iv e n e s s o f S e m a nt ic R el at e d n e s s b a s e d T o pi c S e g m e n - t a ti o n A lg o ri t h m s . . .
+			10 5
+	
+	
+			5.1 Segment Salience and Sentence Extraction . . .
+			110.
+			5.2 Corpus and Evaluation . . .
+			111.
+			5.3 Results . . .
+			113.
+			CONTENTS xii
+	
+	
+			6.1 Keyphrase Extraction using QPP Features . . .
+			116.
+			6.1.1 Candidate Phrase List Creation . . .
+			118 6.1.2 Information Retrieval from Wikipedia . . .
+			119 6.1.3 QPP Measures . . .
+			121 6.1.4 Learning to Classify Keyphrases . . .
+			127 6.2 Corpus and Evaluation Metrics . . .
+			128.
+			6.3 Results . . .
+			130.
+	
+	
+

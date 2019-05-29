@@ -1,0 +1,153 @@
+
+	
+		We present a method of improving the performance of dialog act tagging in identifying minority classes by using per-class feature optimization and a method of choosing the classbased not on confidence, but on a cascade ofclassifiers.
+		We show that it gives a minority class F-measure error reduction of 22.8%,while also reducing the error for other classesand the overall error by about 10%.
+	
+	
+			In this paper, we discuss dialog act tagging, thetask of assigning a dialog act to an utterance, wherea dialog act (DA) is a high-level categorization ofthe pragmatic meaning of the utterance.
+			Our data isemail.
+			Our starting point is the tagger described in(Hu et al., 2009), which uses a standard multiclassclassifier based on support vector machines (SVMs).While the performance of this system is pretty goodas measured by accuracy, it performs badly on theDA REQUEST-ACTION, which is a rare class.
+			Multi-class SVMs are typically implemented as a set ofSVMs, one per class, with the overall choice of classbeing determined by the SVM with the highest confidence (one-against-all).
+			Multi-class SVMs aretypically packaged as a single system, whose innerworkings are ignored by the NLP researcher.
+			In thispaper we show that, for our problem of DA classification, we can boost the performance of the rareclasses (while maintaining the overall performance)by performing feature optimization separately foreach individual classifier.
+			But we also show that we can achieve an all-around error reduction by altering the method by which the multi-class classifiercombines the individual SVMs.
+			This new methodof combination is a simple cascade: we run the individual classifiers in ascending order of frequencyof the classes in the training corpus; the first classifier to classify the data point positively determinesthe choice of the overall classifier.
+			If no classifierclassifies the data point positively, we use the usualconfidence-based method.
+			This new method obtainsa 22.8% error reduction for the minority class, andaround 10% error reduction for the other classes andfor the overall classifier.
+			This paper is structured as follows.
+			We start outby discussing related work (Section 2).
+			We thenpresent our data in Section 3, and in Section 4 wepresent the experiments with our systems and the results.
+			We report the results of an extrinsic evaluationin Section 5, and conclude.
+	
+	
+			Dialog act (DA) annotations and tagging, inspiredby the speech act theory of Austin (1975) and Searle(1976), have been used in the NLP community to understand and model dialog.
+			Initial work was done onspoken interactions (see for example (Stolcke et al.,2000)).
+			Recently, studies have explored dialog acttagging in written interactions such as emails (Cohen et al., 2004), forums (Kim et al., 2006; Kim etal., 2010b), instant messaging (Kim et al., 2010a)and Twitter (Zhang et al., 2012).
+			Most DA taggingsystems for written interactions use a message/postlevel tagging scheme, and allow multiple tags foreach message/post.
+			In such a tagging scheme, indi 802 vidual binary classifiers for each tag are independentof one another.
+			However, recent studies have foundmerit in segmenting each message into functionalunits and assigning a single DA to each segment (Huet al., 2009).
+			Our work falls in this paradigm (wechoose a single DA for smaller textual units).
+			Webuild on the work by (Hu et al., 2009); we improvetheir dialog act predicting performance on minorityclasses using per-class feature optimization.
+	
+	
+			In this study, we use the email corpus presented in(Hu et al., 2009), which is manually annotated forDA tags.
+			The corpus contains 122 email threadswith a total of 360 messages and 20,740 word tokens.
+			This set of email threads is chosen from a version of the Enron email corpus with some missingmessages restored from other emails in which theywere quoted (Yeh and Harnly, 2006; Agarwal et al.,2012).
+			Most emails are concerned with exchanginginformation, scheduling meetings, or solving problems, but there are also purely social emails.
+			Dialog Act Tag Count (%)REQUEST-ACTION (R-A) 35 (2.5%)REQUEST-INFORMATION (R-I) 151 (10.7%)CONVENTIONAL (CONV) 357 (25.4%)INFORM (INF) 853 (60.7%)Total # of DFUs 1406 Table 1: Annotation statistics Each message in the thread is segmented into Dialog Functional Units (DFUs).
+			A DFU is a contiguous span within an email message which hasa coherent communicative intention.
+			Each DFUis assigned a single DA label which is one of thefollowing: REQUEST-ACTION (R-A), REQUEST-INFORMATION (R-I), CONVENTIONAL (CONV)and INFORM (INF).
+			There are three other DA labels INFORM-OFFLINE, COMMIT, and NODA for nodialog act  which occurred 5 or fewer times in thecorpus.
+			We ignore these DA labels in this paper.
+			Thecorpus also contains links between the DFUs, but wedo not use those annotations in this study.
+			Table 1presents the distribution of DA labels in our corpus.We now describe each of the DAs we consider in ourexperiments.
+			In a REQUEST-ACTION, the writer signalsher desire that the reader perform some non-communicative act, i.e., an act that cannot in itselfbe part of the dialogue.
+			For example, a writer canask the reader to write a report or make coffee.
+			In a REQUEST-INFORMATION, the writer signalsher desire that the reader perform a specific communicative act, namely that he provide information(either facts or opinion).
+			In an INFORM, the writer conveys information, ormore precisely, the writer signals that her desire thatthe reader adopt a certain belief.
+			It covers many different types of information that can be conveyed including answers to questions, beliefs (committed ornot), attitudes, and elaborations on prior DAs.
+			A CONVENTIONAL dialog act does not signal anyspecific communicative intention on the part of thewriter, but rather it helps structure and thus facilitatethe communication.
+			Examples include greetings, introductions, expressions of gratitude, etc.
+	
+	
+			We developed four systems for our experiments: abaseline (BAS) system which is close to the systemdescribed in (Hu et al., 2009), and three variants ofour novel divide and conquer (DAC) system.
+			Features used in both systems are extracted as explainedin Section 4.2.
+			Section 4.3 describes the baselinesystem, the basic DAC system, and two variationsof the DAC system.
+			4.1 Experimental FrameworkIn all our experiments, we use linear kernel Support Vector Machines (SVM).
+			However, across thesystems, there are differences in how we use them.Our framework was built with the ClearTK toolkit(Ogren et al., 2008) with its wrapper for SVMLight(Joachims, 1999).
+			The ClearTK wrapper internallyshifts the prediction threshold based on posteriorprobabilistic scores calculated using the algorithmof Lin et al.
+			(2007).
+			We report results from 5foldcross validation performed on the entire corpus..
+			4.2 Feature EngineeringIn developing our system, we classified our featuresinto three categories: lexical, verbal and message-.
+			803 level.
+			Lexical features consists of n-grams of words,n-grams of POS tags, mixed n-grams of closed classwords and POS tags (Prabhakaran et al., 2012), aswell as a small set of specialized features  Start-POS/Lemma (POS tag and lemma of the first word),LastPOS/Lemma (POS tag and lemma of the lastword), MDCount (number of modal verbs in theDFU) and QuestionMark (is there a question markin the DFU).
+			We used the POS tags produced by theOpenNLP POS tagger.
+			Verbal features capture theposition and identity of the first verb in the DFU.
+			Finally, message-level features capture aspects of thelocation of the DFU in the message and of the message in the thread (relative position and size).
+			Inoptimizing each system, we first performed an exhaustive search across all combinations of featureswithin each category.
+			For the lexical n-gram features we varied the n-gram window from 1 to 5.
+			Thisstep gave us the best performing feature combinationwithin each category.
+			In a second step, we found thebest combination of categories, using the previouslydetermined features for each category.
+			In this paper, we do not report best performing feature setsfor each configuration, due to lack of space.
+			4.3 Experiments.
+			Baseline (BAS) System This system uses theClearTK built-in one-versus-all multiclass SVM inprediction.
+			Internally, the multi-class SVM buildsa set of binary classifiers, one for each dialog act.For a given test instance, the classifier that obtainsthe highest probability score determines the overallprediction.
+			We performed feature optimization onthe whole multiclass classifier (as described in Section 4.2), i.e., the same set of features was availableto all component classifiers.
+			We optimized for system accuracy.
+			Table 2 shows results using this system.
+			In this and all tables, we give the performanceof the system on the four DAs, using precision, recall, and F-measure.
+			The DAs are listed in ascending order of frequency in the corpus (least frequentDA first).
+			We also give an overall accuracy evaluation.
+			As we can see, detecting REQUEST-ACTION ismuch harder than detecting the other DAs.
+			Basic Divide and Conquer (DAC) System Likethe BAS system, the DAC system also builds a binary classifier for each dialog act separately, and the Prec.
+			Rec.
+			F-meas.R-A 57.9 31.4 40.7R-I 91.5 78.2 84.3CONV 92.0 95.8 93.8INF 91.6 95.1 93.3Accuracy 91.3 Table 2: Results for baseline (BAS) system (standardmulticlass SVM) component classifier with highest probability scoredetermines the overall prediction.
+			The crucial difference in the DAC system is that the feature optimization is performed for each component classifierseparately.
+			Each component classifier is optimizedfor F-measure.
+			Table 3 shows results using this system.
+			Prec.
+			Recall F-meas.
+			ERR-A 66.7 40.0 50.0 15.6R-I 91.5 78.2 84.3 0.0CONV 93.9 94.1 94.0 2.6INF 91.4 96.1 93.7 5.7Accuracy 91.7 4.9 Table 3: Results for basic DAC system (per-class featureoptimization followed by maximum confidence basedchoice); ER refers to error reduction in percent overstandard multiclass SVM (Table 2) Minority Preference (DACMP) System This system is exactly the same as the basic DAC systemexcept for one crucial difference: overall classification is biased towards a specified minority class.
+			Ifthe minority class binary classifier predicts true, thissystem chooses the minority class as the predictedclass.
+			In cases where the minority class classifierpredicts false, it backs off to the basic DAC systemafter removing the minority class classifier from theconfidence tally.
+			Table 4 shows our results usingREQUEST-ACTION as the minority class.
+			Cascading Minority Preference (DACCMP) SystemThis system is similar to the Minority PreferenceSystem; however, instead of a single supplied minority class, the system accepts an ordered list ofclasses.
+			The classifier then works, in order, throughthis list; whenever any classifier in the list predicts 804 Prec.
+			Recall F-meas.
+			ERR-A 66.7 45.7 54.2 22.8R-I 91.5 78.2 84.3 0.0CONV 93.9 94.1 94.0 2.6INF 91.6 96.0 93.8 6.5Accuracy 91.8 5.7 Table 4: Results for minority-preference DAC system DACMP (first consult REQUEST-ACTION tagger, then default to choice by maximum confidence); ER refers toerror reduction in percent over standard multiclass SVM(Table 2) true, for a given instance, it then assigns this classas the predicted class.
+			The subsequent classifiers inthe list are not run.
+			If all classifiers predict false, weback off to the basic DAC system, i.e., the component classifier with highest probability score determines the overall prediction.
+			We ordered the list ofclasses in the ascending order of their frequencies inthe training data.
+			This ordering is driven by the observation that the less frequent classes are also hardto predict correctly.
+			Table 5 shows our results usingthe ordered list: (REQUEST-ACTION, REQUEST-INFORMATION, CONVENTIONAL, INFORM).
+			Prec.
+			Recall F-meas.
+			ERR-A 66.7 45.7 54.2 22.8R-I 91.0 80.8 85.6 8.4CONV 93.7 95.3 94.5 10.1INF 92.4 95.8 94.0 10.0Accuracy 92.2 10.6 Table 5: Results for cascading minority-preference DACsystem  DACCMP (consult classifiers in reverse orderof frequency of class); ER refers to error reduction inpercent over standard multiclass SVM (Table 2) 4.4 DiscussionAs shown in Table 3, the basic DAC system obtaineda 15.6% F-measure error reduction for the minority class REQUEST-ACTION over the BAS system.It also improves performance of two other classes CONVENTIONAL and INFORM, and obtaines a4.9% error reduction on overall accuracy.
+			Recallhere that the only difference between the DAC system and the BAS system is the per-class feature optimization and therefore this must be the reason for.
+			this boost in performance.
+			When we turn to DACMP,we see that the performance on the minority classREQUEST-ACTION is further enhanced, with an F-measure error reduction of 22.8%; the overall accuracy improves slightly with an error reduction of5.7%.
+			Finally, DACCMP further improves the performance.
+			Since the method of choosing the minority class REQUEST-ACTION does not change overDACMP, the F-measure error reduction remains thesame.
+			However, now all three other classes also improve their performance, and we obtain a 10.6% error reduction on overall accuracy over the baselinesystem.
+			Following (Guyon et al., 2002), we performed aposthoc analysis by inspecting the feature weightsof the best performing models created for each individual classifier in the DAC system.
+			Table 6 listssome interesting features chosen during feature optimization for the individual SVMs.
+			We selected themfrom the top 25 features in terms of absolute valueof feature weights.
+			Some features help distinguish different DA categories.
+			For example, the feature QuestionMarkis the feature with the highest negative weight forINFORM, but has the highest positive weight forREQUEST-INFORMATION.
+			Features like fyi and period (.)
+			have high positive weights for INFORMand high negative weights for CONVENTIONAL.Some other features are important only for certainclasses.
+			For e.g., please and VB NN are importantfor REQUEST-ACTION, but not so for other classes.Overall, the most discriminating features for bothINFORM and CONVENTIONAL are mostly wordngrams, while those for REQUEST-ACTION andREQUEST-INFORMATION are mostly POS ngrams.This shows why our approach of per-class featureoptimization is important to boost the classificationperformance.
+			Another interesting observation is that the leastfrequent category, REQUEST-ACTION, has the leaststrong indicators (as measured by feature weights).Presumably this is because there is much less training data for this class.
+			This explains why our cascading classifiers approach giving priority to the leastfrequent categories worked better than a simple confidence based approach, since the simple approachdrowns out the less confident classifiers.
+			805 REQUEST-ACTION REQUEST-INFORMATION CONVENTIONAL INFORMplease (0.9) QuestionMark (6.6) StartPOS NNP (2.7) QuestionMark (-3.0)VB NN (0.7) BOS PRP (-1.2) thanks (2.3) thanks (-2.2)you VB (0.3) WRB (1.0) .
+			(-2.0) .
+			(2.2)PRP (-0.3) PRP VBP (-0.9) fyi (-2.0) fyi (1.9)MD PRP VB (0.3) BOS MD (0.8) , (0.9) you (-1.0)will (-0.2) BOS DT (-0.7) QuestionMark (-0.8) can you (-0.9) Table 6: Post-hoc analysis on the models built by the DAC system: some of the top features with correspondingfeature weights in parentheses, for each individual tagger.
+			(POS tags are capitalized; BOS stands for Beginning OfSentence)
+	
+	
+			In this section, we perform an extrinsic evaluationfor the dialog act tagger presented in Section 4 byapplying it to the task of identifying Overt Displaysof Power (ODP) in emails, proposed by Prabhakaranet al.
+			(2012).
+			The task is to identify utterances wherethe linguistic form introduces additional constraintson its responses, beyond those introduced by thegeneral dialog act.
+			The dialog act features werefound to be useful and the best performing systemobtained an F-measure of 65.8 using gold dialogact tags.
+			For our extrinsic evaluation, we retrainedthe ODP tagger using dialog act tags predicted byour BAS and DACCMP systems instead of gold dialog acts.
+			ODP tagger uses the same dataset as oursfor training.
+			In the cross validation step, we madesure that the test folds for ODP were excluded fromtraining the taggers to obtain DA tags.
+			At each ODPcross validation step, we trained a BAS or DACCMPtagger using ODPs training folds for that step andused tags produced by that tagger for both trainingand testing the ODP tagger for that step.
+			Table 7 liststhe results obtained.
+			Prec.
+			Rec.
+			F-meas.No-DA 55.7 45.4 50.0GoldDA 75.8 58.1 65.8BASDA 60.6 46.5 52.6DACCMPDA 67.2 45.4 54.2 Table 7: Results for ODP system using various sourcesof DA tagsUsing BAS tagged DA, the F-measure of ODPsystem reduced by 13.2 points to 52.6 from usinggold dialog acts (F=65.8).
+			Using DACCMP, the F measure improved over BAS by 1.6 points to 54.2.This constitutes an error reduction of 12.1%, taking the system using gold DA tags as the reference.This improvement is noteworthy, given the fact thatthe overall error reduction obtained by DACCMP overBAS in the DA tagging was around 10.6%.
+			Also, theDACCMP-based ODP system obtained an error reduction of about 26.6% over a system that does not usethe DA features at all (F=50.0).
+	
+	
+			We presented a method of improving the performance of dialog act tagging in identifying minorityclasses by using per-class feature optimization andchoosing the class based on a cascade of classifiers.We showed that it gives a minority class F-measureerror reduction of 22.8% while also reducing the error on other classes and the overall error by around10%.
+			We also presented an extrinsic evaluation ofthis technique on detecting Overt Displays of Powerin dialog, where we achieve an error reduction of12.1% over using the standard multiclass SVM togenerate dialog act tags.
+	
+	
+			This work is supported, in part, by the Johns Hopkins Human Language Technology Center of Excellence.
+			Any opinions, findings, and conclusionsor recommendations expressed in this material arethose of the authors and do not necessarily reflect theviews of the sponsor.
+			While working on this project,the first author Adinoyi Omuya was affiliated withthe Center for Computational Learning Systems atColumbia University.
+			We thank several anonymousreviewers for their constructive feedback.
+			806
+	

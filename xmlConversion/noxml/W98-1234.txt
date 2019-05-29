@@ -1,0 +1,28 @@
+
+	
+		This paper describes differents methods and tricks in connection with our program which has been entered in the Loebner Prize competition that will happen on Sunday 11 January 1998, at the PowerHouse Museum in Sydney.
+		Of course, this isn't exhaustive, there are other possible techniques but we aim to give the main ideas.
+		We'll speak about the main modules of our program : Spelling correction, Different uses of WordNet, and Generation of comments.
+		Our module used for spelling correction was developed on the basis of works by Brill [1], Brill and Marcus [2), Golding [3), Golding and Schabes [4], and Powers [5).
+	
+	
+			Alan Turing was a brilliant British mathematician who played an important role in the development of part-of-speech (verbs, nouns, adjectives, adverbs).
+			These sets are divided into semanticals categories (e.g. synonymous for nouns...).
+			WordNet is completely described in the URL http://www.speech.cs.cmu.edulcomp.speech/Sectionl I LexicaVwoidnet.html.
+			3.
+			Architecture.
+			To mimic some parts of human thought, we created different principal modules : Spelling Correction, Disambiguation between words, Generation of comments, Simulating human typing...
+			/ computers and developed a test that would serve as an indicator of intelligence for machines.
+			A lot of researchers posed the Loebner Prize as the first formal instantiation of the Turing Test.
+			To participate in this competition, we conceived a program that attempts to simulate the responses of a human being.
+			We'll begin to describe WordNet, which includes a classification of English words.
+			Afterwards, we'll present the architecture of our system which we are programming at the moment.
+			In this section, we'll briefly explain every module.
+			Next, we'll give an '\."--"'"G""e_cno_memraetin-ot$n-of 3.1.
+			Spelling Correction.
+			_, r J ···.
+			example of interaction between our program and one human.
+			In the same section, we'll show different processes of generating a response from the input of the user.
+			Finally, we'll conclude by indicating our own position on this test, using knowledge that we have acquired during only two months of work in this area.
+	
+	
