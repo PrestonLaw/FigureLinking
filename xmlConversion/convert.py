@@ -9,6 +9,10 @@ import glob
 
 from ann_to_json import read_ann
 
+from html import escape, unescape
+import math
+from Levenshtein import distance as l_distance
+
 import pdb
 
 
@@ -29,6 +33,24 @@ def parse_args():
     return _args
 """
 
+# Matching strings isn't going to be exact, what with the weird Unicode characters.
+# Detects the index of str2 within str1, ASSUMING that len(str1) > len(str2).
+def proximity_index(str1, str2):
+
+    if len(str1) < len(str2):
+        return -1
+
+    for i in range(len(str1) - len(str2)):
+        substr = str1[i:i+len(str2)]
+
+        d = l_distance(substr, str2)
+
+        if d < 10:
+            return i
+
+    return -1
+
+
 
 def remake_ann(base):
 
@@ -37,17 +59,40 @@ def remake_ann(base):
     xmlfile = "./xml/" + base + ".xml"
     txtfile = "./noxml/" + base + ".txt"
 
-    xml = []
+    raw_xml = []
+    notag_xml = []
 
     with open(xmlfile, 'r') as XML:
 
         xmlline = XML.readline()
 
         while xmlline:
-            xml.append(xmlline)
+            raw_xml.append(xmlline)
+            xmlline = XML.readline()
+
+            # The first > and last < mark the XML tags on this line.
+
+            i2 = xmlline.index(">")
+            i3 = xmlline.rindex("<")
+
+            if i3 < i2:
+                # There is only one tag on this line.
+                notag_line = xmlline[:i3] + xmlline[i2+1:]
+                notag_xml.append(unescape(notag_line))
+
+            else:
+
+                i1 = xmlline.index("<")
+                i4 = xmlline.rindex(">")
+
+                notag_line = xmlline[:i1] + xmlline[i2+1:i3] + xmlline[i4+1:]
+                notag_xml.append(unescape(notag_line))
+
             xmlline = XML.readline()
 
     txt = []
+    running_length = 0
+    line_indexes = []
 
     with open(txtfile, 'r') as TXT:
 
@@ -55,28 +100,65 @@ def remake_ann(base):
 
         while txtline:
             txt.append(txtline)
-            txtline = TXT.readline()
 
-    running_chars_deleted = 0
+            line_indexes.append(running_length)
+            running_length += len(txtline)
+
+            txtline = TXT.readline()
 
     pdb.set_trace()
 
-    for i in range(len(txt)):
-        print(xml[i])
-        print(txt[i])
-
-        pdb.set_trace()
+    #for i in range(len(txt)):
+    #    print(xml[i])
+    #    print(txt[i])
+    #    pdb.set_trace()
 
     # Brute force.
 
     xml_ann = read_ann(_args.inann)
+    txt_ann = []
 
-    # The concept is to go through every annotation, get the text,
-    # find the approximate starting location of the text, then execute a search for the text.
-
+    # Step 1: Go through every annotation,
     for ann in xml_ann:
-        text = ann["text"]
+        # Step 2: Get the text of the old annotation,
+        ann_text = ann["text"]
 
+        ann_text = unescape(ann_text)
+
+        if len(ann["range"]) > 1:
+            print("WARNING: CONNECTED ANNOTATION - " + ann_text)
+            pdb.set_trace()
+
+        # Step 3: Compare it to all lines until we find the new starting point of the annotation.
+        # Also, we know the length of the new annotation, so when we find a match, we need to
+        # get the text of the new annotation here.
+        new_text = ""
+        position = -1
+        for i in range(len(txt)):
+            index = proximity_index(txt[i], ann_text)
+
+            if index != -1:
+                # Match found.
+                position = line_indexes[i] + index
+                new_text = txt[position:position + len(ann_text)]
+                break
+
+        if position == -1:
+            # If there is no match, make a very visible note of it.
+            print("NO MATCH: " + ann_text)
+            pdb.set_trace()
+
+        # Assuming a match...
+        # Step 4: Construct the new annotation object.
+        new_ann = ann
+        new_ann["text"] = new_text
+        new_ann["range"] = [position, position + len(new_text)]
+        txt_ann.append(new_ann)
+
+    # Step 5: Write out the new annotation file.
+    with open("./newann/" + base + ".txt.ann", 'w') as outfile:
+        for ann in txt_ann:
+            outfile.write("%s %s %s %s %s"%(ann["ID"],
 
 
 if __name__ == "__main__":
