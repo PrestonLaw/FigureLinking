@@ -48,6 +48,8 @@ def read_ann(filename):
 
     annot_count = 0
 
+    continuations = ""
+
     # Opening the file.
     with open(filename, 'r') as f:
         line = f.readline()
@@ -122,7 +124,11 @@ def read_ann(filename):
                 ann_dict[e_id][a_type] = a_val
 
             # Lines that begin with "R" are relations / continuations.
+            
             if tokens[0][0] == "R":
+                continuations += line
+
+                """
 
                 fromID = tokens[2][5:]
                 toID = tokens[3][5:]
@@ -143,15 +149,15 @@ def read_ann(filename):
 
                 # Since we are treating this as a single annotation, delete the 'to' entity.
                 del ann_dict[toID]
-
+            """
 
 
             # Reading in the new line to continue the loop.
             line = f.readline()
 
-    ann_dict["Connected"] = conn_map
+    #ann_dict["Connected"] = conn_map
 
-    return ann_dict
+    return (ann_dict, continuations)
 
     # Now that the dictionary of annotations is complete, we check each one against the configuration file.
     # We only want to include those with appropriate EntityTypes, RefTypes, and Types.

@@ -45,12 +45,12 @@ T16	Reference 25738 25809	IBM1F refers to the fertility IBM1 and HMMF refers to 
 A42	RefType T16 Spatial-Below
 A43	Type T16 Table
 A44	Num T16 1
-A45	Continuation T16
+#A45	Continuation T16
 T17	Reference 25844 25892	We choose t = 1, 5, and 30 for the fertility HMM
 A46	RefType T17 Spatial-Below
 A47	Type T17 Table
 A48	Num T17 1
-A49	Continuation T17
+#A49	Continuation T17
 T12	Caption 26035 26067	Figure 1: AER comparison (en→cn)
 A33	Type T12 Figure
 A34	Num T12 1

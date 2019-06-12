@@ -25,7 +25,7 @@ A39	Num T13 3
 T14	Caption 10784 10813	I exp[ m=1  m hm (e 1 , f1 )]
 A40	Type T14 Equation
 A41	Num T14 3
-A42	Continuation T14
+#A42	Continuation T14
 T15	Reference 10814 10932	This approach has been suggested by Papineni, Roukos, and Ward (1997, 1998) for a natural language understanding task.
 A43	RefType T15 Spatial-Above
 A44	Type T15 Equation
@@ -88,7 +88,7 @@ A17	Num T7 2
 T8	Caption 10722 10725	(2)
 A18	Type T8 Equation
 A19	Num T8 2
-A20	Continuation T8
+#A20	Continuation T8
 T9	Reference 11639 11747	This corresponds to maximizing the equivocation or maximizing the likelihood of the direct-translation model
 A21	RefType T9 Spatial-Above
 A22	Type T9 Equation
@@ -161,7 +161,7 @@ A115	Num T45 11
 T46	Caption 29615 29625	, fjk (11)
 A116	Type T46 Equation
 A117	Num T46 11
-A118	Continuation T46
+#A118	Continuation T46
 T47	Caption 29626 29659	eI K 1 =  e1 ,  ek = eik 1 +1 , .
 A119	Type T47 Equation
 A120	Num T47 12
@@ -215,7 +215,7 @@ A153	Num T61 18
 T62	Caption 36759 36790	, C(e )) (18) 1 1 1 1 i=1   i 1
 A154	Type T62 Equation
 A155	Num T62 18
-A156	Continuation T62
+#A156	Continuation T62
 T63	Reference 36791 36900	The use of the language model feature in equation (18) helps take long-range dependencies better into account
 A157	RefType T63 Direct
 A158	Type T63 Equation

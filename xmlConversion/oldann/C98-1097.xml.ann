@@ -19,10 +19,10 @@ A13	RefType T5 Indirect
 A14	Type T5 Figure
 A15	Num T5 1
 T6	Caption 8509 8518	Figure 1.
-A16	Continuation T6
+#A16	Continuation T6
 T7	Caption 8551 8587	Excerpt from the collocation lexicon
 A17	RefType T7 Spatial
-A18	Continuation T7
+#A18	Continuation T7
 T8	Reference 12543 12684	Results: Table I gives the results for the comparison of the troughs placed by the segmentation algorithm to the known subject change points.
 A19	RefType T8 Direct
 A20	Type T8 Table
@@ -30,13 +30,13 @@ A21	Num T8 1
 T9	Reference 12749 12758	Table 1.<
 A22	Type T9 Table
 A23	Num T9 1
-A24	Continuation T9
+#A24	Continuation T9
 T10	Reference 12790 12863	Comparison of segmentation algorithm using different linguistic features.
 A25	RefType T10 Spatial
 A26	Type T10 Table
 A27	Num T10 1
 A28	RefType T9 Spatial
-A29	Continuation T10
+#A29	Continuation T10
 T11	Reference 16271 16444	Table 2 gives the mean values for the comparison of troughs placed by the segmentation algorithm to the segmentation points identified by the test subjects for all the texts
 A30	RefType T11 Direct
 A31	Type T11 Table

@@ -72,7 +72,7 @@ A51	Num T20 4
 T21	Caption 32871 32936	Figure 3: Accuracy on development data depend ing on context size
 A52	Type T21 Figure
 A53	Num T21 3
-T22	Reference 33198 33250;33254 33334	The corresponding figures for the test data are.</S> <S sid ="206" ssid = "86">89.53% for our tagger and 88.88% for the TnT tag- ger.
+T22	Reference 33198 33301	The corresponding figures for the test data are. 89.53% for our tagger and 88.88% for the TnT tag- ger.
 A54	RefType T22 Indirect
 A55	Type T22 Figure
 A56	Num T22 3
