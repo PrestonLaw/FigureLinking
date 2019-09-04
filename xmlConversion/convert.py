@@ -47,10 +47,23 @@ def edit_distance(s1, s2):
 
 
 
+def Reverse(lst):
+    lst.reverse()
+    return lst
+
+
+
+previous_indexes = []
+
+
+
 # Matching strings isn't going to be exact, what with the weird Unicode characters.
 # Detects the index of str2 within str1, ASSUMING that len(str1) > len(str2).
 # If there is no exact match, this function returns the smallest distance.
-def proximity_index_and_match(str1, str2):
+# Since the position in the new file is less than the position in the old file,
+# we start at the index in the old file and search backwards, then search the
+# rest of the file.  May result in overlap, but less of it.
+def proximity_index_and_match(str1, str2, old_index=0):
 
     #if len(str1) < len(str2):
     #    return -1
@@ -58,8 +71,17 @@ def proximity_index_and_match(str1, str2):
     min_dist = 100
     min_index = -1
 
-    for i in range(len(str1) - len(str2)):
+    # First, search backwards from the old location.
+    end_index = len(str1) - len(str2)
+    start_index = min(old_index, end_index)
+
+    for i in reversed(range(start_index)):
         substr = str1[i:i+len(str2)]
+
+        if substr[:5] != str2[:5]:
+            # If the first five characters aren't the same, they are probably
+            # different strings.  Edit distance is expensive.
+            continue
 
         d = edit_distance(substr, str2)
 
@@ -67,9 +89,29 @@ def proximity_index_and_match(str1, str2):
             min_dist = d
             min_index = i
 
-        if d == 0:
+        if d == 0 and i not in previous_indexes:
+            previous_indexes.append(i)
             return (i, 0)
 
+    for i in range(start_index, end_index):
+        substr = str1[i:i+len(str2)]
+
+        if substr[:5] != str2[:5]:
+            # If the first five characters aren't the same, they are probably
+            # different strings.  Edit distance is expensive.
+            continue
+
+        d = edit_distance(substr, str2)
+
+        if d < min_dist:
+            min_dist = d
+            min_index = i
+
+        if d == 0 and i not in previous_indexes:
+            previous_indexes.append(i)
+            return (i, 0)
+
+    previous_indexes.append(min_index)
     return (min_index, min_dist)
 
 
@@ -89,9 +131,12 @@ def remake_ann(base):
     txt = ""
     running_length = 0
     line_indexes = []
+    previous_indexes = []
 
     print("\nReading file %s..."%txtfile)
 
+    # Step 0: Copy the entire text file into a single local string object.
+    # Also, keep track of how long each line is for reference.
     with open(txtfile, 'r') as TXT:
 
         txtline = TXT.readline()
@@ -125,12 +170,13 @@ def remake_ann(base):
     for key in xml_ann:
         # Step 2: Get the text of the old annotation.
         ann = xml_ann[key]
+        #pdb.set_trace()
+
+        old_index = ann["range"][0][0]
+
         ann_text = ann["text"]
-
         ann_text = unescape(ann_text)
-
         ann_text = cleanhtml(ann_text)
-
         ann_text = ''.join(i for i in ann_text if ord(i)<128)
 
         #if len(ann["range"]) > 1:
@@ -140,12 +186,14 @@ def remake_ann(base):
         #    pdb.set_trace()
         #    continue
 
-        print("Searching for text: %s"%ann_text)
+        print("Searching for text at index %d: %s"%(old_index, ann_text))
 
-        index, dist = proximity_index_and_match(txt, ann_text)
+        index, dist = proximity_index_and_match(txt, ann_text, old_index)
 
-        if dist > 1:
-            print("Closest match text: %s"%txt[index:index + len(ann_text)])
+        print("Closest match text at index %d: %s"%(index, txt[index:index + len(ann_text)]))
+
+        #if dist > 1:
+        #    print("Closest match text: %s"%txt[index:index + len(ann_text)])
 
         # Assuming a match...
         # Step 4: Construct the new annotation object.
@@ -203,15 +251,15 @@ def remake_ann(base):
     with open(txt_ann_file, 'w+') as outfile:
         for ann in txt_ann:
             #pdb.set_trace()
-            outfile.write("%s %s %d %d %s\n"%(ann["ID"], ann["EntityType"], ann["range"][0], ann["range"][1], ann["text"]))
+            outfile.write("%s	%s %d %d	%s\n"%(ann["ID"], ann["EntityType"], ann["range"][0], ann["range"][1], ann["text"]))
             if "RefType" in ann.keys() and ann["RefType"] is not None:
-                outfile.write("A%d RefType %s %s\n"%(inc_id, ann["ID"], ann["RefType"]))
+                outfile.write("A%d	RefType %s %s\n"%(inc_id, ann["ID"], ann["RefType"]))
                 inc_id += 1
-            outfile.write("A%d Type %s %s\n"%(inc_id, ann["ID"], ann["Type"]))
+            outfile.write("A%d	Type %s %s\n"%(inc_id, ann["ID"], ann["Type"]))
             inc_id += 1
             if ann["Num"] is None:
                 ann["Num"] = 0
-            outfile.write("A%d Num %s %d\n"%(inc_id, ann["ID"], ann["Num"]))
+            outfile.write("A%d	Num %s %d\n"%(inc_id, ann["ID"], ann["Num"]))
             inc_id += 1
         outfile.write(continuations)
 

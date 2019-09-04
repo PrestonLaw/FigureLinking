@@ -1,44 +1,44 @@
-T1 Reference 6218 6411 Collocation: Collocations were extracted from a seven million word sample of the Longman English Language Corpus using the association ratio (Church and Hanks, 1990) and outputted to a lexicon.
-A1 RefType T1 Indirect
-A2 Type T1 Figure
-A3 Num T1 1
-T2 Reference 6415 6509 Collocations were automatically located in a text by looking up pairwise words in this lexicon
-A4 RefType T2 Indirect
-A5 Type T2 Figure
-A6 Num T2 1
-T3 Reference 6514 6590 Figure 1 shows the record for the headword orange followed by its collocates
-A7 RefType T3 Direct
-A8 Type T3 Figure
-A9 Num T3 1
-T4 Reference 6595 6662 For example, the pairwise words orange and peel form a collocation.
-A10 RefType T4 Indirect
-A11 Type T4 Figure
-A12 Num T4 1
-T5 Reference 6667 6711 range free green lemon peel red state yellow
-A13 RefType T5 Indirect
-A14 Type T5 Figure
-A15 Num T5 1
-T6 Caption 6712 6721 Figure 1.
-A16 Type T6 None
-A17 Num T6 0
-T7 Caption 6725 6761 Excerpt from the collocation lexicon
-A18 RefType T7 Spatial
-A19 Type T7 None
-A20 Num T7 0
-T8 Reference 9798 9939 Results: Table I gives the results for the comparison of the troughs placed by the segmentation algorithm to the known subject change points.
-A21 RefType T8 Direct
-A22 Type T8 Table
-A23 Num T8 1
-T9 Reference 9975 9984 Table 1.
+T1	Reference 6218 6411	Collocation: Collocations were extracted from a seven million word sample of the Longman English Language Corpus using the association ratio (Church and Hanks, 1990) and outputted to a lexicon.
+A1	RefType T1 Indirect
+A2	Type T1 Figure
+A3	Num T1 1
+T2	Reference 6415 6509	Collocations were automatically located in a text by looking up pairwise words in this lexicon
+A4	RefType T2 Indirect
+A5	Type T2 Figure
+A6	Num T2 1
+T3	Reference 6514 6590	Figure 1 shows the record for the headword orange followed by its collocates
+A7	RefType T3 Direct
+A8	Type T3 Figure
+A9	Num T3 1
+T4	Reference 6595 6662	For example, the pairwise words orange and peel form a collocation.
+A10	RefType T4 Indirect
+A11	Type T4 Figure
+A12	Num T4 1
+T5	Reference 6667 6711	range free green lemon peel red state yellow
+A13	RefType T5 Indirect
+A14	Type T5 Figure
+A15	Num T5 1
+T6	Caption 6712 6721	Figure 1.
+A16	Type T6 None
+A17	Num T6 0
+T7	Caption 6725 6761	Excerpt from the collocation lexicon
+A18	RefType T7 Spatial
+A19	Type T7 None
+A20	Num T7 0
+T8	Reference 9798 9939	Results: Table I gives the results for the comparison of the troughs placed by the segmentation algorithm to the known subject change points.
+A21	RefType T8 Direct
+A22	Type T8 Table
+A23	Num T8 1
+T9	Reference 9975 9984	Table 1.
 
-A24 RefType T9 Spatial
-A25 Type T9 Table
-A26 Num T9 1
-T10 Reference 9987 10060 Comparison of segmentation algorithm using different linguistic features.
-A27 RefType T10 Spatial
-A28 Type T10 Table
-A29 Num T10 1
-T11 Reference 12710 12883 Table 2 gives the mean values for the comparison of troughs placed by the segmentation algorithm to the segmentation points identified by the test subjects for all the texts
-A30 RefType T11 Direct
-A31 Type T11 Table
-A32 Num T11 2
+A24	RefType T9 Spatial
+A25	Type T9 Table
+A26	Num T9 1
+T10	Reference 9987 10060	Comparison of segmentation algorithm using different linguistic features.
+A27	RefType T10 Spatial
+A28	Type T10 Table
+A29	Num T10 1
+T11	Reference 12710 12883	Table 2 gives the mean values for the comparison of troughs placed by the segmentation algorithm to the segmentation points identified by the test subjects for all the texts
+A30	RefType T11 Direct
+A31	Type T11 Table
+A32	Num T11 2

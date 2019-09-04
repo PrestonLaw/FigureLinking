@@ -1,102 +1,102 @@
-T2 Reference 10286 10397 If the token starts with a capital letter (initCaps), then an additional feature (init- Caps, zone) is set to 1
-A1 RefType T2 Indirect
-A2 Type T2 Table
-A3 Num T2 1
-T3 Reference 10402 10475 If it is made up of all capital letters, then (allCaps, zone) is set to 1
-A4 RefType T3 Indirect
-A5 Type T3 Table
-A6 Num T3 1
-T4 Reference 10480 10602 If it starts with a lower case letter, and contains both upper and lower case letters, then (mixedCaps, zone) is set to 1.
-A7 RefType T4 Indirect
-A8 Type T4 Table
-A9 Num T4 1
-T5 Reference 10606 10652 A token that is allCaps will also be initCaps.
-A10 RefType T5 Indirect
-A11 Type T5 Table
-A12 Num T5 1
-T1 Caption 9775 9888 Table 1: Features based on the token string that are based on the probability of each name class during training.
-A13 Type T1 Table
-A14 Num T1 1
-T6 Reference 10870 10948 This group consists of 10 features based on the string , as listed in Table 1.
-A15 RefType T6 Direct
-A16 Type T6 Table
-A17 Num T6 1
-T7 Reference 10952 11090 For example, if a token starts with a capital letter and ends with a period (such as Mr.), then the feature InitCapPeriod is set to 1, etc
-A18 RefType T7 Indirect
-A19 Type T7 Table
-A20 Num T7 1
-T8 Reference 12555 12609 The sources of our dictionaries are listed in Table 2.
-A21 RefType T8 Direct
-A22 Type T8 Table
-A23 Num T8 2
-T9 Reference 13016 13107 Only tokens with initCaps not found in commonWords are tested against each list in Table 2.
-A24 RefType T9 Direct
-A25 Type T9 Table
-A26 Num T9 2
-T10 Caption 16419 16451 Table 2: Sources of Dictionaries
-A27 Type T10 Table
-A28 Num T10 2
-T11 Reference 20010 20089 As we will see from Table 3, not much improvement is derived from this feature.
-A29 RefType T11 Direct
-A30 Type T11 Table
-A31 Num T11 3
-T12 Reference 20097 20195 The baseline system in Table 3 refers to the maximum entropy system that uses only local features.
-A32 RefType T12 Direct
-A33 Type T12 Table
-A34 Num T12 3
-T13 Caption 20437 20510 Table 3: F-measure after successive addition of each global feature group
-A35 Type T13 Table
-A36 Num T13 3
-T14 Caption 20511 20550 Table 5: Comparison of results for MUC6
-A37 Type T14 Table
-A38 Num T14 5
-T15 Caption 20727 20749 Table 4: Training Data
-A39 Type T15 Table
-A40 Num T15 4
-T16 Caption 22326 22365 Table 6: Comparison of results for MUC7
-A41 Type T16 Table
-A42 Num T16 6
-T17 Reference 20750 20769 MUC7 test accuracy.
-A43 RefType T17 Indirect
-A44 Type T17 Table
-A45 Num T17 3
-T18 Reference 20199 20298 As each global feature group is added to the list of features, we see improvements to both MUC6 and
-A46 RefType T18 Indirect
-A47 Type T18 Table
-A48 Num T18 3
-T19 Reference 20771 20852 For MUC6, the reduction in error due to global features is 27%, and for MUC7,14%.
-A49 RefType T19 Indirect
-A50 Type T19 Table
-A51 Num T19 3
-T20 Reference 21236 21337 As can be seen in Table 4, our training data is a lot less than those used by MENE and IdentiFinder3.
-A52 RefType T20 Direct
-A53 Type T20 Table
-A54 Num T20 4
-T21 Reference 21341 21518 In this section, we try to compare our results with those obtained by IdentiFinder ' 97 (Bikel et al., 1997), IdentiFinder ' 99 (Bikel et al., 1999), and MENE (Borthwick, 1999).
-A55 RefType T21 Indirect
-A56 Type T21 Table
-A57 Num T21 5
-T22 Reference 21680 21714 MENE has only been tested on MUC7.
-A58 RefType T22 Indirect
-A59 Type T22 Table
-A60 Num T22 4
-T23 Reference 21718 21813 For fair comparison, we have tabulated all results with the size of training data used (Table 5
-A61 RefType T23 Direct
-A62 Type T23 Table
-A63 Num T23 5
-T24 Reference 21814 21826 and Table 6)
-A64 RefType T24 Direct
-A65 Type T24 Table
-A66 Num T24 6
-T25 Reference 22546 22605 In MUC6, the best result is achieved by SRA (Krupka, 1995).
-A67 RefType T25 Indirect
-A68 Type T25 Table
-A69 Num T25 5
-T26 Reference 22877 23011 For MUC7, there are also no published results on systems trained on only the official training data of 200 aviation disaster articles.
-A70 RefType T26 Indirect
-A71 Type T26 Table
-A72 Num T26 6
-T27 Reference 23406 23507 Except our own and MENE + reference resolution, the results in Table 6 are all official MUC7 results.
-A73 RefType T27 Direct
-A74 Type T27 Table
-A75 Num T27 6
+T2	Reference 10286 10397	If the token starts with a capital letter (initCaps), then an additional feature (init- Caps, zone) is set to 1
+A1	RefType T2 Indirect
+A2	Type T2 Table
+A3	Num T2 1
+T3	Reference 10402 10475	If it is made up of all capital letters, then (allCaps, zone) is set to 1
+A4	RefType T3 Indirect
+A5	Type T3 Table
+A6	Num T3 1
+T4	Reference 10480 10602	If it starts with a lower case letter, and contains both upper and lower case letters, then (mixedCaps, zone) is set to 1.
+A7	RefType T4 Indirect
+A8	Type T4 Table
+A9	Num T4 1
+T5	Reference 10606 10652	A token that is allCaps will also be initCaps.
+A10	RefType T5 Indirect
+A11	Type T5 Table
+A12	Num T5 1
+T1	Caption 9775 9888	Table 1: Features based on the token string that are based on the probability of each name class during training.
+A13	Type T1 Table
+A14	Num T1 1
+T6	Reference 10870 10948	This group consists of 10 features based on the string , as listed in Table 1.
+A15	RefType T6 Direct
+A16	Type T6 Table
+A17	Num T6 1
+T7	Reference 10952 11090	For example, if a token starts with a capital letter and ends with a period (such as Mr.), then the feature InitCapPeriod is set to 1, etc
+A18	RefType T7 Indirect
+A19	Type T7 Table
+A20	Num T7 1
+T8	Reference 12555 12609	The sources of our dictionaries are listed in Table 2.
+A21	RefType T8 Direct
+A22	Type T8 Table
+A23	Num T8 2
+T9	Reference 13016 13107	Only tokens with initCaps not found in commonWords are tested against each list in Table 2.
+A24	RefType T9 Direct
+A25	Type T9 Table
+A26	Num T9 2
+T10	Caption 16419 16451	Table 2: Sources of Dictionaries
+A27	Type T10 Table
+A28	Num T10 2
+T11	Reference 20010 20089	As we will see from Table 3, not much improvement is derived from this feature.
+A29	RefType T11 Direct
+A30	Type T11 Table
+A31	Num T11 3
+T12	Reference 20097 20195	The baseline system in Table 3 refers to the maximum entropy system that uses only local features.
+A32	RefType T12 Direct
+A33	Type T12 Table
+A34	Num T12 3
+T13	Caption 20437 20510	Table 3: F-measure after successive addition of each global feature group
+A35	Type T13 Table
+A36	Num T13 3
+T14	Caption 20511 20550	Table 5: Comparison of results for MUC6
+A37	Type T14 Table
+A38	Num T14 5
+T15	Caption 20727 20749	Table 4: Training Data
+A39	Type T15 Table
+A40	Num T15 4
+T16	Caption 22326 22365	Table 6: Comparison of results for MUC7
+A41	Type T16 Table
+A42	Num T16 6
+T17	Reference 20750 20769	MUC7 test accuracy.
+A43	RefType T17 Indirect
+A44	Type T17 Table
+A45	Num T17 3
+T18	Reference 20199 20298	As each global feature group is added to the list of features, we see improvements to both MUC6 and
+A46	RefType T18 Indirect
+A47	Type T18 Table
+A48	Num T18 3
+T19	Reference 20771 20852	For MUC6, the reduction in error due to global features is 27%, and for MUC7,14%.
+A49	RefType T19 Indirect
+A50	Type T19 Table
+A51	Num T19 3
+T20	Reference 21236 21337	As can be seen in Table 4, our training data is a lot less than those used by MENE and IdentiFinder3.
+A52	RefType T20 Direct
+A53	Type T20 Table
+A54	Num T20 4
+T21	Reference 21341 21518	In this section, we try to compare our results with those obtained by IdentiFinder ' 97 (Bikel et al., 1997), IdentiFinder ' 99 (Bikel et al., 1999), and MENE (Borthwick, 1999).
+A55	RefType T21 Indirect
+A56	Type T21 Table
+A57	Num T21 5
+T22	Reference 21680 21714	MENE has only been tested on MUC7.
+A58	RefType T22 Indirect
+A59	Type T22 Table
+A60	Num T22 4
+T23	Reference 21718 21813	For fair comparison, we have tabulated all results with the size of training data used (Table 5
+A61	RefType T23 Direct
+A62	Type T23 Table
+A63	Num T23 5
+T24	Reference 21814 21826	and Table 6)
+A64	RefType T24 Direct
+A65	Type T24 Table
+A66	Num T24 6
+T25	Reference 22546 22605	In MUC6, the best result is achieved by SRA (Krupka, 1995).
+A67	RefType T25 Indirect
+A68	Type T25 Table
+A69	Num T25 5
+T26	Reference 22877 23011	For MUC7, there are also no published results on systems trained on only the official training data of 200 aviation disaster articles.
+A70	RefType T26 Indirect
+A71	Type T26 Table
+A72	Num T26 6
+T27	Reference 23406 23507	Except our own and MENE + reference resolution, the results in Table 6 are all official MUC7 results.
+A73	RefType T27 Direct
+A74	Type T27 Table
+A75	Num T27 6
