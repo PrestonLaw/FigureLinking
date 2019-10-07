@@ -9,7 +9,7 @@ import pdb
 import argparse
 import configparser
 import datetime
-
+import json
 
 
 
@@ -28,6 +28,7 @@ def parse_args():
     parser.add_argument("--resfile", help="Path to non-groundtruth '.xml.ann' file", default="./results.xml.ann")
     parser.add_argument("--config", help="Path to configuration file", default="./config.txt")
     parser.add_argument("--evalfile", help="Path to output file", default="./evaluation.txt")
+    parser.add_argument("--json", help="Replace .ann file arguments with .json files", action="store_true")
 
     _args = parser.parse_args()
     return _args
@@ -41,6 +42,11 @@ EntityTypes = ["Caption", "Reference"]
 # We should also define the configuration parameters as a global variable as well.
 args = None
 config = None
+
+
+
+def translate_json(json):
+    return json
 
 
 
@@ -219,6 +225,10 @@ def rwrite(outfile, text):
 
 
 
+############################################################################################################
+
+
+
 def evaluate(_args):
 
     global args
@@ -237,8 +247,19 @@ def evaluate(_args):
 
     # Part 3: Parse the annotations files and count how many Caption and Reference entities there are in the Groundtruth and NonGroundtruth files.
 
-    list_gt = read_ann(args.gtfile)
-    list_ex = read_ann(args.resfile)
+    if args.json:
+        with open(args.gtfile) as json_file:
+            gt_json = json.load(json_file)
+            list_gt = translate_json(gt_json)
+        with open(args.exfile) as json_file:
+            ex_json = json.load(json_file)
+            list_ex = translate_json(ex_json)
+    else:
+        list_gt = read_ann(args.gtfile)
+        list_ex = read_ann(args.resfile)
+
+    with open("example.json", "w") as o:
+        o.write(json.dumps(list_gt, indent=4))
 
     entity_statistics = {
         ET: {'gt': 0, 'ex': 0}

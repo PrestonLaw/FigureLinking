@@ -1,6 +1,6 @@
 FIGURE LINKING EVALUATION SUMMARY
 
-Script run on 2019-05-03 05:53:21.584941
+Script run on 2019-09-04 18:18:58.107649
 --------------------------------------------------
 ENTITY STATISTICS
 
